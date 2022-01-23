@@ -66,17 +66,6 @@ jobs:
 
       - run: sam build --template ${SAM_TEMPLATE} --use-container
 
-      - name: Assume the testing pipeline user role
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ env.USER_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.USER_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.TESTING_REGION }}
-          role-to-assume: ${{ env.TESTING_PIPELINE_EXECUTION_ROLE }}
-          role-session-name: feature-deployment
-          role-duration-seconds: 3600
-          role-skip-session-tagging: true
-
       - name: Deploy to prod test
         shell: bash
         run: |
@@ -84,8 +73,7 @@ jobs:
             --capabilities CAPABILITY_IAM \
             --s3-bucket ${TESTING_ARTIFACTS_BUCKET} \
             --region ${TESTING_REGION} \
-            --no-fail-on-empty-changeset \
-            --role-arn ${TESTING_CLOUDFORMATION_EXECUTION_ROLE}
+            --no-fail-on-empty-changeset
 
   build-and-deploy-prod:
     if: github.ref == 'refs/heads/main'
@@ -116,17 +104,6 @@ jobs:
           SOURCE_DIR: ${{ env.FE-DIR }}/build
 
       - run: sam build --template ${SAM_TEMPLATE} --use-container
-
-      - name: Assume the testing pipeline user role
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ env.USER_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.USER_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.PROD_REGION }}
-          role-to-assume: ${{ env.PROD_PIPELINE_EXECUTION_ROLE }}
-          role-session-name: prod-deployment
-          role-duration-seconds: 3600
-          role-skip-session-tagging: true
       
       - name: Deploy to prod stack
         shell: bash
@@ -135,5 +112,4 @@ jobs:
             --capabilities CAPABILITY_IAM \
             --s3-bucket ${PROD_ARTIFACTS_BUCKET} \
             --region ${PROD_REGION} \
-            --no-fail-on-empty-changeset \
-            --role-arn ${PROD_CLOUDFORMATION_EXECUTION_ROLE}
+            --no-fail-on-empty-changeset
