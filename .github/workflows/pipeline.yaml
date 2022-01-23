@@ -64,7 +64,7 @@ jobs:
           role-duration-seconds: 3600
           role-skip-session-tagging: true
 
-      - name: Deploy to feature stack in the testing account
+      - name: Deploy to prod test
         shell: bash
         run: |
           sam deploy --stack-name ${TESTING_STACK_NAME} \
@@ -89,13 +89,13 @@ jobs:
         with:
           aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.TESTING_REGION }}
-          role-to-assume: ${{ env.TESTING_PIPELINE_EXECUTION_ROLE }}
-          role-session-name: testing-packaging
+          aws-region: ${{ env.PROD_REGION }}
+          role-to-assume: ${{ env.PROD_PIPELINE_EXECUTION_ROLE }}
+          role-session-name: prod-deployment
           role-duration-seconds: 3600
           role-skip-session-tagging: true
       
-      - name: Deploy to feature stack in the testing account
+      - name: Deploy to prod stack
         shell: bash
         run: |
           sam deploy --stack-name ${PROD_STACK_NAME} \
