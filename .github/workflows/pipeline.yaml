@@ -10,27 +10,22 @@ on:
       - 'feature**'
 
 env:
-  PIPELINE_USER_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  PIPELINE_USER_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  USER_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  USER_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   SAM_TEMPLATE: listshuffler-be/template.yaml
+  FE-DIR: listshuffler-fe
   TESTING_STACK_NAME: listshuffler-test-be
   TESTING_PIPELINE_EXECUTION_ROLE: arn:aws:iam::392215370007:role/aws-sam-cli-managed-test-pip-PipelineExecutionRole-JXP92MR1N1EK
   TESTING_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::392215370007:role/aws-sam-cli-managed-test-CloudFormationExecutionR-M75E1UPEFY5Y
   TESTING_ARTIFACTS_BUCKET: aws-sam-cli-managed-test-pipeline-artifactsbucket-i5tsrcxwd9mb
-  # If there are functions with "Image" PackageType in your template,
-  # uncomment the line below and add "--image-repository ${TESTING_IMAGE_REPOSITORY}" to
-  # testing "sam package" and "sam deploy" commands.
-  # TESTING_IMAGE_REPOSITORY = '0123456789.dkr.ecr.region.amazonaws.com/repository-name'
   TESTING_REGION: eu-central-1
+  TESTING-FE-BUCKET: listshuffler-fe-test
   PROD_STACK_NAME: listshuffler-prod-be
   PROD_PIPELINE_EXECUTION_ROLE: arn:aws:iam::392215370007:role/aws-sam-cli-managed-prod-pip-PipelineExecutionRole-1M9MCCWFZUOBM
   PROD_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::392215370007:role/aws-sam-cli-managed-prod-CloudFormationExecutionR-XN7N2RTHS8YN
   PROD_ARTIFACTS_BUCKET: aws-sam-cli-managed-prod-pipeline-artifactsbucket-nbm8ekja0jja
-  # If there are functions with "Image" PackageType in your template,
-  # uncomment the line below and add "--image-repository ${PROD_IMAGE_REPOSITORY}" to
-  # prod "sam package" and "sam deploy" commands.
-  # PROD_IMAGE_REPOSITORY = '0123456789.dkr.ecr.region.amazonaws.com/repository-name'
   PROD_REGION: eu-central-1
+  PROD-FE-BUCKET: listshuffler-fe-prod
 
 jobs:
   test:
@@ -42,8 +37,6 @@ jobs:
           # trigger the tests here
 
   build-and-deploy-test:
-    # this stage is triggered only for feature branches (feature*),
-    # which will build the stack and deploy to a stack named with branch name.
     if: github.ref == 'refs/heads/test'
     needs: [test]
     runs-on: ubuntu-latest
@@ -51,13 +44,27 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
       - uses: aws-actions/setup-sam@v1
+
+      - working-directory: ${{ env.FE-DIR }}
+        run: npm run build
+
+      - uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ env.TESTING-FE-BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ env.USER_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ env.USER_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ env.TESTING_REGION }}
+          SOURCE_DIR: ${{ env.FE-DIR, '/build' }}
+
       - run: sam build --template ${SAM_TEMPLATE} --use-container
 
       - name: Assume the testing pipeline user role
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ env.USER_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.USER_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.TESTING_REGION }}
           role-to-assume: ${{ env.TESTING_PIPELINE_EXECUTION_ROLE }}
           role-session-name: feature-deployment
@@ -82,13 +89,27 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
       - uses: aws-actions/setup-sam@v1
+
+      - working-directory: ${{ env.FE-DIR }}
+        run: npm run build
+
+      - uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ env.PROD-FE-BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ env.USER_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ env.USER_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ env.PROD_REGION }}
+          SOURCE_DIR: ${{ env.FE-DIR, '/build' }}
+
       - run: sam build --template ${SAM_TEMPLATE} --use-container
 
       - name: Assume the testing pipeline user role
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ env.USER_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.USER_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.PROD_REGION }}
           role-to-assume: ${{ env.PROD_PIPELINE_EXECUTION_ROLE }}
           role-session-name: prod-deployment
