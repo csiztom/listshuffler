@@ -1,3 +1,4 @@
 # aws build files
 
 .aws-sam/*
+*/.aws-sam/*
