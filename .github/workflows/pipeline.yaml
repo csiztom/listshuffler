@@ -12,7 +12,7 @@ on:
 env:
   PIPELINE_USER_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   PIPELINE_USER_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  SAM_TEMPLATE: template.yaml
+  SAM_TEMPLATE: listshuffler-be/template.yaml
   TESTING_STACK_NAME: listshuffler-test-be
   TESTING_PIPELINE_EXECUTION_ROLE: arn:aws:iam::392215370007:role/aws-sam-cli-managed-test-pip-PipelineExecutionRole-JXP92MR1N1EK
   TESTING_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::392215370007:role/aws-sam-cli-managed-test-CloudFormationExecutionR-M75E1UPEFY5Y
