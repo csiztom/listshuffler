@@ -66,6 +66,13 @@ jobs:
 
       - run: sam build --template ${SAM_TEMPLATE} --use-container
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ env.USER_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.USER_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.TESTING_REGION }}
+
       - name: Deploy to prod test
         shell: bash
         run: |
@@ -104,6 +111,13 @@ jobs:
           SOURCE_DIR: ${{ env.FE-DIR }}/build
 
       - run: sam build --template ${SAM_TEMPLATE} --use-container
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ env.USER_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.USER_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.TESTING_REGION }}
       
       - name: Deploy to prod stack
         shell: bash
