@@ -53,6 +53,7 @@ jobs:
         run: npm ci
       - name: Build app
         working-directory: ${{ env.FE-DIR }}
+        run: npm run build
 
       - uses: jakejarvis/s3-sync-action@master
         with:
@@ -95,6 +96,7 @@ jobs:
         run: npm ci
       - name: Build app
         working-directory: ${{ env.FE-DIR }}
+        run: npm run build
 
       - uses: jakejarvis/s3-sync-action@master
         with:
