@@ -1,7 +1,11 @@
-name: Pipeline
+name: CI/CD pipeline
 
 on:
   push:
+    branches:
+      - 'main'
+      - 'test'
+  pull:
     branches:
       - 'main'
       - 'test'
@@ -26,10 +30,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - working-directory: ${{ env.FE-DIR }}
-        run: npm install
-      - working-directory: ${{ env.FE-DIR }}
-        run: npm test
+      - name: Install packages
+        working-directory: ${{ env.FE-DIR }}
+        run: npm ci
+      - name: Test functionality
+        working-directory: ${{ env.FE-DIR }}
+        run: npm run test
+      - name: Make sure build compiles properly
+        working-directory: ${{ env.FE-DIR }}
+        run: npm run build
 
   build-and-deploy-test:
     needs: [test-fe]
@@ -39,10 +48,11 @@ jobs:
       - uses: actions/setup-python@v2
       - uses: aws-actions/setup-sam@v1
 
-      - working-directory: ${{ env.FE-DIR }}
-        run: npm install
-      - working-directory: ${{ env.FE-DIR }}
-        run: npm run build
+      - name: Install packages
+        working-directory: ${{ env.FE-DIR }}
+        run: npm ci
+      - name: Build app
+        working-directory: ${{ env.FE-DIR }}
 
       - uses: jakejarvis/s3-sync-action@master
         with:
@@ -63,7 +73,7 @@ jobs:
           aws-secret-access-key: ${{ env.USER_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.TESTING_REGION }}
 
-      - name: Deploy to prod test
+      - name: Deploy to test stack
         shell: bash
         run: |
           sam deploy --stack-name ${TESTING_STACK_NAME} \
@@ -80,14 +90,11 @@ jobs:
       - uses: actions/setup-python@v2
       - uses: aws-actions/setup-sam@v1
 
-      - working-directory: ${{ env.FE-DIR }}
-        run: npm install
-
-      - working-directory: ${{ env.FE-DIR }}
-        run: npm test
-
-      - working-directory: ${{ env.FE-DIR }}
-        run: npm run build
+      - name: Install packages
+        working-directory: ${{ env.FE-DIR }}
+        run: npm ci
+      - name: Build app
+        working-directory: ${{ env.FE-DIR }}
 
       - uses: jakejarvis/s3-sync-action@master
         with:
