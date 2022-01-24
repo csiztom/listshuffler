@@ -22,7 +22,7 @@ env:
 
 jobs:
   test-fe:
-    if: github.event_name == 'push'
+    if: github.ref == 'refs/heads/test'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -32,7 +32,6 @@ jobs:
         run: npm test
 
   build-and-deploy-test:
-    if: github.ref == 'refs/heads/test'
     needs: [test-fe]
     runs-on: ubuntu-latest
     steps:
