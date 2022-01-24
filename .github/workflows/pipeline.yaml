@@ -15,14 +15,10 @@ env:
   SAM_TEMPLATE: listshuffler-be/template.yaml
   FE-DIR: listshuffler-fe
   TESTING_STACK_NAME: listshuffler-test-be
-  TESTING_PIPELINE_EXECUTION_ROLE: arn:aws:iam::392215370007:role/aws-sam-cli-managed-test-pip-PipelineExecutionRole-JXP92MR1N1EK
-  TESTING_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::392215370007:role/aws-sam-cli-managed-test-CloudFormationExecutionR-M75E1UPEFY5Y
   TESTING_ARTIFACTS_BUCKET: aws-sam-cli-managed-test-pipeline-artifactsbucket-i5tsrcxwd9mb
   TESTING_REGION: eu-central-1
   TESTING-FE-BUCKET: listshuffler-fe-test
   PROD_STACK_NAME: listshuffler-prod-be
-  PROD_PIPELINE_EXECUTION_ROLE: arn:aws:iam::392215370007:role/aws-sam-cli-managed-prod-pip-PipelineExecutionRole-1M9MCCWFZUOBM
-  PROD_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::392215370007:role/aws-sam-cli-managed-prod-CloudFormationExecutionR-XN7N2RTHS8YN
   PROD_ARTIFACTS_BUCKET: aws-sam-cli-managed-prod-pipeline-artifactsbucket-nbm8ekja0jja
   PROD_REGION: eu-central-1
   PROD-FE-BUCKET: listshuffler-fe-prod
