@@ -56,7 +56,7 @@ jobs:
         run: python -m pytest tests/unit -v
 
   build-and-deploy-test:
-    needs: [test-fe]
+    needs: [test-fe, test-be]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -80,7 +80,7 @@ jobs:
           AWS_REGION: ${{ env.TESTING_REGION }}
           SOURCE_DIR: ${{ env.FE-DIR }}/build
 
-      - run: sam build --template ${BE_DIR}/template.yaml --use-container
+      - run: sam build --template ${{ env.BE-DIR }}/template.yaml --use-container
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -123,7 +123,7 @@ jobs:
           AWS_REGION: ${{ env.PROD_REGION }}
           SOURCE_DIR: ${{ env.FE-DIR }}/build
 
-      - run: sam build --template ${BE_DIR}/template.yaml --use-container
+      - run: sam build --template ${{ env.BE-DIR }}}/template.yaml --use-container
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
