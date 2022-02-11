@@ -53,7 +53,7 @@ jobs:
           pip install -r tests/requirements.txt
       - name: Test functionality
         working-directory: ${{ env.BE-DIR }}
-        run: python -m pytest tests/unit -v
+        run: python3.9 -m pytest tests/unit -v
 
   build-and-deploy-test:
     needs: [test-fe, test-be]
