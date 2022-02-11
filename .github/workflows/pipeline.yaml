@@ -47,7 +47,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: 'pypy-3.9'
+          python-version: '3.9'
       - name: Installing dependencies
         working-directory: ${{ env.BE-DIR }}
         run: |
