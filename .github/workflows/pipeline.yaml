@@ -46,6 +46,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
+        with:
+          python-version: 'pypy-3.9'
       - name: Installing dependencies
         working-directory: ${{ env.BE-DIR }}
         run: |
@@ -53,7 +55,7 @@ jobs:
           pip install -r tests/requirements.txt
       - name: Test functionality
         working-directory: ${{ env.BE-DIR }}
-        run: python3.9 -m pytest tests/unit -v
+        run: python -m pytest tests/unit -v
 
   build-and-deploy-test:
     needs: [test-fe, test-be]
