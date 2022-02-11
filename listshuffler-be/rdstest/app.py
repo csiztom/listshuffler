@@ -2,6 +2,7 @@ import sys
 import logging
 import rds_config
 import pymysql
+import json
 #rds settings
 rds_host  = "rds-instance-endpoint"
 name = rds_config.db_username
@@ -39,4 +40,10 @@ def handler(event, context):
             #print(row)
     conn.commit()
 
-    return "Added %d items from RDS MySQL table" %(item_count)
+    return {
+        "statusCode": 200,
+        "body": json.dumps({
+            "message": "Added %d items from RDS MySQL table" %(item_count)
+            # "location": ip.text.replace("\n", "")
+        }),
+    }

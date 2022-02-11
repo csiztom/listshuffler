@@ -49,3 +49,9 @@ Resources:
           - subnet-09f8776cc80b883d1
         SecurityGroupIds:
           - sg-0eb0c6c1869cfa2ea
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /test
+            Method: get
