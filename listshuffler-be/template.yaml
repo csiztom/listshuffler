@@ -10,33 +10,19 @@ Globals:
   Function:
     Timeout: 3
 
+Parameters:
+  RDSEndpoint:
+    Type: String
+  RDSUser:
+    Type: String
+  RDSPassword:
+    Type: String
+
 Resources:
-  HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: hello_world/
-      Handler: app.lambda_handler
-      Runtime: python3.9
-      Architectures:
-        - x86_64
-      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
-      VpcConfig:
-        SubnetIds:
-          - subnet-071f89317eae740ab
-          - subnet-00bed6b534c1c9117
-          - subnet-09f8776cc80b883d1
-        SecurityGroupIds:
-          - sg-0eb0c6c1869cfa2ea
-      Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /hello
-            Method: get
-  RDSTestFunction:
+  CreateInstanceFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: test_rds/
+      CodeUri: create_instance
       Handler: app.handler
       Runtime: python3.9
       Architectures:
@@ -49,9 +35,14 @@ Resources:
           - subnet-09f8776cc80b883d1
         SecurityGroupIds:
           - sg-0eb0c6c1869cfa2ea
+      Environment:
+        Variables:
+          RDS_ENDPOINT: !Ref RDSEndpoint
+          RDS_USER: !Ref RDSUser
+          RDS_PWD: !Ref RDSPassword
       Events:
-        HelloWorld:
+        CreateInstance:
           Type: Api
           Properties:
-            Path: /test
-            Method: get
+            Path: /create-instance
+            Method: post
