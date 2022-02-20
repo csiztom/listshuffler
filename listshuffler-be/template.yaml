@@ -22,8 +22,8 @@ Resources:
   CreateInstanceFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: create_instance
-      Handler: app.handler
+      CodeUri: src
+      Handler: create_instance.app.handler
       Runtime: python3.9
       Architectures:
         - x86_64
@@ -46,3 +46,30 @@ Resources:
           Properties:
             Path: /create-instance
             Method: post
+  ClearInstancesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: clear_instances.app.handler
+      Runtime: python3.9
+      Architectures:
+        - x86_64
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      VpcConfig:
+        SubnetIds:
+          - subnet-071f89317eae740ab
+          - subnet-00bed6b534c1c9117
+          - subnet-09f8776cc80b883d1
+        SecurityGroupIds:
+          - sg-0eb0c6c1869cfa2ea
+      Environment:
+        Variables:
+          RDS_ENDPOINT: !Ref RDSEndpoint
+          RDS_USER: !Ref RDSUser
+          RDS_PWD: !Ref RDSPassword
+      Events:
+        ScheduledEvent:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 day)
+            Enabled: True
