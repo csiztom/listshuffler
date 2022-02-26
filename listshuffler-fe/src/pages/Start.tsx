@@ -1,4 +1,4 @@
-import { Grid, GridItem, Heading, Button, Input } from '@chakra-ui/react'
+import { Grid, GridItem } from '@chakra-ui/react'
 import { ReactElement } from 'react'
 import { Logo } from '../components'
 import ActionCard from '../components/ActionCard'
