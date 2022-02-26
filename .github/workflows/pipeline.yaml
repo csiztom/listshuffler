@@ -33,9 +33,9 @@ jobs:
       - name: Install packages
         working-directory: ${{ env.FE-DIR }}
         run: npm ci
-      - name: Test functionality
-        working-directory: ${{ env.FE-DIR }}
-        run: npm run test --passWithNoTests
+      #- name: Test functionality
+      #  working-directory: ${{ env.FE-DIR }}
+      #  run: npm run test
       - name: Make sure build compiles properly
         working-directory: ${{ env.FE-DIR }}
         run: npm run build
