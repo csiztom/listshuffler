@@ -4,9 +4,7 @@ import { Logo } from '../components'
 import ActionCard from '../components/ActionCard'
 import image from '../assets/drawing.svg'
 
-interface StartProps {}
-
-const Start = ({}: StartProps): ReactElement => {
+const Start = (): ReactElement => {
     const createList = async () => {
         fetch(
             'https://2tjqqggjwi.execute-api.eu-central-1.amazonaws.com/Prod/hello',
