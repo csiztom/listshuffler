@@ -38,7 +38,7 @@ jobs:
       #  run: npm run test
       - name: Make sure build compiles properly
         working-directory: ${{ env.FE-DIR }}
-        run: npm run build
+        run: npm run build:test
 
   test-be:
     if: github.ref == 'refs/heads/test'
