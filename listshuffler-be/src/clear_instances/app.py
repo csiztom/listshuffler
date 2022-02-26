@@ -10,9 +10,6 @@ def handler(event, context):
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute("SET SQL_SAFE_UPDATES = 0")
-        cur.execute("DELETE FROM public.listitems WHERE listID IN (SELECT listID FROM public.lists WHERE adminID IN (SELECT adminID FROM public.instances where expiration < CURDATE()))")
-        cur.execute("DELETE FROM public.probabilities WHERE listID IN (SELECT listID FROM public.lists WHERE adminID IN (SELECT adminID FROM public.instances where expiration < CURDATE()))")
-        cur.execute("DELETE FROM public.lists WHERE adminID IN (SELECT adminID FROM public.instances where expiration < CURDATE())")
         cur.execute("DELETE FROM public.instances where expiration < CURDATE()")
         conn.commit()
 

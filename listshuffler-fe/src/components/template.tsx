@@ -1,23 +1,12 @@
-import {
-    Button as MUIButton,
-    ButtonProps as MUIButtonProps,
-} from '@mui/material'
+import { Box, BoxProps } from '@chakra-ui/react'
 import { ReactElement, FC } from 'react'
-import { styled } from '@mui/material/styles'
 
-interface ButtonProps extends MUIButtonProps {
+interface ButtonProps extends BoxProps {
     title: string
 }
 
-const PlainButton = ({ title }: ButtonProps): ReactElement => {
-    return <MUIButton>{title}</MUIButton>
+const MyBox = ({ title }: ButtonProps): ReactElement => {
+    return <Box>{title}</Box>
 }
 
-const Button = styled(PlainButton)`
-    background-color: ${(props) => props.theme.palette.primary.light};
-    &:hover {
-        background-color: ${(props) => props.theme.palette.primary.dark};
-    }
-`
-
-export default Button
+export default MyBox

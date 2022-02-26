@@ -8,9 +8,6 @@ try:
 except: #for testing inside different root
     from ..helpers import rds_config
 
-#constraints
-max_tries = 20
-
 #logging
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -24,14 +21,14 @@ def handler(event, context):
     with conn.cursor() as cur:
         unique = False
         i = 0
-        while not unique and i < max_tries:
+        while not unique and i < 20:
             adminId = str(random.randint(100000,999999))
             logger.info("Trying %s" %(adminId))
             cur.execute("select * from instances where adminID='%s'" %(adminId))
             if cur.rowcount == 0:
                 unique = True
             i += 1
-        if max_tries == i:
+        if not unique:
             logger.error("ERROR: Could not find random id")
             sys.exit()
         cur.execute("insert into instances (adminID,expiration) values('%s',DATE_ADD(SYSDATE(), INTERVAL 1 DAY))" %(adminId))
