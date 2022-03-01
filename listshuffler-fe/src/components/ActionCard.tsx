@@ -1,4 +1,4 @@
-import { Box, BoxProps, Heading, Button, ButtonProps, Input } from '@chakra-ui/react'
+import { Box, BoxProps, Heading, Button, Input } from '@chakra-ui/react'
 import { ReactElement, useState } from 'react'
 
 interface ActionCardProps extends BoxProps {
