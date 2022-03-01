@@ -1,12 +1,12 @@
-import { Box, BoxProps, Heading, Button, Input } from '@chakra-ui/react'
-import { ReactElement } from 'react'
+import { Box, BoxProps, Heading, Button, ButtonProps, Input } from '@chakra-ui/react'
+import { ReactElement, useState } from 'react'
 
 interface ActionCardProps extends BoxProps {
     title: string
     buttonText: string
     hasInput?: boolean
     inputPlaceholder?: string
-    onButtonClick?: () => void
+    onButtonClick?: () => Promise<void>
 }
 
 const ActionCard = ({
@@ -17,6 +17,13 @@ const ActionCard = ({
     onButtonClick,
     ...props
 }: ActionCardProps): ReactElement => {
+    const [isLoading, setIsLoading] = useState(false)
+
+    const onClick = () => {
+        setIsLoading(true)
+        onButtonClick && onButtonClick().then(() => setIsLoading(false))
+    }
+
     return (
         <Box
             sx={{
@@ -44,7 +51,8 @@ const ActionCard = ({
                 colorScheme="primary"
                 borderRadius="button"
                 mb={4}
-                onClick={onButtonClick}
+                onClick={onClick}
+                isLoading={isLoading}
             >
                 {buttonText}
             </Button>

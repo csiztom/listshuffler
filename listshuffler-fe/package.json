@@ -23,7 +23,7 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "start": "react-scripts start",
+        "start": ". ./.env.local; react-scripts start",
         "build": ". ./.env.${REACT_APP_ENV}; react-scripts build",
         "build:test": "REACT_APP_ENV=test npm run build",
         "build:prod": "REACT_APP_ENV=prod npm run build",
