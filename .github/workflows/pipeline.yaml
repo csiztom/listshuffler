@@ -102,7 +102,8 @@ jobs:
             --parameter-overrides \
             RDSEndpoint=${{ secrets.T_RDS_ENDPOINT }} \
             RDSUser=${{ secrets.T_RDS_USER }} \
-            RDSPassword=${{ secrets.T_RDS_PWD }}
+            RDSPassword=${{ secrets.T_RDS_PWD }} \
+            LSPageOrigin=${{ secrets.T_PAGE_ORIGIN }}
 
   build-and-deploy-prod:
     if: github.ref == 'refs/heads/main'
@@ -149,4 +150,5 @@ jobs:
             --parameter-overrides \
             RDSEndpoint=${{ secrets.P_RDS_ENDPOINT }} \
             RDSUser=${{ secrets.P_RDS_USER }} \
-            RDSPassword=${{ secrets.P_RDS_PWD }}
+            RDSPassword=${{ secrets.P_RDS_PWD }} \
+            LSPageOrigin=${{ secrets.P_PAGE_ORIGIN }}

@@ -2,6 +2,7 @@ import sys
 import logging
 import json
 import random
+import os
 
 try:
     from helpers import rds_config
@@ -36,6 +37,9 @@ def handler(event, context):
 
     return {
         "statusCode": 200,
+        "headers": {
+            "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
+        },
         "body": json.dumps({
             "adminID": str(adminId)
         }),

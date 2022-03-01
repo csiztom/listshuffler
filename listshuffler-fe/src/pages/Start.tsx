@@ -5,17 +5,14 @@ import ActionCard from '../components/ActionCard'
 import image from '../assets/drawing.svg'
 
 const Start = (): ReactElement => {
-    const createList = async () => {
+    const createList = async () =>
         fetch(
-            'https://2tjqqggjwi.execute-api.eu-central-1.amazonaws.com/Prod/hello',
-            {
-                mode: 'cors',
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                },
-            },
-        ).then((response) => console.log(response))
-    }
+            (process.env.REACT_APP_API_URL) +
+                'create-instance',
+            { method: 'POST' },
+        ).then((response) => {
+            console.log(response.json())
+        })
 
     return (
         <Grid
