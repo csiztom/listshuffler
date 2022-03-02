@@ -34,7 +34,7 @@ Globals:
         LS_RDS_ENDPOINT: !Ref RDSEndpoint
         LS_RDS_USER: !Ref RDSUser
         LS_RDS_PWD: !Ref RDSPassword
-        LS_PAGE_ORIGIN: !Join ["",["'", !Ref OriginUrl , "'"]]
+        LS_PAGE_ORIGIN: !Sub "'${OriginUrl}'"
 
 Resources:
   ListshufflerApi:
@@ -43,7 +43,7 @@ Resources:
       StageName: Prod
       Cors:
         AllowMethods: "'GET, PUT, POST, DELETE, OPTIONS'"
-        AllowOrigin: !Join ["",["'", !Ref OriginUrl , "'"]]
+        AllowOrigin: !Sub "'${OriginUrl}'"
         AllowHeaders: "'Content-type, x-api-key'"
       Auth:
         ApiKeyRequired: false
