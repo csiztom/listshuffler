@@ -42,7 +42,10 @@ Globals:
         LS_RDS_ENDPOINT: !Ref RDSEndpoint
         LS_RDS_USER: !Ref RDSUser
         LS_RDS_PWD: !Ref RDSPassword
-        LS_PAGE_ORIGIN: !If [ isProd, "'http://listshuffler-fe-prod.s3-website.eu-central-1.amazonaws.com'", !If [ isTest, "'http://listshuffler-fe-test.s3-website.eu-central-1.amazonaws.com'", "'http://localhost:3000'" ]]
+        LS_PAGE_ORIGIN: Fn::If
+          - isProd
+          - "'http://listshuffler-fe-prod.s3-website.eu-central-1.amazonaws.com'"
+          - !If [ isTest, "'http://listshuffler-fe-test.s3-website.eu-central-1.amazonaws.com'", "'http://localhost:3000'" ]]
 
 Resources:
   ListshufflerApi:
