@@ -12,9 +12,17 @@ Parameters:
     Type: String
   RDSPassword:
     Type: String
-  PageOrigin:
+  EnvType:
     Type: String
     Default: local
+    AllowedValues:
+      - prod
+      - test
+      - local
+
+Condition:
+  isProd: !Equals [ !Ref EnvType, prod]
+  isTest: !Equals [ !Ref EnvType, test]
 
 Globals:
   Function:
@@ -34,14 +42,7 @@ Globals:
         LS_RDS_ENDPOINT: !Ref RDSEndpoint
         LS_RDS_USER: !Ref RDSUser
         LS_RDS_PWD: !Ref RDSPassword
-        LS_PAGE_ORIGIN: 
-          'Fn::If':
-            - !Equals [!Ref PageOrigin, prod]
-            - "'http://listshuffler-fe-prod.s3-website.eu-central-1.amazonaws.com'"
-            - 'Fn::If':
-              - !Equals [!Ref PageOrigin, test]
-              - "'http://listshuffler-fe-test.s3-website.eu-central-1.amazonaws.com'"
-              - "'http://localhost:3000'"
+        LS_PAGE_ORIGIN: !If [ isProd, "'http://listshuffler-fe-prod.s3-website.eu-central-1.amazonaws.com'", !If [ isTest, "'http://listshuffler-fe-test.s3-website.eu-central-1.amazonaws.com'", "'http://localhost:3000'" ]]
 
 Resources:
   ListshufflerApi:
@@ -50,14 +51,7 @@ Resources:
       StageName: Prod
       Cors:
         AllowMethods: "'GET, PUT, POST, DELETE, OPTIONS'"
-        AllowOrigin: 
-          'Fn::If':
-            - !Equals [!Ref PageOrigin, prod]
-            - "'http://listshuffler-fe-prod.s3-website.eu-central-1.amazonaws.com'"
-            - 'Fn::If':
-              - !Equals [!Ref PageOrigin, test]
-              - "'http://listshuffler-fe-test.s3-website.eu-central-1.amazonaws.com'"
-              - "'http://localhost:3000'"
+        AllowOrigin: !If [ isProd, "'http://listshuffler-fe-prod.s3-website.eu-central-1.amazonaws.com'", !If [ isTest, "'http://listshuffler-fe-test.s3-website.eu-central-1.amazonaws.com'", "'http://localhost:3000'" ]]
         AllowHeaders: "'Content-type, x-api-key'"
       Auth:
         ApiKeyRequired: false

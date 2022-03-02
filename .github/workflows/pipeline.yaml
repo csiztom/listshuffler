@@ -103,7 +103,7 @@ jobs:
             RDSEndpoint=${{ secrets.T_RDS_ENDPOINT }} \
             RDSUser=${{ secrets.T_RDS_USER }} \
             RDSPassword=${{ secrets.T_RDS_PWD }} \
-            PageOrigin=test
+            EnvType=test
 
   build-and-deploy-prod:
     if: github.ref == 'refs/heads/main'
@@ -151,4 +151,4 @@ jobs:
             RDSEndpoint=${{ secrets.P_RDS_ENDPOINT }} \
             RDSUser=${{ secrets.P_RDS_USER }} \
             RDSPassword=${{ secrets.P_RDS_PWD }} \
-            PageOrigin=prod
+            EnvType=prod
