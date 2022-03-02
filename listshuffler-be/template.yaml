@@ -43,9 +43,9 @@ Globals:
         LS_RDS_USER: !Ref RDSUser
         LS_RDS_PWD: !Ref RDSPassword
         LS_PAGE_ORIGIN: Fn::If
-          - isProd
+          - is
           - "'http://listshuffler-fe-prod.s3-website.eu-central-1.amazonaws.com'"
-          - !If [ isTest, "'http://listshuffler-fe-test.s3-website.eu-central-1.amazonaws.com'", "'http://localhost:3000'" ]]
+          - "'http://listshuffler-fe-test.s3-website.eu-central-1.amazonaws.com'"
 
 Resources:
   ListshufflerApi:
@@ -54,7 +54,10 @@ Resources:
       StageName: Prod
       Cors:
         AllowMethods: "'GET, PUT, POST, DELETE, OPTIONS'"
-        AllowOrigin: !If [ isProd, "'http://listshuffler-fe-prod.s3-website.eu-central-1.amazonaws.com'", !If [ isTest, "'http://listshuffler-fe-test.s3-website.eu-central-1.amazonaws.com'", "'http://localhost:3000'" ]]
+        AllowOrigin: Fn::If
+          - is
+          - "'http://listshuffler-fe-prod.s3-website.eu-central-1.amazonaws.com'"
+          - "'http://listshuffler-fe-test.s3-website.eu-central-1.amazonaws.com'"
         AllowHeaders: "'Content-type, x-api-key'"
       Auth:
         ApiKeyRequired: false
