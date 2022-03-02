@@ -6,11 +6,9 @@ import image from '../assets/drawing.svg'
 
 const Start = (): ReactElement => {
     const createList = async () =>
-        fetch(
-            (process.env.REACT_APP_API_URL) +
-                'create-instance',
-            { method: 'POST' },
-        ).then((response) => {
+        fetch(process.env.REACT_APP_API_URL + '/create-instance', {
+            method: 'POST',
+        }).then((response) => {
             console.log(response.json())
         })
 
