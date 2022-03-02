@@ -35,17 +35,16 @@ Globals:
         LS_RDS_USER: !Ref RDSUser
         LS_RDS_PWD: !Ref RDSPassword
         LS_PAGE_ORIGIN: !Ref LSPageOrigin
-  Api:
-    Cors:
-      AllowMethods: "'GET, PUT, POST, DELETE, OPTIONS'"
-      AllowOrigin: !Ref LSPageOrigin
-      AllowHeaders: "'Content-type, x-api-key'"
 
 Resources:
   ListshufflerApi:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
+      Cors:
+        AllowMethods: "'GET, PUT, POST, DELETE, OPTIONS'"
+        AllowOrigin: !Ref LSPageOrigin
+        AllowHeaders: "'Content-type, x-api-key'"
       Auth:
         ApiKeyRequired: false
   CreateInstanceFunction:
