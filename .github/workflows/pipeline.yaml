@@ -19,10 +19,12 @@ env:
   TESTING_ARTIFACTS_BUCKET: aws-sam-cli-managed-test-pipeline-artifactsbucket-i5tsrcxwd9mb
   TESTING_REGION: eu-central-1
   TESTING_FE_BUCKET: listshuffler-fe-test
+  TESTING_PAGE_ORIGIN: "http://listshuffler-fe-test.s3-website.eu-central-1.amazonaws.com"
   PROD_STACK_NAME: listshuffler-prod-be
   PROD_ARTIFACTS_BUCKET: aws-sam-cli-managed-prod-pipeline-artifactsbucket-nbm8ekja0jja
   PROD_REGION: eu-central-1
   PROD_FE_BUCKET: listshuffler-fe-prod
+  PROD_PAGE_ORIGIN: "http://listshuffler-fe-prod.s3-website.eu-central-1.amazonaws.com"
 
 jobs:
   test-fe:
@@ -103,7 +105,7 @@ jobs:
             RDSEndpoint=${{ secrets.T_RDS_ENDPOINT }} \
             RDSUser=${{ secrets.T_RDS_USER }} \
             RDSPassword=${{ secrets.T_RDS_PWD }} \
-            EnvType=test
+            OriginUrl=${TESTING_PAGE_ORIGIN}
 
   build-and-deploy-prod:
     if: github.ref == 'refs/heads/main'
@@ -151,4 +153,4 @@ jobs:
             RDSEndpoint=${{ secrets.P_RDS_ENDPOINT }} \
             RDSUser=${{ secrets.P_RDS_USER }} \
             RDSPassword=${{ secrets.P_RDS_PWD }} \
-            EnvType=prod
+            OriginUrl=${PROD_PAGE_ORIGIN}
