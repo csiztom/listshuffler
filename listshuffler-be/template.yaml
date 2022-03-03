@@ -34,7 +34,7 @@ Globals:
         LS_RDS_ENDPOINT: !Ref RDSEndpoint
         LS_RDS_USER: !Ref RDSUser
         LS_RDS_PWD: !Ref RDSPassword
-        LS_PAGE_ORIGIN: !Sub "'${OriginUrl}'"
+        LS_PAGE_ORIGIN: !Ref OriginUrl
 
 Resources:
   ListshufflerApi:
