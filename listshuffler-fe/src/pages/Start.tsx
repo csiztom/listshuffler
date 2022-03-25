@@ -1,16 +1,27 @@
 import { Grid, GridItem } from '@chakra-ui/react'
-import { ReactElement } from 'react'
-import { Logo } from '../components'
-import ActionCard from '../components/ActionCard'
+import { ReactElement, useState } from 'react'
+import { Logo, ActionCard } from '../components'
 import image from '../assets/drawing.svg'
+import { useNavigate } from 'react-router-dom'
 
 const Start = (): ReactElement => {
-    const createList = async () =>
-        fetch(process.env.REACT_APP_API_URL + '/create-instance', {
+    const navigate = useNavigate()
+    const [createIsLoading, setCreateIsLoading] = useState(false)
+    const createList = async () => {
+        setCreateIsLoading(true)
+        fetch(process.env.REACT_APP_API_URL + '/instance', {
             method: 'POST',
-        }).then((response) => {
-            console.log(response.json())
         })
+            .then((response) => response.ok && response.json())
+            .then((resp) => {
+                setCreateIsLoading(false)
+                resp.adminID && navigate('./instance' + resp.adminID, { replace: true })
+            })
+            .catch(() => {
+                console.log('error')
+                setCreateIsLoading(false)
+            })
+    }
 
     return (
         <Grid
@@ -38,6 +49,7 @@ const Start = (): ReactElement => {
                     title="Create your own list"
                     buttonText="Create lists"
                     onButtonClick={createList}
+                    isLoading={createIsLoading}
                 />
             </GridItem>
             <GridItem rowSpan={1} colSpan={2}>

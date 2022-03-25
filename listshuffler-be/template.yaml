@@ -14,7 +14,7 @@ Parameters:
     Type: String
   OriginUrl:
     Type: String
-    Default: localhost:3000
+    Default: http://localhost:3000
 
 Globals:
   Function:
@@ -42,24 +42,160 @@ Resources:
     Properties:
       StageName: Prod
       Cors:
-        AllowMethods: "'GET, PUT, POST, DELETE, OPTIONS'"
+        AllowMethods: "'GET, PUT, POST, DELETE, OPTIONS, PATCH'"
         AllowOrigin: !Sub "'${OriginUrl}'"
         AllowHeaders: "'Content-type, x-api-key'"
       Auth:
         ApiKeyRequired: false
-  CreateInstanceFunction:
+  PostInstanceFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: src
-      Handler: create_instance.app.handler
+      Handler: post_instance.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
       Events:
-        CreateInstance:
+        PostInstance:
           Type: Api
           Properties:
             RestApiId: !Ref ListshufflerApi
-            Path: /create-instance
+            Path: /instance
             Method: post
+  PostListFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: post_list.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        PostList:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /list
+            Method: post
+            RequestParameters:
+              - method.request.querystring.adminID:
+                  Required: true
+              - method.request.querystring.listName:
+                  Required: true
+  PostListitemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: post_listitem.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        PostListitem:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /listitem
+            Method: post
+            RequestParameters:
+              - method.request.querystring.listID:
+                  Required: true
+              - method.request.querystring.listItem:
+                  Required: true
+  PatchInstanceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: patch_instance.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        PostInstance:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /instance
+            Method: patch
+            RequestParameters:
+              - method.request.querystring.adminID:
+                  Required: true
+  PatchListFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: patch_list.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        PostList:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /list
+            Method: patch
+            RequestParameters:
+              - method.request.querystring.listID:
+                  Required: true
+              - method.request.querystring.listName:
+                  Required: true
+  PatchListitemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: patch_listitem.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        PostListitem:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /listitem
+            Method: patch
+            RequestParameters:
+              - method.request.querystring.listItemID:
+                  Required: true
+              - method.request.querystring.listItem:
+                  Required: true
+  GetInstanceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: get_instance.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        GetInstance:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /instance
+            Method: get
+            RequestParameters:
+              - method.request.querystring.adminID:
+                  Required: true
+  GetListFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: get_list.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        GetList:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /list
+            Method: get
+            RequestParameters:
+              - method.request.querystring.listID:
+                  Required: true
+  GetListitemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: get_listitem.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        GetListitem:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /listitem
+            Method: get
+            RequestParameters:
+              - method.request.querystring.listItemID:
+                  Required: true
   ClearInstancesFunction:
     Type: AWS::Serverless::Function
     Properties:
