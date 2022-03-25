@@ -18,7 +18,7 @@ const InstancePage = (): ReactElement => {
             .then((response: AbstractInstance) => setLists(response.lists))
             .catch(() => console.log('error'))
             .then(() => setIsLoading(false))
-    }, [])
+    }, [id])
 
     const addList = () =>
         fetch(
@@ -53,7 +53,7 @@ const InstancePage = (): ReactElement => {
         id: string,
         ind: number,
     ) =>
-        (name == editedName
+        (name === editedName
             ? Promise.resolve()
             : fetch(
                   process.env.REACT_APP_API_URL +
@@ -70,7 +70,7 @@ const InstancePage = (): ReactElement => {
             .then(() =>
                 Promise.all(
                     list.map((it, i) =>
-                        it.listItemID == editedList[i].listItemID &&
+                        it.listItemID === editedList[i].listItemID &&
                         it.listItem != editedList[i].listItem
                             ? fetch(
                                   process.env.REACT_APP_API_URL +
@@ -87,7 +87,7 @@ const InstancePage = (): ReactElement => {
                 ).then(() =>
                     setLists((lists) =>
                         lists.map((val, i) =>
-                            i == ind
+                            i === ind
                                 ? {
                                       listID: id,
                                       listItems: editedList,
