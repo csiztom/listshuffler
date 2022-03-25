@@ -71,7 +71,7 @@ const InstancePage = (): ReactElement => {
                 Promise.all(
                     list.map((it, i) =>
                         it.listItemID === editedList[i].listItemID &&
-                        it.listItem != editedList[i].listItem
+                        it.listItem !== editedList[i].listItem
                             ? fetch(
                                   process.env.REACT_APP_API_URL +
                                       '/listitem?listItemID=' +
