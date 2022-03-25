@@ -1,5 +1,4 @@
-import { AddIcon } from '@chakra-ui/icons'
-import { Stack, Box, Text, Button } from '@chakra-ui/react'
+import { Stack } from '@chakra-ui/react'
 import { ReactElement, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import image from '../assets/drawing.svg'

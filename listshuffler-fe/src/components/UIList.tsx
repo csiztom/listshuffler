@@ -1,6 +1,6 @@
 import { AddIcon, EditIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
 import { Box, Button, Stack, ButtonProps, Text, Input } from '@chakra-ui/react'
-import { ReactElement, useEffect, useMemo, useState } from 'react'
+import { ReactElement, useMemo, useState } from 'react'
 import { AbstractListItem } from '../types/main'
 import UIListItem from './UIListItem'
 

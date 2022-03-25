@@ -1,7 +1,5 @@
-import { CheckIcon } from '@chakra-ui/icons'
-import { Box, Button, Stack, ButtonProps, Text, Input, InputProps } from '@chakra-ui/react'
-import { ReactElement, useMemo, useState } from 'react'
-import { AbstractListItem } from '../types/main'
+import { Button, Input, InputProps } from '@chakra-ui/react'
+import { ReactElement } from 'react'
 
 interface UIListItemProps extends Pick<InputProps, 'onChange'> {
     editing?: boolean
