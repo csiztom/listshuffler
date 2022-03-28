@@ -14,7 +14,7 @@ logger.setLevel(logging.INFO)
 
 def handler(event, context):
     """
-    This function gets a list
+    This function gets an instance
     """
     try:
         listId = event['queryStringParameters']['listID']
@@ -28,18 +28,13 @@ def handler(event, context):
         }
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
-        cur.execute("select * from lists where listId='%s'" % listId)
-        result = cur.fetchone()
+        cur.execute("SET SQL_SAFE_UPDATES = 0")
+        cur.execute("DELETE FROM public.lists where listID='%s'" % (listId))
+        conn.commit()
 
     return {
-        "statusCode": 200 if result != None else 404,
+        "statusCode": 200,
         "headers": {
             "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
         },
-        "body": json.dumps({
-            'adminID': result[0],
-            'listID': result[1],
-            'listName': result[2],
-            'muliplicity': result[3],
-        }),
     }

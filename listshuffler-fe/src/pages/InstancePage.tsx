@@ -43,7 +43,16 @@ const InstancePage = (): ReactElement => {
                     },
                 ]),
             )
-            .then(() => undefined)
+            .then(() => {})
+
+    const deleteList = (id: string) =>
+        fetch(process.env.REACT_APP_API_URL + '/list?listID=' + id, {
+            method: 'DELETE',
+        })
+            .then(() =>
+                setLists((lists) => lists.filter((val) => val.listID != id)),
+            )
+            .catch(() => console.log('error'))
 
     const editList = (
         list: Array<AbstractListItem>,
@@ -53,51 +62,60 @@ const InstancePage = (): ReactElement => {
         id: string,
         ind: number,
     ) =>
-        (name === editedName
-            ? Promise.resolve()
-            : fetch(
-                  process.env.REACT_APP_API_URL +
-                      '/list?listID=' +
-                      id +
-                      '&listName=' +
-                      editedName,
-                  {
-                      method: 'PATCH',
-                  },
-              )
-        )
-            .catch(() => console.log('error'))
+        Promise.all([
+            name === editedName
+                ? Promise.resolve()
+                : fetch(
+                      process.env.REACT_APP_API_URL +
+                          '/list?listID=' +
+                          id +
+                          '&listName=' +
+                          editedName,
+                      {
+                          method: 'PATCH',
+                      },
+                  ).catch(() => console.log('error')),
+            ...list.map((it) => {
+                let found = editedList.find(
+                    (val) => val.listItemID == it.listItemID,
+                )
+                return found
+                    ? it.listItem !== found.listItem
+                        ? fetch(
+                              process.env.REACT_APP_API_URL +
+                                  '/listitem?listItemID=' +
+                                  it.listItemID +
+                                  '&listItem=' +
+                                  found.listItem,
+                              {
+                                  method: 'PATCH',
+                              },
+                          ).catch(() => console.log('error'))
+                        : Promise.resolve()
+                    : fetch(
+                          process.env.REACT_APP_API_URL +
+                              '/listitem?listItemID=' +
+                              it.listItemID,
+                          {
+                              method: 'DELETE',
+                          },
+                      ).catch(() => console.log('error'))
+            }),
+        ])
             .then(() =>
-                Promise.all(
-                    list.map((it, i) =>
-                        it.listItemID === editedList[i].listItemID &&
-                        it.listItem !== editedList[i].listItem
-                            ? fetch(
-                                  process.env.REACT_APP_API_URL +
-                                      '/listitem?listItemID=' +
-                                      it.listItemID +
-                                      '&listItem=' +
-                                      editedList[i].listItem,
-                                  {
-                                      method: 'PATCH',
-                                  },
-                              ).catch(() => console.log('error'))
-                            : Promise.resolve(),
-                    ),
-                ).then(() =>
-                    setLists((lists) =>
-                        lists.map((val, i) =>
-                            i === ind
-                                ? {
-                                      listID: id,
-                                      listItems: editedList,
-                                      listName: editedName,
-                                  }
-                                : val,
-                        ),
+                setLists((lists) =>
+                    lists.map((val, i) =>
+                        i === ind
+                            ? {
+                                  listID: id,
+                                  listItems: editedList,
+                                  listName: editedName,
+                              }
+                            : val,
                     ),
                 ),
             )
+            .then(() => {})
 
     const addListItem = (listId: string) =>
         fetch(
@@ -105,14 +123,13 @@ const InstancePage = (): ReactElement => {
                 '/listitem?listID=' +
                 listId +
                 '&listItem=' +
-                'hello',
+                'New Item',
             {
                 method: 'POST',
             },
         )
             .then((response) => response.ok && response.json())
-            .then(function (response) {
-                console.log(response.listItemID)
+            .then((response) =>
                 setLists((lists) =>
                     lists.map((val) =>
                         val.listID === listId
@@ -121,19 +138,15 @@ const InstancePage = (): ReactElement => {
                                   listItems: [
                                       ...val.listItems,
                                       {
-                                          listItem: 'hello',
+                                          listItem: 'New Item',
                                           listItemID: response.listItemID,
                                       },
                                   ],
                               }
                             : val,
                     ),
-                )
-                return {
-                    listItem: 'hello',
-                    listItemID: response.listItemID,
-                }
-            })
+                ),
+            )
             .catch(() => console.log('error'))
 
     const generatedLists = useMemo(
@@ -144,6 +157,7 @@ const InstancePage = (): ReactElement => {
                     items={it.listItems}
                     name={it.listName}
                     asyncClickAdd={() => addListItem(it.listID)}
+                    asyncClickDeleteList={() => deleteList(it.listID)}
                     handleChange={(el, en) =>
                         editList(
                             it.listItems,

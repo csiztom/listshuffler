@@ -196,6 +196,54 @@ Resources:
             RequestParameters:
               - method.request.querystring.listItemID:
                   Required: true
+  DeleteInstanceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: delete_instance.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        GetInstance:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /instance
+            Method: delete
+            RequestParameters:
+              - method.request.querystring.adminID:
+                  Required: true
+  DeleteListFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: delete_list.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        GetList:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /list
+            Method: delete
+            RequestParameters:
+              - method.request.querystring.listID:
+                  Required: true
+  DeleteListitemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: delete_listitem.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        GetListitem:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /listitem
+            Method: delete
+            RequestParameters:
+              - method.request.querystring.listItemID:
+                  Required: true 
   ClearInstancesFunction:
     Type: AWS::Serverless::Function
     Properties:

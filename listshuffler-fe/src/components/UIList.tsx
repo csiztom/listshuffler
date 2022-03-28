@@ -1,12 +1,28 @@
-import { AddIcon, EditIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
-import { Box, Button, Stack, ButtonProps, Text, Input } from '@chakra-ui/react'
-import { ReactElement, useMemo, useState } from 'react'
+import {
+    AddIcon,
+    EditIcon,
+    CheckIcon,
+    CloseIcon,
+    DeleteIcon,
+} from '@chakra-ui/icons'
+import {
+    Box,
+    Button,
+    Stack,
+    ButtonProps,
+    Text,
+    Input,
+    ButtonGroup,
+    list,
+} from '@chakra-ui/react'
+import { ReactElement, useEffect, useMemo, useState } from 'react'
 import { AbstractListItem } from '../types/main'
 import UIListItem from './UIListItem'
 
 interface UIListProps extends Pick<ButtonProps, 'isLoading'> {
     items: Array<AbstractListItem>
-    asyncClickAdd?: () => Promise<AbstractListItem | void>
+    asyncClickAdd?: () => Promise<void>
+    asyncClickDeleteList?: () => Promise<void>
     editable?: boolean
     name: string
     handleChange?: (
@@ -18,6 +34,7 @@ interface UIListProps extends Pick<ButtonProps, 'isLoading'> {
 const UIList = ({
     items,
     asyncClickAdd,
+    asyncClickDeleteList,
     editable = true,
     isLoading: parentIsLoading,
     name,
@@ -28,20 +45,17 @@ const UIList = ({
     const [isLoading, setIsLoading] = useState(false)
     const [editedList, setEditedList] = useState(items)
     const [editedName, setEditedName] = useState(name)
+    useEffect(() => setEditedList(items), [items])
     const onAdd = () => {
         if (asyncClickAdd) {
             setIsLoading(true)
-            asyncClickAdd()
-                .then(
-                    (response) =>
-                        editedList &&
-                        response &&
-                        setEditedList((editedList) => [
-                            ...editedList,
-                            response,
-                        ]),
-                )
-                .then(() => setIsLoading(false))
+            asyncClickAdd().then(() => setIsLoading(false))
+        }
+    }
+    const onDelete = () => {
+        if (asyncClickDeleteList) {
+            setIsLoading(true)
+            asyncClickDeleteList()
         }
     }
     const editList = () => {
@@ -54,29 +68,49 @@ const UIList = ({
     }
     const generatedItems = useMemo(
         () =>
-            items.map((it) => (
-                <UIListItem
-                    key={it.listItemID}
-                    id={it.listItemID}
-                    name={it.listItem}
-                    editing={editing}
-                    onChange={(e) =>
-                        setEditedList(
-                            (editedList) =>
-                                editedList &&
-                                editedList.map((item) =>
-                                    item.listItemID === it.listItemID
-                                        ? {
-                                              listItem: e.target.value,
-                                              listItemID: item.listItemID,
-                                          }
-                                        : item,
-                                ),
-                        )
-                    }
-                />
+            editedList.map((it) => (
+                <ButtonGroup isAttached variant="solid" key={it.listItemID}>
+                    <UIListItem
+                        id={it.listItemID}
+                        name={it.listItem}
+                        editing={editing}
+                        onChange={(e) =>
+                            setEditedList(
+                                (editedList) =>
+                                    editedList &&
+                                    editedList.map((item) =>
+                                        item.listItemID === it.listItemID
+                                            ? {
+                                                  listItem: e.target.value,
+                                                  listItemID: item.listItemID,
+                                              }
+                                            : item,
+                                    ),
+                            )
+                        }
+                        isLoading={parentIsLoading || isLoading}
+                    />
+                    {editing && (
+                        <Button
+                            colorScheme="red"
+                            borderRadius="button"
+                            p={2}
+                            onClick={() =>
+                                setEditedList((editedList) =>
+                                    editedList.filter(
+                                        (val) =>
+                                            val.listItemID != it.listItemID,
+                                    ),
+                                )
+                            }
+                            isLoading={parentIsLoading || isLoading}
+                        >
+                            <DeleteIcon />
+                        </Button>
+                    )}
+                </ButtonGroup>
             )),
-        [items, editing],
+        [editedList, editing, isLoading, parentIsLoading],
     )
     return (
         <Box
@@ -86,7 +120,8 @@ const UIList = ({
                 bgColor: 'card',
                 borderRadius: 'card',
                 m: '2',
-                p: '6',
+                p: '8',
+                pt: '2',
             }}
             {...props}
         >
@@ -94,18 +129,21 @@ const UIList = ({
                 <Input
                     colorScheme="secondary"
                     borderRadius="button"
-                    mt={-5}
-                    mb={5}
+                    mt={0.5}
+                    mb={2}
+                    fontSize="xsmall"
+                    size="sm"
                     w="fit-content"
                     defaultValue={name}
-                    htmlSize={name.length}
+                    htmlSize={editedName.length}
                     backdropFilter="blur(16px) saturate(180%)"
                     bgColor="card"
                     onChange={(e) => setEditedName(e.target.value)}
+                    textAlign='center'
                 />
             ) : (
-                <Text mt={-5} color="text" fontSize="xsmall">
-                    {name}
+                <Text mt={2} mb={2} color="text" fontSize="small">
+                    {editedName}
                 </Text>
             )}
             <Stack
@@ -116,19 +154,38 @@ const UIList = ({
                 wrap="wrap"
                 justifyContent="center"
             >
-                {editing && (
+                {editable && (editing || asyncClickDeleteList) && (
                     <Button
                         colorScheme="red"
                         borderRadius="button"
                         p={2}
-                        onClick={() => setEditing((editing) => !editing)}
+                        onClick={
+                            editing
+                                ? () => {
+                                      setEditing(false)
+                                      setEditedList((items) => items)
+                                      setEditedName((name) => name)
+                                  }
+                                : onDelete
+                        }
                         isLoading={parentIsLoading || isLoading}
                     >
-                        <CloseIcon />
+                        {editing ? <CloseIcon /> : <DeleteIcon />}
                     </Button>
                 )}
                 {generatedItems}
-                {editing && (
+                {editable && (
+                    <Button
+                        colorScheme="primary"
+                        borderRadius="button"
+                        p={2}
+                        onClick={() => editList()}
+                        isLoading={parentIsLoading || isLoading}
+                    >
+                        {isLoading || editing ? <CheckIcon /> : <EditIcon />}
+                    </Button>
+                )}
+                {(!editing || !editable) && asyncClickAdd && (
                     <Button
                         colorScheme="primary"
                         borderRadius="button"
@@ -139,23 +196,6 @@ const UIList = ({
                         {isLoading || <AddIcon />}
                     </Button>
                 )}
-                <Button
-                    colorScheme="primary"
-                    borderRadius="button"
-                    p={2}
-                    onClick={() => (editable ? editList() : onAdd())}
-                    isLoading={parentIsLoading || isLoading}
-                >
-                    {isLoading || editable ? (
-                        editing ? (
-                            <CheckIcon />
-                        ) : (
-                            <EditIcon />
-                        )
-                    ) : (
-                        <AddIcon />
-                    )}
-                </Button>
             </Stack>
         </Box>
     )

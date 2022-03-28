@@ -37,7 +37,7 @@ def handler(event, context):
             listId = ''.join(random.choice(
                 string.ascii_letters + string.digits) for _ in range(6))
             try:
-                cur.execute("insert into lists (adminID,listID,listName) values('%s','%s','%s')" % (
+                cur.execute("insert into lists (adminID,listID,listName,multiplicity) values('%s','%s','%s',1)" % (
                     adminId, listId, listName))
                 conn.commit()
             except:

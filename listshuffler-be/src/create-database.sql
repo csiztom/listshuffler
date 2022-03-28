@@ -9,6 +9,7 @@ create table if not exists public.lists (
 	adminID varchar(8) not null,
     listID varchar(6) not null,
     listName varchar(255) not null,
+    multiplicity int not null,
     primary key (listID),
     foreign key (adminID) references instances(adminID) on delete cascade
 );
@@ -16,6 +17,7 @@ create table if not exists public.listItems (
 	listItemID varchar(8) not null,
 	listItem varchar(255) not null,
     listID varchar(6) not null,
+    pair int,
     primary key (listItemID),
     foreign key (listID) references lists(listID) on delete cascade
 );

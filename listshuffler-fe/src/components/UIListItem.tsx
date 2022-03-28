@@ -1,7 +1,9 @@
-import { Button, Input, InputProps } from '@chakra-ui/react'
+import { Button, ButtonProps, Input, InputProps } from '@chakra-ui/react'
 import { ReactElement } from 'react'
 
-interface UIListItemProps extends Pick<InputProps, 'onChange'> {
+interface UIListItemProps
+    extends Pick<InputProps, 'onChange'>,
+        Omit<ButtonProps, 'onChange'> {
     editing?: boolean
     name: string
     id: string
@@ -11,6 +13,7 @@ const UIListItem = ({
     editing,
     name,
     id,
+    onChange,
     ...props
 }: UIListItemProps): ReactElement => {
     return editing ? (
@@ -22,13 +25,13 @@ const UIListItem = ({
                 w="fit-content"
                 defaultValue={name}
                 htmlSize={name.length}
-                backdropFilter='blur(16px) saturate(180%)'
-                bgColor='card'
-                {...props}
+                backdropFilter="blur(16px) saturate(180%)"
+                bgColor="card"
+                onChange={onChange}
             />
         </>
     ) : (
-        <Button colorScheme="secondary" borderRadius="button" p={2}>
+        <Button colorScheme="secondary" borderRadius="button" p={2} {...props}>
             {name}
         </Button>
     )

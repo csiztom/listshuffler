@@ -28,11 +28,12 @@ def handler(event, context):
         }
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
-        cur.execute("select l.listID, listName from public.instances i inner join public.lists l on i.adminID=l.adminID where i.adminId='%s'" %
+        cur.execute("select l.listID, listName, multiplicity from public.instances i inner join public.lists l on i.adminID=l.adminID where i.adminId='%s'" %
                     adminId)
         result = list(map(lambda tup: {
             'listID': tup[0],
             'listName': tup[1],
+            'multiplicity': tup[2],
         }, cur.fetchall()))
         print(result)
         for ind, val in enumerate(result):
