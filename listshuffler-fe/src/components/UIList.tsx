@@ -13,7 +13,6 @@ import {
     Text,
     Input,
     ButtonGroup,
-    list,
 } from '@chakra-ui/react'
 import { ReactElement, useEffect, useMemo, useState } from 'react'
 import { AbstractListItem } from '../types/main'
