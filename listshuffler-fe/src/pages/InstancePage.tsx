@@ -50,7 +50,7 @@ const InstancePage = (): ReactElement => {
             method: 'DELETE',
         })
             .then(() =>
-                setLists((lists) => lists.filter((val) => val.listID != id)),
+                setLists((lists) => lists.filter((val) => val.listID !== id)),
             )
             .catch(() => console.log('error'))
 
@@ -77,7 +77,7 @@ const InstancePage = (): ReactElement => {
                   ).catch(() => console.log('error')),
             ...list.map((it) => {
                 let found = editedList.find(
-                    (val) => val.listItemID == it.listItemID,
+                    (val) => val.listItemID === it.listItemID,
                 )
                 return found
                     ? it.listItem !== found.listItem

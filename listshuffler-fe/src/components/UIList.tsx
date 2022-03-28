@@ -98,7 +98,7 @@ const UIList = ({
                                 setEditedList((editedList) =>
                                     editedList.filter(
                                         (val) =>
-                                            val.listItemID != it.listItemID,
+                                            val.listItemID !== it.listItemID,
                                     ),
                                 )
                             }
