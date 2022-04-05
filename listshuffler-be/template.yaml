@@ -73,11 +73,6 @@ Resources:
             RestApiId: !Ref ListshufflerApi
             Path: /list
             Method: post
-            RequestParameters:
-              - method.request.querystring.adminID:
-                  Required: true
-              - method.request.querystring.listName:
-                  Required: true
   PostListitemFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -91,11 +86,6 @@ Resources:
             RestApiId: !Ref ListshufflerApi
             Path: /listitem
             Method: post
-            RequestParameters:
-              - method.request.querystring.listID:
-                  Required: true
-              - method.request.querystring.listItem:
-                  Required: true
   PatchInstanceFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -103,15 +93,12 @@ Resources:
       Handler: patch_instance.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
       Events:
-        PostInstance:
+        PatchInstance:
           Type: Api
           Properties:
             RestApiId: !Ref ListshufflerApi
             Path: /instance
             Method: patch
-            RequestParameters:
-              - method.request.querystring.adminID:
-                  Required: true
   PatchListFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -119,17 +106,12 @@ Resources:
       Handler: patch_list.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
       Events:
-        PostList:
+        PatchList:
           Type: Api
           Properties:
             RestApiId: !Ref ListshufflerApi
             Path: /list
             Method: patch
-            RequestParameters:
-              - method.request.querystring.listID:
-                  Required: true
-              - method.request.querystring.listName:
-                  Required: true
   PatchListitemFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -137,17 +119,25 @@ Resources:
       Handler: patch_listitem.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
       Events:
-        PostListitem:
+        PatchListitem:
           Type: Api
           Properties:
             RestApiId: !Ref ListshufflerApi
             Path: /listitem
             Method: patch
-            RequestParameters:
-              - method.request.querystring.listItemID:
-                  Required: true
-              - method.request.querystring.listItem:
-                  Required: true
+  PatchProbabilitiesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: patch_probabilities.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        PatchProbabilities:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /probabilities
+            Method: patch
   GetInstanceFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -161,9 +151,6 @@ Resources:
             RestApiId: !Ref ListshufflerApi
             Path: /instance
             Method: get
-            RequestParameters:
-              - method.request.querystring.adminID:
-                  Required: true
   GetListFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -177,9 +164,6 @@ Resources:
             RestApiId: !Ref ListshufflerApi
             Path: /list
             Method: get
-            RequestParameters:
-              - method.request.querystring.listID:
-                  Required: true
   GetListitemFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -193,9 +177,19 @@ Resources:
             RestApiId: !Ref ListshufflerApi
             Path: /listitem
             Method: get
-            RequestParameters:
-              - method.request.querystring.listItemID:
-                  Required: true
+  GetProbabilitiesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: get_probabilities.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        GetProbabilities:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /probabilities
+            Method: get
   DeleteInstanceFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -203,7 +197,7 @@ Resources:
       Handler: delete_instance.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
       Events:
-        GetInstance:
+        DeleteInstance:
           Type: Api
           Properties:
             RestApiId: !Ref ListshufflerApi
@@ -219,15 +213,12 @@ Resources:
       Handler: delete_list.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
       Events:
-        GetList:
+        DeleteList:
           Type: Api
           Properties:
             RestApiId: !Ref ListshufflerApi
             Path: /list
             Method: delete
-            RequestParameters:
-              - method.request.querystring.listID:
-                  Required: true
   DeleteListitemFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -235,15 +226,12 @@ Resources:
       Handler: delete_listitem.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
       Events:
-        GetListitem:
+        DeleteListitem:
           Type: Api
           Properties:
             RestApiId: !Ref ListshufflerApi
             Path: /listitem
             Method: delete
-            RequestParameters:
-              - method.request.querystring.listItemID:
-                  Required: true 
   ClearInstancesFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -256,3 +244,16 @@ Resources:
           Properties:
             Schedule: rate(1 day)
             Enabled: True
+  ShuffleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: shuffle.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        PatchShuffle:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /shuffle
+            Method: patch

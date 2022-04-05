@@ -20,7 +20,7 @@ def handler(event, context):
     This function creates an instance to add lists to
     """
     try:
-        adminId = event['queryStringParameters']['adminID']
+        adminId = json.loads(event['body'])['adminID']
     except:
         return {
             "statusCode": 422,

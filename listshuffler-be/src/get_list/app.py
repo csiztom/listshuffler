@@ -28,7 +28,7 @@ def handler(event, context):
         }
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
-        cur.execute("select * from lists where listId='%s'" % listId)
+        cur.execute("select * from lists where listId=%s", (listId))
         result = cur.fetchone()
 
     return {

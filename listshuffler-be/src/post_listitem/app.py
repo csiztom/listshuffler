@@ -20,8 +20,8 @@ def handler(event, context):
     This function creates a listitem
     """
     try:
-        listId = event['queryStringParameters']['listID']
-        listItem = event['queryStringParameters']['listItem']
+        listId = json.loads(event['body'])['listID']
+        listItem = json.loads(event['body'])['listItem']
     except:
         return {
             "statusCode": 422,
@@ -37,7 +37,7 @@ def handler(event, context):
             listItemId = ''.join(random.choice(
                 string.ascii_letters + string.digits) for _ in range(8))
             try:
-                cur.execute("insert into listItems (listID,listItemID,listItem) values('%s','%s','%s')" % (
+                cur.execute("insert into listItems (listID,listItemID,listItem) values(%s,%s,%s)", (
                     listId, listItemId, listItem))
                 conn.commit()
             except:

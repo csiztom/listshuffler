@@ -20,8 +20,9 @@ def handler(event, context):
     This function creates a list
     """
     try:
-        listId = event['queryStringParameters']['listID']
-        listName = event['queryStringParameters']['listName']
+        listId = json.loads(event['body'])['listID']
+        listName = json.loads(event['body'])['listName']
+        multiplicity = json.loads(event['body'])['multiplicity']
     except:
         return {
             "statusCode": 422,
@@ -33,8 +34,8 @@ def handler(event, context):
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         try:
-            cur.execute("update lists set listName='%s' where listID='%s'" % (
-                listName, listId))
+            cur.execute("update lists set listName=%s, multiplicity=%s where listID=%s", (
+                listName, multiplicity, listId))
             conn.commit()
         except:
             return {

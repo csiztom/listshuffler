@@ -17,7 +17,7 @@ def handler(event, context):
     This function gets an instance
     """
     try:
-        adminId = event['queryStringParameters']['adminID']
+        adminId = json.loads(event['body'])['adminID']
     except:
         return {
             "statusCode": 422,
@@ -29,7 +29,7 @@ def handler(event, context):
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute("SET SQL_SAFE_UPDATES = 0")
-        cur.execute("DELETE FROM public.instances where adminID='%s'" % (adminId))
+        cur.execute("DELETE FROM public.instances where adminID=%s", (adminId))
         conn.commit()
 
     return {

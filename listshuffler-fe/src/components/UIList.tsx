@@ -1,202 +1,185 @@
+import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
 import {
-    AddIcon,
-    EditIcon,
-    CheckIcon,
-    CloseIcon,
-    DeleteIcon,
-} from '@chakra-ui/icons'
-import {
-    Box,
     Button,
     Stack,
     ButtonProps,
     Text,
     Input,
     ButtonGroup,
+    NumberInput,
+    NumberIncrementStepper,
+    NumberInputStepper,
+    NumberDecrementStepper,
+    NumberInputField,
+    Tooltip,
 } from '@chakra-ui/react'
-import { ReactElement, useEffect, useMemo, useState } from 'react'
+import { ReactElement, useMemo } from 'react'
 import { AbstractListItem } from '../types/main'
+import Card from './Card'
 import UIListItem from './UIListItem'
 
 interface UIListProps extends Pick<ButtonProps, 'isLoading'> {
     items: Array<AbstractListItem>
-    asyncClickAdd?: () => Promise<void>
-    asyncClickDeleteList?: () => Promise<void>
+    addListItem?: () => void
+    editList?: (name: string) => void
+    deleteList?: () => void
+    editListItem?: (id: string, name: string) => void
+    deleteListItem?: (id: string) => void
+    changeMultiplicity?: (m: number) => void
     editable?: boolean
+    editing?: boolean
     name: string
-    handleChange?: (
-        editedItems: Array<AbstractListItem>,
-        editedName: string,
-    ) => Promise<void>
+    multiplicity?: number
 }
 
 const UIList = ({
     items,
-    asyncClickAdd,
-    asyncClickDeleteList,
+    addListItem,
+    editList,
+    deleteList,
+    editListItem,
+    deleteListItem,
+    changeMultiplicity,
     editable = true,
+    editing = false,
     isLoading: parentIsLoading,
     name,
-    handleChange,
+    multiplicity = 1,
     ...props
 }: UIListProps): ReactElement => {
-    const [editing, setEditing] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const [editedList, setEditedList] = useState(items)
-    const [editedName, setEditedName] = useState(name)
-    useEffect(() => setEditedList(items), [items])
-    const onAdd = () => {
-        if (asyncClickAdd) {
-            setIsLoading(true)
-            asyncClickAdd().then(() => setIsLoading(false))
-        }
-    }
-    const onDelete = () => {
-        if (asyncClickDeleteList) {
-            setIsLoading(true)
-            asyncClickDeleteList()
-        }
-    }
-    const editList = () => {
-        console.log(editedList)
-        if (editing && handleChange && editedList && editedName) {
-            setIsLoading(true)
-            handleChange(editedList, editedName).then(() => setIsLoading(false))
-        }
-        setEditing(!editing)
-    }
     const generatedItems = useMemo(
         () =>
-            editedList.map((it) => (
+            items.map((it) => (
                 <ButtonGroup isAttached variant="solid" key={it.listItemID}>
                     <UIListItem
                         id={it.listItemID}
                         name={it.listItem}
                         editing={editing}
                         onChange={(e) =>
-                            setEditedList(
-                                (editedList) =>
-                                    editedList &&
-                                    editedList.map((item) =>
-                                        item.listItemID === it.listItemID
-                                            ? {
-                                                  listItem: e.target.value,
-                                                  listItemID: item.listItemID,
-                                              }
-                                            : item,
-                                    ),
-                            )
+                            editListItem &&
+                            editListItem(it.listItemID, e.target.value)
                         }
-                        isLoading={parentIsLoading || isLoading}
+                        isLoading={parentIsLoading}
                     />
                     {editing && (
-                        <Button
-                            colorScheme="red"
-                            borderRadius="button"
-                            p={2}
-                            onClick={() =>
-                                setEditedList((editedList) =>
-                                    editedList.filter(
-                                        (val) =>
-                                            val.listItemID !== it.listItemID,
-                                    ),
-                                )
-                            }
-                            isLoading={parentIsLoading || isLoading}
-                        >
-                            <DeleteIcon />
-                        </Button>
+                        <Tooltip hasArrow label="Delete list item">
+                            <Button
+                                colorScheme="red"
+                                borderRadius="button"
+                                p={2}
+                                onClick={() =>
+                                    deleteListItem &&
+                                    deleteListItem(it.listItemID)
+                                }
+                                isLoading={parentIsLoading}
+                            >
+                                <DeleteIcon />
+                            </Button>
+                        </Tooltip>
                     )}
                 </ButtonGroup>
             )),
-        [editedList, editing, isLoading, parentIsLoading],
+        [items, editing, parentIsLoading, deleteListItem, editListItem],
     )
     return (
-        <Box
-            sx={{
-                textAlign: 'center',
-                backdropFilter: 'blur(16px) saturate(180%)',
-                bgColor: 'card',
-                borderRadius: 'card',
-                m: '2',
-                p: '8',
-                pt: '2',
-            }}
-            {...props}
-        >
-            {name && editing ? (
-                <Input
-                    colorScheme="secondary"
-                    borderRadius="button"
-                    mt={0.5}
-                    mb={2}
-                    fontSize="xsmall"
-                    size="sm"
-                    w="fit-content"
-                    defaultValue={name}
-                    htmlSize={editedName.length}
-                    backdropFilter="blur(16px) saturate(180%)"
-                    bgColor="card"
-                    onChange={(e) => setEditedName(e.target.value)}
-                    textAlign='center'
-                />
+        <Card {...props}>
+            {name !== undefined && editing ? (
+                <Tooltip hasArrow label="Edit list name">
+                    <Input
+                        colorScheme="secondary"
+                        borderRadius="button"
+                        mb={4}
+                        maxLength={40}
+                        fontSize="xsmall"
+                        size="sm"
+                        w="fit-content"
+                        defaultValue={name}
+                        htmlSize={name.length + 6}
+                        backdropFilter="blur(16px) saturate(180%)"
+                        bgColor="card"
+                        onChange={(e) => editList && editList(e.target.value)}
+                    />
+                </Tooltip>
             ) : (
-                <Text mt={2} mb={2} color="text" fontSize="small">
-                    {editedName}
+                <Text mt={-4} mb={2} color="text" fontSize="small">
+                    {name}
                 </Text>
             )}
-            <Stack
-                direction="row"
-                gap={4}
-                spacing={0}
-                align="center"
-                wrap="wrap"
-                justifyContent="center"
-            >
-                {editable && (editing || asyncClickDeleteList) && (
-                    <Button
-                        colorScheme="red"
-                        borderRadius="button"
-                        p={2}
-                        onClick={
-                            editing
-                                ? () => {
-                                      setEditing(false)
-                                      setEditedList((items) => items)
-                                      setEditedName((name) => name)
-                                  }
-                                : onDelete
-                        }
-                        isLoading={parentIsLoading || isLoading}
-                    >
-                        {editing ? <CloseIcon /> : <DeleteIcon />}
-                    </Button>
-                )}
-                {generatedItems}
-                {editable && (
-                    <Button
-                        colorScheme="primary"
-                        borderRadius="button"
-                        p={2}
-                        onClick={() => editList()}
-                        isLoading={parentIsLoading || isLoading}
-                    >
-                        {isLoading || editing ? <CheckIcon /> : <EditIcon />}
-                    </Button>
-                )}
-                {(!editing || !editable) && asyncClickAdd && (
-                    <Button
-                        colorScheme="primary"
-                        borderRadius="button"
-                        p={2}
-                        onClick={onAdd}
-                        isLoading={parentIsLoading || isLoading}
-                    >
-                        {isLoading || <AddIcon />}
-                    </Button>
-                )}
-            </Stack>
-        </Box>
+            {generatedItems.length > 0 && (
+                <Stack
+                    direction="row"
+                    gap={4}
+                    spacing={0}
+                    align="center"
+                    wrap="wrap"
+                    justifyContent="center"
+                >
+                    {generatedItems}
+                </Stack>
+            )}
+            {editing && (
+                <Stack
+                    direction="row"
+                    gap={4}
+                    spacing={0}
+                    align="center"
+                    wrap="wrap"
+                    mt={generatedItems.length ? 4 : 0}
+                    justifyContent="center"
+                >
+                    {deleteList && (
+                        <Tooltip hasArrow label="Delete list">
+                            <Button
+                                colorScheme="red"
+                                borderRadius="button"
+                                p={2}
+                                onClick={deleteList}
+                                isLoading={parentIsLoading}
+                            >
+                                {<DeleteIcon />}
+                            </Button>
+                        </Tooltip>
+                    )}
+                    {addListItem && (
+                        <Tooltip hasArrow label="Add list item">
+                            <Button
+                                colorScheme="primary"
+                                borderRadius="button"
+                                p={2}
+                                onClick={addListItem}
+                                isLoading={parentIsLoading}
+                            >
+                                {<AddIcon />}
+                            </Button>
+                        </Tooltip>
+                    )}
+                    {
+                        <Tooltip hasArrow label="Change multiplicity">
+                            <NumberInput
+                                isRequired
+                                step={1}
+                                defaultValue={multiplicity}
+                                min={1}
+                                max={5}
+                                maxW={24}
+                                onChange={(str, num) =>
+                                    changeMultiplicity &&
+                                    (str !== ''
+                                        ? changeMultiplicity(num)
+                                        : changeMultiplicity(0))
+                                }
+                            >
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
+                        </Tooltip>
+                    }
+                </Stack>
+            )}
+        </Card>
     )
 }
 

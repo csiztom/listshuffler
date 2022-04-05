@@ -19,17 +19,11 @@ def handler(event, context):
     """
     This function creates a list
     """
-    try:
-        adminId = event['queryStringParameters']['adminID']
-        listName = event['queryStringParameters']['listName']
-    except:
-        return {
-            "statusCode": 422,
-            "headers": {
-                "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-            },
-            "body": "Missing parameter",
-        }
+    
+    adminId = json.loads(event['body'])['adminID']
+    listName = json.loads(event['body'])['listName']
+    multiplicity = json.loads(event['body'])['multiplicity']
+    
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         i = 0
@@ -37,8 +31,8 @@ def handler(event, context):
             listId = ''.join(random.choice(
                 string.ascii_letters + string.digits) for _ in range(6))
             try:
-                cur.execute("insert into lists (adminID,listID,listName,multiplicity) values('%s','%s','%s',1)" % (
-                    adminId, listId, listName))
+                cur.execute("insert into lists (adminID,listID,listName,multiplicity) values(%s,%s,%s,%s)", (
+                    adminId, listId, listName, multiplicity))
                 conn.commit()
             except:
                 logging.info("INFO: ID already there")

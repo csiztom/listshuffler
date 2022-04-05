@@ -20,8 +20,8 @@ def handler(event, context):
     This function creates a listitem
     """
     try:
-        listItemId = event['queryStringParameters']['listItemID']
-        listItem = event['queryStringParameters']['listItem']
+        listItemId = json.loads(event['body'])['listItemID']
+        listItem = json.loads(event['body'])['listItem']
     except:
         return {
             "statusCode": 422,
@@ -33,7 +33,7 @@ def handler(event, context):
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         try:
-            cur.execute("update listItems set listItem='%s' where listItemID='%s'" % (
+            cur.execute("update listItems set listItem=%s where listItemID=%s", (
                 listItem, listItemId))
             conn.commit()
         except:
