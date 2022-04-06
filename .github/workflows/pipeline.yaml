@@ -19,12 +19,12 @@ env:
   TESTING_ARTIFACTS_BUCKET: aws-sam-cli-managed-test-pipeline-artifactsbucket-i5tsrcxwd9mb
   TESTING_REGION: eu-central-1
   TESTING_FE_BUCKET: test.listshuffler.com
-  TESTING_PAGE_ORIGIN: http://test.listshuffler.com.s3-website.eu-central-1.amazonaws.com
+  TESTING_PAGE_ORIGIN: https://test.listshuffler.com
   PROD_STACK_NAME: listshuffler-prod-be
   PROD_ARTIFACTS_BUCKET: aws-sam-cli-managed-prod-pipeline-artifactsbucket-nbm8ekja0jja
   PROD_REGION: eu-central-1
   PROD_FE_BUCKET: listshuffler.com
-  PROD_PAGE_ORIGIN: http://listshuffler.com.s3-website.eu-central-1.amazonaws.com
+  PROD_PAGE_ORIGIN: https://listshuffler.com
 
 jobs:
   test-fe:
