@@ -13,16 +13,18 @@ on:
 env:
   USER_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   USER_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  SAM_TEMPLATE: listshuffler-be/template.yaml
   FE-DIR: listshuffler-fe
+  BE-DIR: listshuffler-be
   TESTING_STACK_NAME: listshuffler-test-be
   TESTING_ARTIFACTS_BUCKET: aws-sam-cli-managed-test-pipeline-artifactsbucket-i5tsrcxwd9mb
   TESTING_REGION: eu-central-1
-  TESTING_FE_BUCKET: listshuffler-fe-test
+  TESTING_FE_BUCKET: test.listshuffler.com
+  TESTING_PAGE_ORIGIN: https://test.listshuffler.com
   PROD_STACK_NAME: listshuffler-prod-be
   PROD_ARTIFACTS_BUCKET: aws-sam-cli-managed-prod-pipeline-artifactsbucket-nbm8ekja0jja
   PROD_REGION: eu-central-1
-  PROD_FE_BUCKET: listshuffler-fe-prod
+  PROD_FE_BUCKET: listshuffler.com
+  PROD_PAGE_ORIGIN: https://listshuffler.com
 
 jobs:
   test-fe:
@@ -33,15 +35,32 @@ jobs:
       - name: Install packages
         working-directory: ${{ env.FE-DIR }}
         run: npm ci
-      - name: Test functionality
-        working-directory: ${{ env.FE-DIR }}
-        run: npm run test
+      #- name: Test functionality
+      #  working-directory: ${{ env.FE-DIR }}
+      #  run: npm run test
       - name: Make sure build compiles properly
         working-directory: ${{ env.FE-DIR }}
-        run: npm run build
+        run: npm run build:test
+
+  test-be:
+    if: github.ref == 'refs/heads/test'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Installing dependencies
+        working-directory: ${{ env.BE-DIR }}
+        run: |
+          pip install -U pip
+          pip install -r tests/requirements.txt
+      #- name: Test functionality
+      #  working-directory: ${{ env.BE-DIR }}
+      #  run: python -m pytest tests/unit -v
 
   build-and-deploy-test:
-    needs: [test-fe]
+    needs: [test-fe, test-be]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -53,7 +72,7 @@ jobs:
         run: npm ci
       - name: Build app
         working-directory: ${{ env.FE-DIR }}
-        run: npm run build
+        run: npm run build:test
 
       - uses: jakejarvis/s3-sync-action@master
         with:
@@ -65,7 +84,7 @@ jobs:
           AWS_REGION: ${{ env.TESTING_REGION }}
           SOURCE_DIR: ${{ env.FE-DIR }}/build
 
-      - run: sam build --template ${SAM_TEMPLATE} --use-container
+      - run: sam build --template ${{ env.BE-DIR }}/template.yaml --use-container
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -81,7 +100,12 @@ jobs:
             --capabilities CAPABILITY_IAM \
             --s3-bucket ${TESTING_ARTIFACTS_BUCKET} \
             --region ${TESTING_REGION} \
-            --no-fail-on-empty-changeset
+            --no-fail-on-empty-changeset \
+            --parameter-overrides \
+            RDSEndpoint=${{ secrets.T_RDS_ENDPOINT }} \
+            RDSUser=${{ secrets.T_RDS_USER }} \
+            RDSPassword=${{ secrets.T_RDS_PWD }} \
+            OriginUrl=${TESTING_PAGE_ORIGIN}
 
   build-and-deploy-prod:
     if: github.ref == 'refs/heads/main'
@@ -96,7 +120,7 @@ jobs:
         run: npm ci
       - name: Build app
         working-directory: ${{ env.FE-DIR }}
-        run: npm run build
+        run: npm run build:prod
 
       - uses: jakejarvis/s3-sync-action@master
         with:
@@ -108,7 +132,7 @@ jobs:
           AWS_REGION: ${{ env.PROD_REGION }}
           SOURCE_DIR: ${{ env.FE-DIR }}/build
 
-      - run: sam build --template ${SAM_TEMPLATE} --use-container
+      - run: sam build --template ${{ env.BE-DIR }}}/template.yaml --use-container
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -124,4 +148,9 @@ jobs:
             --capabilities CAPABILITY_IAM \
             --s3-bucket ${PROD_ARTIFACTS_BUCKET} \
             --region ${PROD_REGION} \
-            --no-fail-on-empty-changeset
+            --no-fail-on-empty-changeset \
+            --parameter-overrides \
+            RDSEndpoint=${{ secrets.P_RDS_ENDPOINT }} \
+            RDSUser=${{ secrets.P_RDS_USER }} \
+            RDSPassword=${{ secrets.P_RDS_PWD }} \
+            OriginUrl=${PROD_PAGE_ORIGIN}

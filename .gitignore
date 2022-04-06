@@ -2,3 +2,7 @@
 
 .aws-sam/*
 */.aws-sam/*
+
+# mac files
+*/.DS_Store
+.DS_Store

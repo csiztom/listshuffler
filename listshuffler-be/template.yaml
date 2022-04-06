@@ -5,37 +5,255 @@ Description: >
 
   Backend for Listshuffler App
 
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Parameters:
+  RDSEndpoint:
+    Type: String
+  RDSUser:
+    Type: String
+  RDSPassword:
+    Type: String
+  OriginUrl:
+    Type: String
+    Default: http://localhost:3000
+
 Globals:
   Function:
     Timeout: 3
+    Runtime: python3.9
+    Architectures:
+      - x86_64
+    VpcConfig:
+      SubnetIds:
+        - subnet-071f89317eae740ab
+        - subnet-00bed6b534c1c9117
+        - subnet-09f8776cc80b883d1
+      SecurityGroupIds:
+        - sg-0eb0c6c1869cfa2ea
+    Environment:
+      Variables:
+        LS_RDS_ENDPOINT: !Ref RDSEndpoint
+        LS_RDS_USER: !Ref RDSUser
+        LS_RDS_PWD: !Ref RDSPassword
+        LS_PAGE_ORIGIN: !Ref OriginUrl
 
 Resources:
-  HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  ListshufflerApi:
+    Type: AWS::Serverless::Api
     Properties:
-      CodeUri: hello_world/
-      Handler: app.lambda_handler
-      Runtime: python3.9
-      Architectures:
-        - x86_64
+      StageName: Prod
+      Cors:
+        AllowMethods: "'GET, PUT, POST, DELETE, OPTIONS, PATCH'"
+        AllowOrigin: !Sub "'${OriginUrl}'"
+        AllowHeaders: "'Content-type, x-api-key'"
+      Auth:
+        ApiKeyRequired: false
+  PostInstanceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: post_instance.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
       Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+        PostInstance:
+          Type: Api
           Properties:
-            Path: /hello
+            RestApiId: !Ref ListshufflerApi
+            Path: /instance
+            Method: post
+  PostListFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: post_list.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        PostList:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /list
+            Method: post
+  PostListitemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: post_listitem.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        PostListitem:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /listitem
+            Method: post
+  PatchInstanceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: patch_instance.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        PatchInstance:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /instance
+            Method: patch
+  PatchListFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: patch_list.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        PatchList:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /list
+            Method: patch
+  PatchListitemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: patch_listitem.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        PatchListitem:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /listitem
+            Method: patch
+  PatchProbabilitiesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: patch_probabilities.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        PatchProbabilities:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /probabilities
+            Method: patch
+  GetInstanceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: get_instance.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        GetInstance:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /instance
             Method: get
-
-Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+  GetListFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: get_list.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        GetList:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /list
+            Method: get
+  GetListitemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: get_listitem.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        GetListitem:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /listitem
+            Method: get
+  GetProbabilitiesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: get_probabilities.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        GetProbabilities:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /probabilities
+            Method: get
+  DeleteInstanceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: delete_instance.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        DeleteInstance:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /instance
+            Method: delete
+            RequestParameters:
+              - method.request.querystring.adminID:
+                  Required: true
+  DeleteListFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: delete_list.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        DeleteList:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /list
+            Method: delete
+  DeleteListitemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: delete_listitem.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        DeleteListitem:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /listitem
+            Method: delete
+  ClearInstancesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: clear_instances.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        ScheduledEvent:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 day)
+            Enabled: True
+  ShuffleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: shuffle.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        PatchShuffle:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /shuffle
+            Method: patch

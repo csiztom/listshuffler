@@ -1,9 +1,13 @@
-import json
-
 import pytest
+import json
+import mock
+import os
+import pymysql
 
-from hello_world import app
-
+environment = open("env.json")
+with mock.patch.dict(os.environ, json.load(environment)["Parameters"]):
+    from src.create_instance import app
+    from src.helpers import rds_config
 
 @pytest.fixture()
 def apigw_event():
@@ -61,13 +65,10 @@ def apigw_event():
         "path": "/examplepath",
     }
 
-
-def test_lambda_handler(apigw_event, mocker):
-
-    ret = app.lambda_handler(apigw_event, "")
-    data = json.loads(ret["body"])
-
-    assert ret["statusCode"] == 200
-    assert "message" in ret["body"]
-    assert data["message"] == "hello world"
-    # assert "location" in data.dict_keys()
+def test_instance(apigw_event):
+    ret = app.handler(apigw_event, "")
+    adminId = json.loads(ret["body"])["adminID"]
+    conn = pymysql.connect(host=rds_config.db_host, user=rds_config.db_username, passwd=rds_config.db_password, db=rds_config.db_name, connect_timeout=5)
+    with conn.cursor() as cur:
+        cur.execute("select * from instances where adminID='%s'" %(adminId))
+        assert cur.rowcount == 1

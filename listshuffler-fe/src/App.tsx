@@ -1,25 +1,22 @@
-import React from 'react'
-import logo from './logo.svg'
-import './App.css'
+import theme from './styles/theme'
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
+import { Start, InstancePage } from './pages'
+import { Routes, Route } from 'react-router-dom'
+import '@fontsource/catamaran/200.css'
 
-function App() {
+const App = () => {
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <>
+            <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+            <ChakraProvider theme={theme}>
+                <Routes>
+                    <Route index element={<Start />} />
+                    <Route path="instance:id" element={<InstancePage/>}/>
+                    <Route path="list:id" element={<></>} />
+                    <Route path="*" element={<></>}></Route>
+                </Routes>
+            </ChakraProvider>
+        </>
     )
 }
 
