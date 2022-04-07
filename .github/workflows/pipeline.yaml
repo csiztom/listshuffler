@@ -15,12 +15,12 @@ env:
   USER_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   FE-DIR: listshuffler-fe
   BE-DIR: listshuffler-be
-  TESTING_STACK_NAME: test.listshuffler.com
+  TESTING_STACK_NAME: test-listshuffler-com
   TESTING_ARTIFACTS_BUCKET: aws-sam-cli-managed-test-pipeline-artifactsbucket-i5tsrcxwd9mb
   TESTING_REGION: eu-central-1
   TESTING_FE_BUCKET: test.listshuffler.com
   TESTING_PAGE_ORIGIN: https://test.listshuffler.com
-  PROD_STACK_NAME: listshuffler.com
+  PROD_STACK_NAME: listshuffler-com
   PROD_ARTIFACTS_BUCKET: aws-sam-cli-managed-prod-pipeline-artifactsbucket-nbm8ekja0jja
   PROD_REGION: eu-central-1
   PROD_FE_BUCKET: listshuffler.com
