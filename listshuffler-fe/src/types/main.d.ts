@@ -9,5 +9,7 @@ export type AbstractList = {
 }
 
 export type AbstractInstance = {
-    lists: Array<AbstractList>
+    lists: Array<AbstractList>,
+    shuffled: boolean,
+    shuffledID: string,
 }

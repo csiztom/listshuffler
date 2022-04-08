@@ -13,40 +13,41 @@ import {
     NumberInputField,
     Tooltip,
 } from '@chakra-ui/react'
-import { ReactElement, useMemo } from 'react'
-import { AbstractListItem } from '../types/main'
+import { Dispatch, ReactElement, SetStateAction, useMemo } from 'react'
+import useEditLists from '../hooks/useEditLists'
+import { AbstractList, AbstractListItem } from '../types/main'
 import Card from './Card'
 import UIListItem from './UIListItem'
 
 interface UIListProps extends Pick<ButtonProps, 'isLoading'> {
     items: Array<AbstractListItem>
-    addListItem?: () => void
-    editList?: (name: string) => void
-    deleteList?: () => void
-    editListItem?: (id: string, name: string) => void
-    deleteListItem?: (id: string) => void
-    changeMultiplicity?: (m: number) => void
+    setLists: Dispatch<SetStateAction<AbstractList[]>>
     editable?: boolean
     editing?: boolean
     name: string
     multiplicity?: number
+    listId: string
 }
 
 const UIList = ({
     items,
-    addListItem,
-    editList,
-    deleteList,
-    editListItem,
-    deleteListItem,
-    changeMultiplicity,
+    setLists,
     editable = true,
     editing = false,
     isLoading: parentIsLoading,
     name,
     multiplicity = 1,
+    listId,
     ...props
 }: UIListProps): ReactElement => {
+    const [
+        editList,
+        deleteList,
+        addListItem,
+        editListItem,
+        deleteListItem,
+        changeMultiplicity,
+    ] = useEditLists(setLists)
     const generatedItems = useMemo(
         () =>
             items.map((it) => (
@@ -57,7 +58,7 @@ const UIList = ({
                         editing={editing}
                         onChange={(e) =>
                             editListItem &&
-                            editListItem(it.listItemID, e.target.value)
+                            editListItem(listId, it.listItemID, e.target.value)
                         }
                         isLoading={parentIsLoading}
                     />
@@ -69,7 +70,7 @@ const UIList = ({
                                 p={2}
                                 onClick={() =>
                                     deleteListItem &&
-                                    deleteListItem(it.listItemID)
+                                    deleteListItem(listId, it.listItemID)
                                 }
                                 isLoading={parentIsLoading}
                             >
@@ -94,10 +95,12 @@ const UIList = ({
                         size="sm"
                         w="fit-content"
                         defaultValue={name}
-                        htmlSize={name.length + 6}
+                        htmlSize={name.length}
                         backdropFilter="blur(16px) saturate(180%)"
                         bgColor="card"
-                        onChange={(e) => editList && editList(e.target.value)}
+                        onChange={(e) =>
+                            editList && editList(listId, e.target.value)
+                        }
                     />
                 </Tooltip>
             ) : (
@@ -133,7 +136,7 @@ const UIList = ({
                                 colorScheme="red"
                                 borderRadius="button"
                                 p={2}
-                                onClick={deleteList}
+                                onClick={() => deleteList(listId)}
                                 isLoading={parentIsLoading}
                             >
                                 {<DeleteIcon />}
@@ -146,7 +149,7 @@ const UIList = ({
                                 colorScheme="primary"
                                 borderRadius="button"
                                 p={2}
-                                onClick={addListItem}
+                                onClick={() => addListItem(listId)}
                                 isLoading={parentIsLoading}
                             >
                                 {<AddIcon />}
@@ -165,11 +168,11 @@ const UIList = ({
                                 onChange={(str, num) =>
                                     changeMultiplicity &&
                                     (str !== ''
-                                        ? changeMultiplicity(num)
-                                        : changeMultiplicity(0))
+                                        ? changeMultiplicity(listId, num)
+                                        : changeMultiplicity(listId, 0))
                                 }
                             >
-                                <NumberInputField />
+                                <NumberInputField bgColor="card" />
                                 <NumberInputStepper>
                                     <NumberIncrementStepper />
                                     <NumberDecrementStepper />

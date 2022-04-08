@@ -59,7 +59,7 @@ const UIProbabilityCounter = ({
                     maxW={16}
                     onChange={onChange}
                 >
-                    <NumberInputField />
+                    <NumberInputField bgColor="card" />
                     <NumberInputStepper>
                         <NumberIncrementStepper />
                         <NumberDecrementStepper />
