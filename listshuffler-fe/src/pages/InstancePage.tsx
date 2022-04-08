@@ -45,7 +45,7 @@ const InstancePage = (): ReactElement => {
         setShuffledId,
     ] = useLists(id, setIsLoading)
     const [probabilities, setProbabilities, saveProbabilities] =
-        useProbabilities(id, shuffledId, setIsLoading)
+        useProbabilities(id, shuffledId, listItems, setIsLoading)
     const [probabilityEditor, setProbabilityEditor] = useState(false)
 
     const generatedLists = useMemo(

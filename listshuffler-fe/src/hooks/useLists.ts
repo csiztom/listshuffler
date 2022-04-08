@@ -245,7 +245,7 @@ const useLists = (
                                       },
                                   )
                         }) || []),
-                        ...(li.listItems.map((it, ind) =>
+                        ...(li.listItems.map((it) =>
                             prevList?.listItems.find(
                                 (val) => val.listItemID === it.listItemID,
                             )
@@ -267,24 +267,23 @@ const useLists = (
                                       )
                                       .then((response) =>
                                           setEditedLists((editedLists) =>
-                                              editedLists.map((li) =>
-                                                  li.listID === id
+                                              editedLists.map((list) =>
+                                                  li.listID === list.listID
                                                       ? {
                                                             ...li,
                                                             listItems:
                                                                 li.listItems.map(
-                                                                    (val, i) =>
-                                                                        i ===
-                                                                        ind
+                                                                    (val) =>
+                                                                        it.listItemID === val.listItemID
                                                                             ? {
                                                                                   ...val,
                                                                                   listItemID:
-                                                                                      response.listID,
+                                                                                      response.listItemID,
                                                                               }
                                                                             : val,
                                                                 ),
                                                         }
-                                                      : li,
+                                                      : list,
                                               ),
                                           ),
                                       ),

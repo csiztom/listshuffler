@@ -1,5 +1,6 @@
 import { useToast } from '@chakra-ui/react'
 import { useState, useEffect, Dispatch, SetStateAction } from 'react'
+import { AbstractListItem } from '../types/main'
 
 interface Probabilities {
     [key: string]: { [key: string]: number }
@@ -8,6 +9,7 @@ interface Probabilities {
 const useProbabilities = (
     id: string | undefined,
     listId: string | undefined,
+    listItems: { [key: string]: AbstractListItem },
     setLoading: Dispatch<SetStateAction<boolean>>,
 ): [Probabilities, Dispatch<SetStateAction<Probabilities>>, () => void] => {
     const [probabilities, setProbabilities] = useState<Probabilities>({})
@@ -74,7 +76,7 @@ const useProbabilities = (
                 }),
             )
             .then(() => setLoading(false))
-    }, [id, listId, toast, setLoading])
+    }, [id, listId, toast, setLoading, listItems])
 
     return [probabilities, setProbabilities, save]
 }

@@ -13,8 +13,8 @@ import { ReactElement } from 'react'
 import { AbstractListItem } from '../types/main'
 
 interface UIProbabilityCounterProps extends Pick<NumberInputProps, 'onChange'> {
-    listItem1?: AbstractListItem
-    listItem2?: AbstractListItem
+    listItem1: AbstractListItem
+    listItem2: AbstractListItem
     probability: number
 }
 
@@ -35,7 +35,7 @@ const UIProbabilityCounter = ({
                         fontSize="sm"
                         {...props}
                     >
-                        {listItem1?.listItem}
+                        {listItem1.listItem}
                     </Button>
                 </Tooltip>
                 <Tooltip hasArrow label={listItem2?.listItemID}>
@@ -45,7 +45,7 @@ const UIProbabilityCounter = ({
                         fontSize="sm"
                         {...props}
                     >
-                        {listItem2?.listItem}
+                        {listItem2.listItem}
                     </Button>
                 </Tooltip>
             </ButtonGroup>
