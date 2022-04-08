@@ -80,7 +80,7 @@ const UIList = ({
                     )}
                 </ButtonGroup>
             )),
-        [items, editing, parentIsLoading, deleteListItem, editListItem],
+        [items, listId, editing, parentIsLoading, deleteListItem, editListItem],
     )
     return (
         <Card {...props}>

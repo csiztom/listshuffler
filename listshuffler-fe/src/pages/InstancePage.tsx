@@ -61,7 +61,7 @@ const InstancePage = (): ReactElement => {
                     setLists={setLists}
                 />
             )),
-        [lists, editing],
+        [lists, editing, setLists],
     )
 
     const generatedProbabilities = useMemo(
@@ -82,7 +82,7 @@ const InstancePage = (): ReactElement => {
                     />
                 )),
             ),
-        [probabilities, listItems],
+        [probabilities, listItems, setProbabilities],
     )
 
     return (
@@ -244,7 +244,7 @@ const InstancePage = (): ReactElement => {
                             borderRadius="button"
                             p={2}
                             isLoading={isLoading}
-                            disabled={multiplicity < 2}
+                            disabled={multiplicity < 2 || shuffled}
                         >
                             Time
                         </Button>
