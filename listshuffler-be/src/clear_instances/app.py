@@ -13,5 +13,3 @@ def handler(event, context):
         cur.execute("SET SQL_SAFE_UPDATES = 0")
         cur.execute("DELETE FROM public.instances where expiration < CURDATE()")
         conn.commit()
-
-        # on delete cascade!!!! foreign key

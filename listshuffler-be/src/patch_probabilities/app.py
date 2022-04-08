@@ -6,9 +6,9 @@ import os
 import string
 
 try:
-    from helpers import rds_config
+    from helpers import rds_config, params
 except:  # for testing inside different root
-    from ..helpers import rds_config
+    from ..helpers import rds_config, params
 
 # logging
 logger = logging.getLogger()
@@ -19,22 +19,15 @@ def handler(event, context):
     """
     This function creates an instance to add lists to
     """
-    try:
-        adminId = json.loads(event['body'])['adminID']
-        shuffledListId = json.loads(event['body'])['listID']
-        probabilities = json.loads(event['body'])['probabilities']
-    except:
-        return {
-            "statusCode": 422,
-            "headers": {
-                "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-            },
-            "body": "Missing parameter",
-        }
+    parameters = params.get_params(event, 'adminID', 'listID', 'probabilities')
+    if type(parameters) is dict: return parameters
+    [adminId, shuffledListId, probabilities] = parameters
+
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute("""select distinct ID1, ID2, probability 
-            from (select a.listItemID ID1, b.listItemID ID2 from ((public.listItems a natural join public.lists c) 
+            from (select a.listItemID ID1, b.listItemID ID2 
+            from ((public.listItems a natural join public.lists c) 
             join (public.listItems b natural join public.lists d))
             where c.adminID = %s and d.adminID = %s and c.listID = %s) d
             left join public.probabilities 

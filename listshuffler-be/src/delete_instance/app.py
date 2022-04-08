@@ -3,9 +3,9 @@ import json
 import os
 
 try:
-    from helpers import rds_config
+    from helpers import rds_config, params
 except:  # for testing inside different root
-    from ..helpers import rds_config
+    from ..helpers import rds_config, params
 
 # logging
 logger = logging.getLogger()
@@ -16,16 +16,10 @@ def handler(event, context):
     """
     This function gets an instance
     """
-    try:
-        adminId = json.loads(event['body'])['adminID']
-    except:
-        return {
-            "statusCode": 422,
-            "headers": {
-                "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-            },
-            "body": "Missing parameter",
-        }
+    parameters = params.get_params(event, 'adminID')
+    if type(parameters) is dict: return parameters
+    [adminId] = parameters
+        
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute("SET SQL_SAFE_UPDATES = 0")

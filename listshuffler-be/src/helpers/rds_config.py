@@ -11,6 +11,12 @@ db_name = "public"
 
 
 def connect_rds():
+    """Tries to connect to the database
+
+    Returns:
+    The connection object
+
+   """
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
 

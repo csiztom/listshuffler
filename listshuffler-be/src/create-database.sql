@@ -2,6 +2,8 @@ create database if not exists public;
 create table if not exists public.instances (
 	adminID varchar(8) not null,
     expiration datetime not null,
+    shuffled boolean not null,
+    shuffledId varchar(6),
     preset varchar(255),
     primary key (adminID)
 );

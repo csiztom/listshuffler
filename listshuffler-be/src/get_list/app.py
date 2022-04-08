@@ -3,9 +3,9 @@ import json
 import os
 
 try:
-    from helpers import rds_config
+    from helpers import rds_config, params
 except:  # for testing inside different root
-    from ..helpers import rds_config
+    from ..helpers import rds_config, params
 
 # logging
 logger = logging.getLogger()
@@ -16,16 +16,10 @@ def handler(event, context):
     """
     This function gets a list
     """
-    try:
-        listId = event['queryStringParameters']['listID']
-    except:
-        return {
-            "statusCode": 422,
-            "headers": {
-                "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-            },
-            "body": "Missing parameter",
-        }
+    parameters = params.get_params(event, 'listID')
+    if type(parameters) is dict: return parameters
+    [listId] = parameters
+        
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute("select * from lists where listId=%s", (listId))

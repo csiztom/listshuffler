@@ -6,9 +6,9 @@ import os
 import string
 
 try:
-    from helpers import rds_config
+    from helpers import rds_config, params
 except:  # for testing inside different root
-    from ..helpers import rds_config
+    from ..helpers import rds_config, params
 
 # logging
 logger = logging.getLogger()
@@ -19,10 +19,9 @@ def handler(event, context):
     """
     This function creates a list
     """
-    
-    adminId = json.loads(event['body'])['adminID']
-    listName = json.loads(event['body'])['listName']
-    multiplicity = json.loads(event['body'])['multiplicity']
+    parameters = params.get_params(event, 'adminID', 'listName', 'multiplicity')
+    if type(parameters) is dict: return parameters
+    [adminId, listName, multiplicity] = parameters
     
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
@@ -31,8 +30,8 @@ def handler(event, context):
             listId = ''.join(random.choice(
                 string.ascii_letters + string.digits) for _ in range(6))
             try:
-                cur.execute("insert into lists (adminID,listID,listName,multiplicity) values(%s,%s,%s,%s)", (
-                    adminId, listId, listName, multiplicity))
+                cur.execute("""insert into lists (adminID,listID,listName,multiplicity) 
+                    values(%s,%s,%s,%s)""", (adminId, listId, listName, multiplicity))
                 conn.commit()
             except:
                 logging.info("INFO: ID already there")
