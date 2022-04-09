@@ -53,7 +53,9 @@ const useLists = (
             )
     }, [id, toast, setLoading, updateLists, updateEditedLists])
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => setLists(editedLists), [updateLists])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => setEditedLists(lists), [updateEditedLists])
 
     const multiplicity = useMemo(
