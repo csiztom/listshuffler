@@ -51,20 +51,10 @@ const useLists = (
                     isClosable: true,
                 }),
             )
-    }, [id, toast, setLoading])
+    }, [id, toast, setLoading, updateLists, updateEditedLists])
 
-    useEffect(() => {
-        if (updateLists) {
-            setLists(editedLists)
-            setUpdateLists(false)
-        }
-    }, [updateLists, editedLists])
-    useEffect(() => {
-        if (updateEditedLists) {
-            setEditedLists(lists)
-            setUpdateEditedLists(false)
-        }
-    }, [updateEditedLists, lists])
+    useEffect(() => setLists(editedLists), [updateLists])
+    useEffect(() => setEditedLists(lists), [updateEditedLists])
 
     const multiplicity = useMemo(
         () => lists.reduce((prev, i) => prev + i.multiplicity, 0),
@@ -98,17 +88,18 @@ const useLists = (
                 adminID: id,
                 shuffledID: shuffledId,
             }),
-        }).then(() => setLoading(false))
-        .catch(() =>
-            toast({
-                title: 'Error occurred, please refresh. :/',
-                description:
-                    'In order to get the latest saved state refresh the page.',
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
-            }),
-        )
+        })
+            .then(() => setLoading(false))
+            .catch(() =>
+                toast({
+                    title: 'Error occurred, please refresh. :/',
+                    description:
+                        'In order to get the latest saved state refresh the page.',
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                }),
+            )
     }
 
     const addList = () => {
@@ -260,33 +251,10 @@ const useLists = (
                                               listItem: it.listItem,
                                           }),
                                       },
-                                  )
-                                      .then(
-                                          (response) =>
-                                              response.ok && response.json(),
-                                      )
-                                      .then((response) =>
-                                          setEditedLists((editedLists) =>
-                                              editedLists.map((list) =>
-                                                  li.listID === list.listID
-                                                      ? {
-                                                            ...li,
-                                                            listItems:
-                                                                li.listItems.map(
-                                                                    (val) =>
-                                                                        it.listItemID === val.listItemID
-                                                                            ? {
-                                                                                  ...val,
-                                                                                  listItemID:
-                                                                                      response.listItemID,
-                                                                              }
-                                                                            : val,
-                                                                ),
-                                                        }
-                                                      : list,
-                                              ),
-                                          ),
-                                      ),
+                                  ).then(
+                                      (response) =>
+                                          response.ok && response.json(),
+                                  ),
                         ) || []),
                     ]
                 })
