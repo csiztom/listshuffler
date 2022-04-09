@@ -67,6 +67,7 @@ const InstancePage = (): ReactElement => {
     const generatedProbabilities = useMemo(
         () =>
             probabilities &&
+            probabilityEditor &&
             Object.keys(probabilities).map((p1) =>
                 Object.keys(probabilities[p1]).map((p2) => (
                     <UIProbabilityCounter
@@ -82,7 +83,7 @@ const InstancePage = (): ReactElement => {
                     />
                 )),
             ),
-        [probabilities, listItems, setProbabilities],
+        [probabilities, listItems, setProbabilities, probabilityEditor],
     )
 
     return (
