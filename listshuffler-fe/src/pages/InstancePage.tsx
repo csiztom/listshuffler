@@ -19,18 +19,20 @@ import {
     ButtonGroup,
 } from '@chakra-ui/react'
 import { ReactElement, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import image from '../assets/drawing.svg'
 import { UIList } from '../components'
 import Card from '../components/Card'
 import UIProbabilityCounter from '../components/UIProbabilityCounter'
 import useLists from '../hooks/useLists'
 import useProbabilities from '../hooks/useProbabilities'
+import useShuffle from '../hooks/useShuffle'
 
 const InstancePage = (): ReactElement => {
     const { id } = useParams()
     const [isLoading, setIsLoading] = useState(false)
-    const [
+    const navigate = useNavigate()
+    const {
         lists,
         setLists,
         listItems,
@@ -43,10 +45,11 @@ const InstancePage = (): ReactElement => {
         shuffled,
         shuffledId,
         setShuffledId,
-    ] = useLists(id, setIsLoading)
+    } = useLists(id, setIsLoading)
     const [probabilities, setProbabilities, saveProbabilities] =
         useProbabilities(id, shuffledId, listItems, setIsLoading)
     const [probabilityEditor, setProbabilityEditor] = useState(false)
+    const shuffle = useShuffle(id, setIsLoading, shuffled)[1]
 
     const generatedLists = useMemo(
         () =>
@@ -110,122 +113,130 @@ const InstancePage = (): ReactElement => {
             ) : (
                 generatedLists
             )}
-            <Card zIndex={2}>
-                <Stack
-                    direction="row"
-                    gap={4}
-                    spacing={0}
-                    align="center"
-                    wrap="wrap"
-                    justifyContent="center"
-                >
-                    {editing || (
-                        <Menu>
+            {shuffled || (
+                <Card zIndex={2}>
+                    <Stack
+                        direction="row"
+                        gap={4}
+                        spacing={0}
+                        align="center"
+                        wrap="wrap"
+                        justifyContent="center"
+                    >
+                        {editing || (
+                            <Menu>
+                                <Tooltip
+                                    hasArrow
+                                    label="Which list will you shuffle for"
+                                >
+                                    <MenuButton
+                                        as={Button}
+                                        rightIcon={<ChevronDownIcon />}
+                                        isLoading={isLoading}
+                                        colorScheme="secondary"
+                                        borderRadius="button"
+                                        disabled={shuffled || multiplicity < 2}
+                                        p={2}
+                                    >
+                                        {shuffledId ?? 'Select'}
+                                    </MenuButton>
+                                </Tooltip>
+                                <MenuList>
+                                    {lists.map((li) => (
+                                        <MenuItem
+                                            key={li.listID}
+                                            command={li.listID}
+                                            onClick={() =>
+                                                setShuffledId(li.listID)
+                                            }
+                                        >
+                                            {li.listName}
+                                        </MenuItem>
+                                    ))}
+                                </MenuList>
+                            </Menu>
+                        )}
+                        {editing && (
                             <Tooltip
                                 hasArrow
-                                label="Which list will you shuffle for"
+                                label={editing ? 'Cancel' : 'Delete instance'}
                             >
-                                <MenuButton
-                                    as={Button}
-                                    rightIcon={<ChevronDownIcon />}
+                                <Button
+                                    colorScheme="red"
+                                    borderRadius="button"
+                                    p={2}
                                     isLoading={isLoading}
+                                    onClick={cancelEdited}
+                                >
+                                    {editing ? <CloseIcon /> : <DeleteIcon />}
+                                </Button>
+                            </Tooltip>
+                        )}
+                        {editing && (
+                            <Tooltip hasArrow label="Add list">
+                                <Button
+                                    colorScheme="primary"
+                                    borderRadius="button"
+                                    p={2}
+                                    onClick={addList}
+                                    isLoading={isLoading}
+                                >
+                                    {<AddIcon />}
+                                </Button>
+                            </Tooltip>
+                        )}
+                        {probabilityEditor || (
+                            <Tooltip
+                                hasArrow
+                                label={editing ? 'Save' : 'Edit lists'}
+                            >
+                                <Button
+                                    colorScheme="primary"
+                                    borderRadius="button"
+                                    p={2}
+                                    isLoading={isLoading}
+                                    onClick={
+                                        editing
+                                            ? saveEdited
+                                            : () => setEditing(true)
+                                    }
+                                >
+                                    {editing ? <CheckIcon /> : <EditIcon />}
+                                </Button>
+                            </Tooltip>
+                        )}
+                        {editing || (
+                            <Tooltip hasArrow label="Edit probabilities">
+                                <Button
                                     colorScheme="secondary"
                                     borderRadius="button"
-                                    disabled={multiplicity < 2}
                                     p={2}
+                                    isLoading={isLoading}
+                                    disabled={
+                                        shuffled ||
+                                        !shuffledId ||
+                                        multiplicity < 2
+                                    }
+                                    onClick={
+                                        probabilityEditor
+                                            ? () => {
+                                                  saveProbabilities()
+                                                  setProbabilityEditor(false)
+                                              }
+                                            : () => setProbabilityEditor(true)
+                                    }
                                 >
-                                    {shuffledId ?? 'Select'}
-                                </MenuButton>
+                                    {probabilityEditor ? (
+                                        <CheckIcon />
+                                    ) : (
+                                        <StarIcon />
+                                    )}
+                                </Button>
                             </Tooltip>
-                            <MenuList>
-                                {lists.map((li) => (
-                                    <MenuItem
-                                        key={li.listID}
-                                        command={li.listID}
-                                        onClick={() => setShuffledId(li.listID)}
-                                    >
-                                        {li.listName}
-                                    </MenuItem>
-                                ))}
-                            </MenuList>
-                        </Menu>
-                    )}
-                    {editing && (
-                        <Tooltip
-                            hasArrow
-                            label={editing ? 'Cancel' : 'Delete instance'}
-                        >
-                            <Button
-                                colorScheme="red"
-                                borderRadius="button"
-                                p={2}
-                                isLoading={isLoading}
-                                onClick={cancelEdited}
-                            >
-                                {editing ? <CloseIcon /> : <DeleteIcon />}
-                            </Button>
-                        </Tooltip>
-                    )}
-                    {editing && (
-                        <Tooltip hasArrow label="Add list">
-                            <Button
-                                colorScheme="primary"
-                                borderRadius="button"
-                                p={2}
-                                onClick={addList}
-                                isLoading={isLoading}
-                            >
-                                {<AddIcon />}
-                            </Button>
-                        </Tooltip>
-                    )}
-                    {probabilityEditor || (
-                        <Tooltip
-                            hasArrow
-                            label={editing ? 'Save' : 'Edit lists'}
-                        >
-                            <Button
-                                colorScheme="primary"
-                                borderRadius="button"
-                                p={2}
-                                isLoading={isLoading}
-                                onClick={
-                                    editing
-                                        ? saveEdited
-                                        : () => setEditing(true)
-                                }
-                            >
-                                {editing ? <CheckIcon /> : <EditIcon />}
-                            </Button>
-                        </Tooltip>
-                    )}
-                    {editing || (
-                        <Tooltip hasArrow label="Edit probabilities">
-                            <Button
-                                colorScheme="secondary"
-                                borderRadius="button"
-                                p={2}
-                                isLoading={isLoading}
-                                disabled={!shuffledId || multiplicity < 2}
-                                onClick={
-                                    probabilityEditor
-                                        ? () => {
-                                              saveProbabilities()
-                                              setProbabilityEditor(false)
-                                          }
-                                        : () => setProbabilityEditor(true)
-                                }
-                            >
-                                {probabilityEditor ? (
-                                    <CheckIcon />
-                                ) : (
-                                    <StarIcon />
-                                )}
-                            </Button>
-                        </Tooltip>
-                    )}
-                </Stack>
-            </Card>
+                        )}
+                    </Stack>
+                </Card>
+            )}
             <Card zIndex={1}>
                 <ButtonGroup>
                     <Tooltip hasArrow label="Shuffle lists">
@@ -234,7 +245,13 @@ const InstancePage = (): ReactElement => {
                             borderRadius="button"
                             p={2}
                             isLoading={isLoading}
-                            disabled={multiplicity < 2}
+                            disabled={
+                                shuffled || !shuffledId || multiplicity < 2
+                            }
+                            onClick={() => {
+                                shuffledId && shuffle(shuffledId)
+                                navigate('./pairs', { replace: true })
+                            }}
                         >
                             Shuffle now
                         </Button>

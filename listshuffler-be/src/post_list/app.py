@@ -17,7 +17,7 @@ logger.setLevel(logging.INFO)
 
 def handler(event, context):
     """
-    This function creates a list
+    This function creates a list to add list items to
     """
     parameters = params.get_params(event, 'adminID', 'listName', 'multiplicity')
     if type(parameters) is dict: return parameters

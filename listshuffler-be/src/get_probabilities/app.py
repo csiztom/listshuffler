@@ -14,7 +14,7 @@ logger.setLevel(logging.INFO)
 
 def handler(event, context):
     """
-    This function gets an instance
+    This function gets the probabilities
     """
     parameters = params.get_params(event, 'adminID', 'listID')
     if type(parameters) is dict: return parameters

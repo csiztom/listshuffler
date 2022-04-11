@@ -17,7 +17,7 @@ logger.setLevel(logging.INFO)
 
 def handler(event, context):
     """
-    This function creates a list
+    This function patches a list
     """
     parameters = params.get_params(event, 'listID', 'listName', 'multiplicity')
     if type(parameters) is dict: return parameters

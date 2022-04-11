@@ -57,7 +57,7 @@ def pair_up(lists, listId1, listId2, multiplicity, i, used, unique):
 
 def handler(event, context):
     """
-    This function gets an instance
+    This shuffles the lists
     """
     parameters = params.get_params(event, 'adminID', 'unique')
     if type(parameters) is dict: return parameters

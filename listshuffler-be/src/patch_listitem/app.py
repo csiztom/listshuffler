@@ -17,7 +17,7 @@ logger.setLevel(logging.INFO)
 
 def handler(event, context):
     """
-    This function creates a listitem
+    This function patches a listitem
     """
     parameters = params.get_params(event, 'listItemID', 'listItem')
     if type(parameters) is dict: return parameters

@@ -5,7 +5,7 @@ import { AbstractInstance, AbstractList, AbstractListItem } from '../types/main'
 const useLists = (
     id: string | undefined,
     setLoading: Dispatch<SetStateAction<boolean>>,
-): [
+): {
     lists: AbstractList[],
     setLists: Dispatch<SetStateAction<AbstractList[]>>,
     listItems: { [key: string]: AbstractListItem },
@@ -18,7 +18,7 @@ const useLists = (
     shuffled: boolean,
     shuffledId: string | undefined,
     setShuffledId: (shuffledId: string) => void,
-] => {
+} => {
     const [lists, setLists] = useState<AbstractList[]>([])
     const [shuffled, setShuffled] = useState(false)
     const [shuffledId, setShuffledId] = useState<string>()
@@ -296,20 +296,20 @@ const useLists = (
             )
     }
 
-    return [
-        editedLists,
-        setEditedLists,
-        listItems,
-        editing,
-        setEditing,
-        addList,
-        multiplicity,
-        cancelEdited,
-        saveEdited,
-        shuffled,
-        shuffledId,
-        updateShuffledId,
-    ]
+    return {
+        lists: editedLists,
+        setLists: setEditedLists,
+        listItems: listItems,
+        editing: editing,
+        setEditing: setEditing,
+        addList: addList,
+        multiplicity: multiplicity,
+        cancelEdited: cancelEdited,
+        saveEdited: saveEdited,
+        shuffled: shuffled,
+        shuffledId: shuffledId,
+        setShuffledId: updateShuffledId,
+    }
 }
 
 export default useLists

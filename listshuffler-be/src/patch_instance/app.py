@@ -17,7 +17,7 @@ logger.setLevel(logging.INFO)
 
 def handler(event, context):
     """
-    This function creates an instance to add lists to
+    This function patches an instance
     """
     parameters = params.get_params(event, 'adminID', 'shuffledID')
     if type(parameters) is dict: return parameters

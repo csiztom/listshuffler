@@ -6,14 +6,14 @@ import {
     Input,
     ButtonProps,
 } from '@chakra-ui/react'
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 
 interface ActionCardProps extends BoxProps, Pick<ButtonProps, 'isLoading'> {
     title: string
     buttonText: string
     hasInput?: boolean
     inputPlaceholder?: string
-    onButtonClick?: () => Promise<void>
+    onButtonClick?: (str: string) => void
 }
 
 const ActionCard = ({
@@ -25,6 +25,7 @@ const ActionCard = ({
     isLoading,
     ...props
 }: ActionCardProps): ReactElement => {
+    const [value, setValue] = useState('')
     return (
         <Box
             sx={{
@@ -46,13 +47,14 @@ const ActionCard = ({
                     variant="filled"
                     mb={4}
                     borderColor="text"
+                    onChange={(e) => setValue(e.target.value)}
                 />
             )}
             <Button
                 colorScheme="primary"
                 borderRadius="button"
                 mb={4}
-                onClick={onButtonClick}
+                onClick={() => onButtonClick && onButtonClick(value)}
                 isLoading={isLoading}
             >
                 {buttonText}

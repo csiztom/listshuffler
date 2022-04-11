@@ -14,7 +14,7 @@ logger.setLevel(logging.INFO)
 
 def handler(event, context):
     """
-    This function gets a listitem
+    This function gets a list item
     """
     parameters = params.get_params(event, 'listItemID')
     if type(parameters) is dict: return parameters
@@ -25,9 +25,12 @@ def handler(event, context):
         cur.execute("select * from listItems where listItemId=%s",
                     (listItemId))
         result = cur.fetchone()
-        cur.execute("select toListItemID from pairs where fromListItemID=%s",
-                    (listItemId))
-        pairs = cur.fetchall()
+        cur.execute("""select listItemID, listItem
+            from public.pairs join public.listItems
+            on toListItemID=listItemID
+            where fromListItemID=%s""",
+            (listItemId))
+        pairs = {val[0]: val[1] for val in cur.fetchall()}
 
     return {
         "statusCode": 200 if result != None else 404,

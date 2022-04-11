@@ -14,21 +14,29 @@ logger.setLevel(logging.INFO)
 
 def handler(event, context):
     """
-    This function deletes an instance
+    This function gets the pairs
     """
     parameters = params.get_params(event, 'adminID')
-    if type(parameters) is dict: return parameters
+    if type(parameters) is dict:
+        return parameters
     [adminId] = parameters
-        
+
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
-        cur.execute("SET SQL_SAFE_UPDATES = 0")
-        cur.execute("DELETE FROM public.instances where adminID=%s", (adminId))
-        conn.commit()
+        cur.execute(
+            """select fromListItemID, toListItemID 
+            from public.pairs join (public.lists natural join public.listItems) 
+            on fromListItemID=listItemID where adminID=%s""", (adminId))
+        result = {}
+        for res in cur.fetchall():
+            if res[0] not in result:
+                result[res[0]] = []
+            result[res[0]].append(res[1])
 
     return {
         "statusCode": 200,
         "headers": {
             "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
         },
+        "body": json.dumps({'pairs': result, }),
     }

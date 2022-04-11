@@ -190,6 +190,19 @@ Resources:
             RestApiId: !Ref ListshufflerApi
             Path: /probabilities
             Method: get
+  GetPairsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: get_pairs.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        GetPairs:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ListshufflerApi
+            Path: /pairs
+            Method: get
   DeleteInstanceFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -244,11 +257,11 @@ Resources:
           Properties:
             Schedule: rate(1 day)
             Enabled: True
-  ShuffleFunction:
+  PatchShuffleFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: src
-      Handler: shuffle.app.handler
+      Handler: patch_shuffle.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
       Events:
         PatchShuffle:

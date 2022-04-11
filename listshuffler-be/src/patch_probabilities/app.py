@@ -17,7 +17,7 @@ logger.setLevel(logging.INFO)
 
 def handler(event, context):
     """
-    This function creates an instance to add lists to
+    This patches the probabilities
     """
     parameters = params.get_params(event, 'adminID', 'listID', 'probabilities')
     if type(parameters) is dict: return parameters

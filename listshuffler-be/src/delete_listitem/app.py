@@ -14,7 +14,7 @@ logger.setLevel(logging.INFO)
 
 def handler(event, context):
     """
-    This function gets an instance
+    This function deletes a list item
     """
     parameters = params.get_params(event, 'listItemID')
     if type(parameters) is dict: return parameters
