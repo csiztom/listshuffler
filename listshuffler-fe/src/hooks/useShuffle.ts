@@ -9,21 +9,23 @@ const useShuffle = (
     id: string | undefined,
     setLoading: Dispatch<SetStateAction<boolean>>,
     shuffled: boolean,
-): [Pairs, (shuffledId: string) => void] => {
+    setShuffled: Dispatch<SetStateAction<boolean>>,
+): [Pairs, () => void] => {
     const [pairs, setPairs] = useState<Pairs>({})
     const toast = useToast()
 
-    const shuffle = (shuffledId: string) => {
+    const shuffle = () => {
         if (!id || shuffled) return
         setLoading(true)
         fetch(process.env.REACT_APP_API_URL + '/shuffle', {
             method: 'PATCH',
             body: JSON.stringify({
                 adminID: id,
-                unique: true,
+                unique: 'true',
             }),
         })
             .then(() => setLoading(false))
+            .then(() => setShuffled(true))
             .catch(() =>
                 toast({
                     title: 'Error occurred, please refresh. :/',

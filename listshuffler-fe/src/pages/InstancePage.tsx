@@ -43,13 +43,14 @@ const InstancePage = (): ReactElement => {
         cancelEdited,
         saveEdited,
         shuffled,
+        setShuffled,
         shuffledId,
         setShuffledId,
     } = useLists(id, setIsLoading)
     const [probabilities, setProbabilities, saveProbabilities] =
         useProbabilities(id, shuffledId, listItems, setIsLoading)
     const [probabilityEditor, setProbabilityEditor] = useState(false)
-    const shuffle = useShuffle(id, setIsLoading, shuffled)[1]
+    const shuffle = useShuffle(id, setIsLoading, shuffled, setShuffled)[1]
 
     const generatedLists = useMemo(
         () =>
@@ -249,7 +250,7 @@ const InstancePage = (): ReactElement => {
                                 shuffled || !shuffledId || multiplicity < 2
                             }
                             onClick={() => {
-                                shuffledId && shuffle(shuffledId)
+                                shuffledId && shuffle()
                                 navigate('./pairs', { replace: true })
                             }}
                         >

@@ -16,6 +16,7 @@ const useLists = (
     cancelEdited: () => void,
     saveEdited: () => void,
     shuffled: boolean,
+    setShuffled: Dispatch<SetStateAction<boolean>>,
     shuffledId: string | undefined,
     setShuffledId: (shuffledId: string) => void,
 } => {
@@ -307,6 +308,7 @@ const useLists = (
         cancelEdited: cancelEdited,
         saveEdited: saveEdited,
         shuffled: shuffled,
+        setShuffled: setShuffled,
         shuffledId: shuffledId,
         setShuffledId: updateShuffledId,
     }

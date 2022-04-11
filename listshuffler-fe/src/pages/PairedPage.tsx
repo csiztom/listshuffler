@@ -10,8 +10,8 @@ import useShuffle from '../hooks/useShuffle'
 const PairedPage = (): ReactElement => {
     const { id } = useParams()
     const [isLoading, setIsLoading] = useState(false)
-    const { shuffled, listItems } = useLists(id, setIsLoading)
-    const [pairs] = useShuffle(id, setIsLoading, shuffled)
+    const { shuffled, setShuffled, listItems } = useLists(id, setIsLoading)
+    const [pairs] = useShuffle(id, setIsLoading, shuffled, setShuffled)
 
     const generatedPairs = useMemo(
         () =>
