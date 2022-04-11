@@ -1,5 +1,6 @@
 import { useToast } from '@chakra-ui/react'
 import { useState, useEffect, Dispatch, SetStateAction } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface Pairs {
     [key: string]: Array<string>
@@ -13,6 +14,7 @@ const useShuffle = (
 ): [Pairs, () => void] => {
     const [pairs, setPairs] = useState<Pairs>({})
     const toast = useToast()
+    const navigate = useNavigate()
 
     const shuffle = () => {
         if (!id || shuffled) return
@@ -25,7 +27,6 @@ const useShuffle = (
             }),
         })
             .then(() => setLoading(false))
-            .then(() => setShuffled(true))
             .catch(() =>
                 toast({
                     title: 'Error occurred, please refresh. :/',
@@ -36,6 +37,7 @@ const useShuffle = (
                     isClosable: true,
                 }),
             )
+            .then(() => navigate('./pairs'))
     }
 
     useEffect(() => {

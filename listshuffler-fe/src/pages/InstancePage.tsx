@@ -19,7 +19,7 @@ import {
     ButtonGroup,
 } from '@chakra-ui/react'
 import { ReactElement, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import image from '../assets/drawing.svg'
 import { UIList } from '../components'
 import Card from '../components/Card'
@@ -31,7 +31,6 @@ import useShuffle from '../hooks/useShuffle'
 const InstancePage = (): ReactElement => {
     const { id } = useParams()
     const [isLoading, setIsLoading] = useState(false)
-    const navigate = useNavigate()
     const {
         lists,
         setLists,
@@ -251,7 +250,6 @@ const InstancePage = (): ReactElement => {
                             }
                             onClick={() => {
                                 shuffledId && shuffle()
-                                navigate('./pairs', { replace: true })
                             }}
                         >
                             Shuffle now

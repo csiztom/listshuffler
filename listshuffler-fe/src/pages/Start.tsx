@@ -38,7 +38,7 @@ const Start = (): ReactElement => {
             .then((response) => response.ok && response.json())
             .then((resp) => {
                 setIsLoading(false)
-                resp.listItemID && navigate('./listitem/' + resp.listItemID, { replace: true })
+                resp.listItemID && navigate('./listitem/' + resp.listItemID)
             })
             .catch(() =>
                 toast({
