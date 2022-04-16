@@ -55,9 +55,13 @@ jobs:
         run: |
           pip install -U pip
           pip install -r tests/requirements.txt
-      #- name: Test functionality
-      #  working-directory: ${{ env.BE-DIR }}
-      #  run: python -m pytest tests/unit -v
+      - name: Unit tests
+        working-directory: ${{ env.BE-DIR }}
+        run: LS_RDS_ENDPOINT=${{ secrets.T_RDS_ENDPOINT }} \ 
+          LS_RDS_USER=${{ secrets.T_RDS_USER }} \ 
+          LS_RDS_PWD=${{ secrets.T_RDS_PWD }} \
+          LS_PAGE_ORIGIN=${TESTING_PAGE_ORIGIN} \
+          python3.9 -m unittest discover tests/unit
 
   build-and-deploy-test:
     needs: [test-fe, test-be]
@@ -105,7 +109,8 @@ jobs:
             RDSEndpoint=${{ secrets.T_RDS_ENDPOINT }} \
             RDSUser=${{ secrets.T_RDS_USER }} \
             RDSPassword=${{ secrets.T_RDS_PWD }} \
-            OriginUrl=${TESTING_PAGE_ORIGIN}
+            OriginUrl=${TESTING_PAGE_ORIGIN} \
+            Stage=test
 
   build-and-deploy-prod:
     if: github.ref == 'refs/heads/main'
@@ -153,4 +158,5 @@ jobs:
             RDSEndpoint=${{ secrets.P_RDS_ENDPOINT }} \
             RDSUser=${{ secrets.P_RDS_USER }} \
             RDSPassword=${{ secrets.P_RDS_PWD }} \
-            OriginUrl=${PROD_PAGE_ORIGIN}
+            OriginUrl=${PROD_PAGE_ORIGIN} \
+            Stage=prod

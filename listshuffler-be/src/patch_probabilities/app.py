@@ -25,6 +25,15 @@ def handler(event, context):
 
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
+        cur.execute(
+            "select adminID, listID from public.lists where adminID=%s and listID=%s", (adminId, shuffledListId))
+        if (cur.fetchone() == None):
+            return {
+                "statusCode": 404,
+                "headers": {
+                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
+                },
+            }
         cur.execute("""select distinct ID1, ID2, probability 
             from (select a.listItemID ID1, b.listItemID ID2 
             from ((public.listItems a natural join public.lists c) 
@@ -41,9 +50,17 @@ def handler(event, context):
         for it1, prob in prevProbabilities.items():
             for it2, val in prob.items():
                 if probabilities[it1][it2] != val:
-                    cur.execute("""insert into probabilities (listItemID1,listItemID2,probability) values(%s,%s,%s) 
-                        on duplicate key update probability=%s""", (
-                        it1, it2, probabilities[it1][it2], probabilities[it1][it2]))
+                    try:
+                        cur.execute("""insert into probabilities (listItemID1,listItemID2,probability) values(%s,%s,%s) 
+                            on duplicate key update probability=%s""", (
+                            it1, it2, probabilities[it1][it2], probabilities[it1][it2]))
+                    except:
+                        return {
+                            "statusCode": 400,
+                            "headers": {
+                                "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
+                            },
+                        }
         conn.commit()
 
     return {

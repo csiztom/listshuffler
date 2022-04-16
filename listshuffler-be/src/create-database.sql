@@ -3,9 +3,10 @@ create table if not exists public.instances (
 	adminID varchar(8) not null,
     expiration datetime not null,
     shuffled boolean not null,
-    shuffledId varchar(6),
+    shuffledID varchar(6),
     preset varchar(255),
     primary key (adminID)
+    foreign key (shuffledID) references lists(listID) on delete cascade
 );
 create table if not exists public.lists (
 	adminID varchar(8) not null,

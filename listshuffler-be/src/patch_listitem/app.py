@@ -25,6 +25,15 @@ def handler(event, context):
 
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
+        cur.execute(
+            "select listItemID from public.listitems where listItemID=%s", (listItemId))
+        if (cur.fetchone() == None):
+            return {
+                "statusCode": 404,
+                "headers": {
+                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
+                },
+            }
         try:
             cur.execute("update listItems set listItem=%s where listItemID=%s", (
                 listItem, listItemId))

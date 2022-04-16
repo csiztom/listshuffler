@@ -22,6 +22,15 @@ def handler(event, context):
 
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
+        cur.execute(
+            "select adminID from public.instances where adminId=%s", (adminId))
+        if (cur.fetchone() == None):
+            return {
+                "statusCode": 404,
+                "headers": {
+                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
+                },
+            }
         cur.execute("""select distinct ID1, ID2, probability 
             from (select a.listItemID ID1, b.listItemID ID2 
             from ((public.listItems a natural join public.lists c) 

@@ -41,7 +41,6 @@ def handler(event, context):
             'listName': tup[1],
             'multiplicity': tup[2],
         }, cur.fetchall()))
-        print(result)
         for ind, val in enumerate(result):
             cur.execute("""select listItem, listItemID 
                 from public.lists l inner join public.listItems li 

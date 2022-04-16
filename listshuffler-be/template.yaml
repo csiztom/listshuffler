@@ -15,6 +15,8 @@ Parameters:
   OriginUrl:
     Type: String
     Default: http://localhost:3000
+  Stage:
+    Type: String
 
 Globals:
   Function:
@@ -50,6 +52,7 @@ Resources:
   PostInstanceFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}PostInstance"
       CodeUri: src
       Handler: post_instance.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -63,6 +66,7 @@ Resources:
   PostListFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}PostList"
       CodeUri: src
       Handler: post_list.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -76,6 +80,7 @@ Resources:
   PostListitemFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}PostListitem"
       CodeUri: src
       Handler: post_listitem.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -89,6 +94,7 @@ Resources:
   PatchInstanceFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}PatchInstance"
       CodeUri: src
       Handler: patch_instance.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -102,6 +108,7 @@ Resources:
   PatchListFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}PatchList"
       CodeUri: src
       Handler: patch_list.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -115,6 +122,7 @@ Resources:
   PatchListitemFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}PatchListitem"
       CodeUri: src
       Handler: patch_listitem.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -128,6 +136,7 @@ Resources:
   PatchProbabilitiesFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}PatchProbabilities"
       CodeUri: src
       Handler: patch_probabilities.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -141,6 +150,7 @@ Resources:
   GetInstanceFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}GetInstance"
       CodeUri: src
       Handler: get_instance.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -154,6 +164,7 @@ Resources:
   GetListFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}GetList"
       CodeUri: src
       Handler: get_list.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -167,6 +178,7 @@ Resources:
   GetListitemFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}GetListitem"
       CodeUri: src
       Handler: get_listitem.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -180,6 +192,7 @@ Resources:
   GetProbabilitiesFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}GetProbabilities"
       CodeUri: src
       Handler: get_probabilities.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -193,6 +206,7 @@ Resources:
   GetPairsFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}GetPairs"
       CodeUri: src
       Handler: get_pairs.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -206,6 +220,7 @@ Resources:
   DeleteInstanceFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}DeleteInstance"
       CodeUri: src
       Handler: delete_instance.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -222,6 +237,7 @@ Resources:
   DeleteListFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}DeleteList"
       CodeUri: src
       Handler: delete_list.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -235,6 +251,7 @@ Resources:
   DeleteListitemFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}DeleteListitem"
       CodeUri: src
       Handler: delete_listitem.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -260,6 +277,7 @@ Resources:
   PatchShuffleFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}PatchShuffle"
       CodeUri: src
       Handler: patch_shuffle.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role

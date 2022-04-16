@@ -25,6 +25,15 @@ def handler(event, context):
 
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
+        cur.execute(
+            "select adminID from public.instances where adminId=%s", (adminId))
+        if (cur.fetchone() == None):
+            return {
+                "statusCode": 404,
+                "headers": {
+                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
+                },
+            }
         try:
             cur.execute("update instances set shuffledID=%s where adminID=%s", (
                 shuffledId, adminId))

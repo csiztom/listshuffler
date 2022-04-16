@@ -22,7 +22,7 @@ def handler(event, context):
 
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
-        cur.execute("select * from listItems where listItemId=%s",
+        cur.execute("select listItem from listItems where listItemId=%s",
                     (listItemId))
         result = cur.fetchone()
         cur.execute("""select listItemID, listItem
@@ -38,9 +38,8 @@ def handler(event, context):
             "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
         },
         "body": json.dumps({
-            'listItemID': result[0],
-            'listItem': result[1],
-            'listID': result[2],
+            'listItemID': listItemId,
+            'listItem': result[0],
             'pairs': pairs,
-        }),
+        }) if result != None else '',
     }

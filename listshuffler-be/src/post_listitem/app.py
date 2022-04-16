@@ -25,6 +25,15 @@ def handler(event, context):
 
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
+        cur.execute(
+            "select listID from public.lists where listID=%s", (listId))
+        if (cur.fetchone() == None):
+            return {
+                "statusCode": 404,
+                "headers": {
+                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
+                },
+            }
         i = 0
         while i < 20:
             listItemId = ''.join(random.choice(

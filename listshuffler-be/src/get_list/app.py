@@ -22,7 +22,7 @@ def handler(event, context):
         
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
-        cur.execute("select * from lists where listId=%s", (listId))
+        cur.execute("select listName, multiplicity from lists where listID=%s", (listId))
         result = cur.fetchone()
 
     return {
@@ -31,9 +31,8 @@ def handler(event, context):
             "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
         },
         "body": json.dumps({
-            'adminID': result[0],
-            'listID': result[1],
-            'listName': result[2],
-            'muliplicity': result[3],
-        }),
+            'listID': listId,
+            'listName': result[0],
+            'multiplicity': result[1],
+        }) if result != None else '',
     }

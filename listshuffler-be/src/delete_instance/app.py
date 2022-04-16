@@ -22,7 +22,6 @@ def handler(event, context):
         
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
-        cur.execute("SET SQL_SAFE_UPDATES = 0")
         cur.execute("DELETE FROM public.instances where adminID=%s", (adminId))
         conn.commit()
 

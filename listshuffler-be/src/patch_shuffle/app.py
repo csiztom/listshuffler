@@ -66,6 +66,15 @@ def handler(event, context):
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute(
+            "select adminID from public.instances where adminId=%s", (adminId))
+        if (cur.fetchone() == None):
+            return {
+                "statusCode": 404,
+                "headers": {
+                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
+                },
+            }
+        cur.execute(
             "select shuffled, shuffledID from public.instances where adminId=%s", (adminId))
         [shuffled, shuffledListId] = cur.fetchone()
         if (shuffled): return {"statusCode": 400,"headers": {
@@ -84,6 +93,13 @@ def handler(event, context):
             lists[listId] = {tup[0]: {} for tup in cur.fetchall()}
 
         # get probabilities 
+        if shuffledListId not in lists:
+            return {
+                "statusCode": 400,
+                "headers": {
+                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
+                },
+            }
         for listItemId, listItem in lists[shuffledListId].items():
             cur.execute("select listItemID2, probability from public.probabilities where listItemID1=%s", 
                         (listItemId))
@@ -105,13 +121,11 @@ def handler(event, context):
 
         # save results
         values = ''
-        print(lists[shuffledListId])
         for listItemId, listItem in lists[shuffledListId].items():
             for i, (listId, mListItem) in enumerate(listItem.items()):
                 for probs in mListItem:
                     if 'pair' in probs:
                         values += " ('%s','%s','%i')," % (listItemId, probs['pair'], i)
-        print(values[:-1])
         if (len(values) > 0): 
             cur.execute("insert into pairs (fromListItemID,toListItemID,multiplicity) values"+ values[:-1])
             cur.execute("update instances set shuffled=true where adminID=%s", (
