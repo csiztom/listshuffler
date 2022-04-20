@@ -125,9 +125,9 @@ def handler(event, context):
             for i, (listId, mListItem) in enumerate(listItem.items()):
                 for probs in mListItem:
                     if 'pair' in probs:
-                        values += " ('%s','%s','%i')," % (listItemId, probs['pair'], i)
+                        values += " ('%s','%s','%i','%s')," % (listItemId, probs['pair'], i, listId)
         if (len(values) > 0): 
-            cur.execute("insert into pairs (fromListItemID,toListItemID,multiplicity) values"+ values[:-1])
+            cur.execute("insert into pairs (listItemID1,listItemID2,multiplicity,listID2) values"+ values[:-1])
             cur.execute("update instances set shuffled=true where adminID=%s", (
                 adminId))
             conn.commit()

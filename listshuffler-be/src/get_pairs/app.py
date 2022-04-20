@@ -33,9 +33,9 @@ def handler(event, context):
                 },
             }
         cur.execute(
-            """select fromListItemID, toListItemID 
+            """select listItemID1, listItemID2 
             from public.pairs join (public.lists natural join public.listItems) 
-            on fromListItemID=listItemID where adminID=%s""", (adminId))
+            on listItemID1=listItemID where adminID=%s""", (adminId))
         result = {}
         for res in cur.fetchall():
             if res[0] not in result:

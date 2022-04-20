@@ -27,8 +27,8 @@ def handler(event, context):
         result = cur.fetchone()
         cur.execute("""select listItemID, listItem
             from public.pairs join public.listItems
-            on toListItemID=listItemID
-            where fromListItemID=%s""",
+            on listItemID2=listItemID
+            where listItemID1=%s""",
             (listItemId))
         pairs = {val[0]: val[1] for val in cur.fetchall()}
 
