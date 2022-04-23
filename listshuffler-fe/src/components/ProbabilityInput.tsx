@@ -12,19 +12,19 @@ import {
 import { ReactElement } from 'react'
 import { AbstractListItem } from '../types/main'
 
-interface UIProbabilityCounterProps extends Pick<NumberInputProps, 'onChange'> {
+interface ProbabilityInputProps extends Pick<NumberInputProps, 'onChange'> {
     listItem1: AbstractListItem
     listItem2: AbstractListItem
     probability: number
 }
 
-const UIProbabilityCounter = ({
+const ProbabilityInput = ({
     listItem1,
     listItem2,
     probability,
     onChange,
     ...props
-}: UIProbabilityCounterProps): ReactElement => {
+}: ProbabilityInputProps): ReactElement => {
     return (
         <>
             <ButtonGroup isAttached>
@@ -70,4 +70,4 @@ const UIProbabilityCounter = ({
     )
 }
 
-export default UIProbabilityCounter
+export default ProbabilityInput

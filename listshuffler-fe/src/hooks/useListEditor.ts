@@ -1,23 +1,24 @@
-import { useState, Dispatch, SetStateAction, useCallback } from 'react'
-import { AbstractList } from '../types/main'
+import { useState, useCallback } from 'react'
+import { AbstractList, AbstractListItem } from '../types/main'
 
-const useEditLists = (
-    setLists: Dispatch<SetStateAction<AbstractList[]>>,
-): [
-    (id: string, name: string) => void,
-    (id: string) => void,
-    (id: string) => void,
-    (listId: string, id: string, name: string) => void,
-    (listId: string, name: string) => void,
-    (id: string, m: number) => void,
-] => {
+const useListEditor = (
+    lists: AbstractList[],
+    setLists: (lists: AbstractList[]) => void,
+): {
+    editList: (list: AbstractList) => void
+    deleteList: (list: AbstractList) => void
+    addListItem: (list: AbstractList) => void
+    editListItem: (list: AbstractList, item: AbstractListItem) => void
+    deleteListItem: (list: AbstractList, item: AbstractListItem) => void
+    editMultiplicity: (list: AbstractList) => void
+} => {
     const [index, setIndex] = useState(0)
 
     const addListItem = useCallback(
-        (id: string) => {
-            setLists((lists) =>
+        (list: AbstractList) => {
+            setLists(
                 lists.map((li) =>
-                    li.listID === id
+                    li.listID === list.listID
                         ? {
                               ...li,
                               listItems: [
@@ -33,32 +34,32 @@ const useEditLists = (
             )
             setIndex(index + 1)
         },
-        [index, setLists],
+        [index, setLists, lists],
     )
 
-    const editList = (id: string, name: string) => {
-        setLists((lists) =>
+    const editList = (list: AbstractList) => {
+        setLists(
             lists.map((it) =>
-                it.listID === id
+                it.listID === list.listID
                     ? {
                           ...it,
-                          listName: name,
+                          listName: list.listName,
                       }
                     : it,
             ),
         )
     }
-    const editListItem = (listId: string, id: string, name: string) => {
-        setLists((lists) =>
+    const editListItem = (list: AbstractList, item: AbstractListItem) => {
+        setLists(
             lists.map((li) =>
-                li.listID === listId
+                li.listID === list.listID
                     ? {
                           ...li,
                           listItems: li.listItems.map((it) =>
-                              it.listItemID === id
+                              it.listItemID === item.listItemID
                                   ? {
                                         ...it,
-                                        listItem: name,
+                                        listItem: item.listItem,
                                     }
                                   : it,
                           ),
@@ -67,17 +68,17 @@ const useEditLists = (
             ),
         )
     }
-    const deleteList = (id: string) => {
-        setLists((lists) => lists.filter((it) => it.listID !== id))
+    const deleteList = (list: AbstractList) => {
+        setLists(lists.filter((it) => it.listID !== list.listID))
     }
-    const deleteListItem = (listId: string, id: string) => {
-        setLists((lists) =>
+    const deleteListItem = (list: AbstractList, item: AbstractListItem) => {
+        setLists(
             lists.map((li) =>
-                li.listID === listId
+                li.listID === list.listID
                     ? {
                           ...li,
                           listItems: li.listItems.filter(
-                              (it) => it.listItemID !== id,
+                              (it) => it.listItemID !== item.listItemID,
                           ),
                       }
                     : li,
@@ -85,27 +86,27 @@ const useEditLists = (
         )
     }
 
-    const changeMultiplicity = (id: string, m: number) => {
-        setLists((editedLists) =>
-            editedLists.map((it) =>
-                it.listID === id
+    const editMultiplicity = (list: AbstractList) => {
+        setLists(
+            lists.map((it) =>
+                it.listID === list.listID
                     ? {
                           ...it,
-                          multiplicity: m,
+                          multiplicity: list.multiplicity,
                       }
                     : it,
             ),
         )
     }
 
-    return [
+    return {
         editList,
         deleteList,
         addListItem,
         editListItem,
         deleteListItem,
-        changeMultiplicity,
-    ]
+        editMultiplicity,
+    }
 }
 
-export default useEditLists
+export default useListEditor

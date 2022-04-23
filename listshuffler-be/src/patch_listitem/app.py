@@ -26,7 +26,7 @@ def handler(event, context):
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute(
-            "select listItemID from public.listitems where listItemID=%s", (listItemId))
+            "select listItemID from public.listItems where listItemID=%s", (listItemId))
         if (cur.fetchone() == None):
             return {
                 "statusCode": 404,

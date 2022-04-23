@@ -2,7 +2,7 @@ import { Stack, useToast } from '@chakra-ui/react'
 import { ReactElement, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import image from '../assets/drawing.svg'
-import { UIListItem } from '../components'
+import { ListItemButtonInput } from '../components'
 import Card from '../components/Card'
 
 const ListItemPage = (): ReactElement => {
@@ -49,7 +49,7 @@ const ListItemPage = (): ReactElement => {
                 >
                     {
                         <>
-                            <UIListItem id={it} name={pairs[it]} disabled />
+                            <ListItemButtonInput id={it} name={pairs[it]} disabled />
                         </>
                     }
                 </Stack>
@@ -77,7 +77,7 @@ const ListItemPage = (): ReactElement => {
                     wrap="wrap"
                     justifyContent="center"
                 >
-                    {id && <UIListItem id={id} name={name} isLoading={isLoading}/>}
+                    {id && <ListItemButtonInput id={id} name={name} isLoading={isLoading}/>}
                     {generatedPairs}
                 </Stack>
             </Card>

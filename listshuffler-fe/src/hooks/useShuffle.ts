@@ -1,6 +1,5 @@
 import { useToast } from '@chakra-ui/react'
-import { useState, useEffect, Dispatch, SetStateAction } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
 interface Pairs {
     [key: string]: Array<string>
@@ -8,25 +7,22 @@ interface Pairs {
 
 const useShuffle = (
     id: string | undefined,
-    setLoading: Dispatch<SetStateAction<boolean>>,
-    shuffled: boolean,
-    setShuffled: Dispatch<SetStateAction<boolean>>,
+    shuffled: boolean | undefined,
+    setLoading?: { on: () => void; off: () => void },
 ): [Pairs, () => void] => {
     const [pairs, setPairs] = useState<Pairs>({})
     const toast = useToast()
-    const navigate = useNavigate()
 
     const shuffle = () => {
         if (!id || shuffled) return
-        setLoading(true)
+        setLoading && setLoading.on()
         fetch(process.env.REACT_APP_API_URL + '/shuffle', {
             method: 'PATCH',
             body: JSON.stringify({
                 adminID: id,
-                unique: 'true',
             }),
         })
-            .then(() => setLoading(false))
+            .then(setLoading && setLoading.off)
             .catch(() =>
                 toast({
                     title: 'Error occurred, please refresh. :/',
@@ -37,12 +33,11 @@ const useShuffle = (
                     isClosable: true,
                 }),
             )
-            .then(() => navigate('./pairs'))
     }
 
     useEffect(() => {
-        if (!id && !shuffled) return
-        setLoading(true)
+        if (!id || !shuffled) return
+        setLoading && setLoading.on()
         fetch(process.env.REACT_APP_API_URL + '/pairs?adminID=' + id, {
             method: 'GET',
         })
@@ -60,8 +55,9 @@ const useShuffle = (
                     isClosable: true,
                 }),
             )
-            .then(() => setLoading(false))
-    }, [id, toast, setLoading, shuffled])
+            .then(setLoading && setLoading.off)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id, toast, shuffled])
 
     return [pairs, shuffle]
 }

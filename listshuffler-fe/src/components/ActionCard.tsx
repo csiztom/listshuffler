@@ -1,5 +1,4 @@
 import {
-    Box,
     BoxProps,
     Heading,
     Button,
@@ -7,6 +6,7 @@ import {
     ButtonProps,
 } from '@chakra-ui/react'
 import { ReactElement, useState } from 'react'
+import Card from './Card'
 
 interface ActionCardProps extends BoxProps, Pick<ButtonProps, 'isLoading'> {
     title: string
@@ -27,16 +27,7 @@ const ActionCard = ({
 }: ActionCardProps): ReactElement => {
     const [value, setValue] = useState('')
     return (
-        <Box
-            sx={{
-                textAlign: 'center',
-                backdropFilter: 'blur(16px) saturate(180%)',
-                bgColor: 'card',
-                borderRadius: 'card',
-                m: '2',
-                p: '6',
-            }}
-            {...props}
+        <Card
         >
             <Heading as="h1" fontSize="xlarge" fontWeight="light" mb={4}>
                 {title}
@@ -59,7 +50,7 @@ const ActionCard = ({
             >
                 {buttonText}
             </Button>
-        </Box>
+        </Card>
     )
 }
 

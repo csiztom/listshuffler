@@ -23,7 +23,7 @@ def handler(event, context):
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute(
-            "select adminID, shuffled, shuffledID, preset from public.instances where adminId=%s", (adminId))
+            "select adminID, shuffled, shuffledID, uniqueInMul, preset, shuffleTime from public.instances where adminId=%s", (adminId))
         instance = cur.fetchone()
         if (instance == None):
             return {
@@ -56,5 +56,12 @@ def handler(event, context):
         "headers": {
             "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
         },
-        "body": json.dumps({'lists': result, 'shuffled': instance[1], 'shuffledID': instance[2], 'preset': instance[3]}),
+        "body": json.dumps({
+            'lists': result, 
+            'shuffled': instance[1], 
+            'shuffledID': instance[2], 
+            'uniqueInMul': instance[3], 
+            'preset': instance[4], 
+            'shuffleTime': str(instance[5].date()) if instance[5] != None else None,
+        }),
     }

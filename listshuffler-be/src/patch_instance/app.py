@@ -19,9 +19,14 @@ def handler(event, context):
     """
     This function patches an instance
     """
-    parameters = params.get_params(event, 'adminID', 'shuffledID')
+    parameters = params.get_params(event, 'adminID')
     if type(parameters) is dict: return parameters
-    [adminId, shuffledId] = parameters
+    [adminId] = parameters
+
+    parameters = params.has_params(event, 'shuffleTime', 'uniqueInMul', 'shuffledID')
+    shuffleTime = '"' + parameters['shuffleTime'] + '"' if parameters['shuffleTime'] != None else None
+    unique = parameters['uniqueInMul']
+    shuffledId = parameters['shuffledID']
 
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
@@ -34,17 +39,14 @@ def handler(event, context):
                     "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
                 },
             }
-        try:
-            cur.execute("update instances set shuffledID=%s where adminID=%s", (
-                shuffledId, adminId))
-            conn.commit()
-        except:
-            return {
-                "statusCode": 400,
-                "headers": {
-                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-                }
-            }
+        
+        if shuffleTime != None: cur.execute("update instances set shuffleTime="+shuffleTime+", expiration=DATE_ADD("+shuffleTime+", INTERVAL 30 DAY) where adminID=%s", (
+            adminId))
+        if shuffledId != None: cur.execute("update instances set shuffledID=%s where adminID=%s", (
+            shuffledId, adminId))
+        if unique != None: cur.execute("update instances set uniqueInMul=%s where adminID=%s", (
+            unique, adminId))
+        conn.commit()
 
     return {
         "statusCode": 200,

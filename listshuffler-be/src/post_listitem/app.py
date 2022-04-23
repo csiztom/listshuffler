@@ -37,7 +37,7 @@ def handler(event, context):
         i = 0
         while i < 20:
             listItemId = ''.join(random.choice(
-                string.ascii_letters + string.digits) for _ in range(8))
+                string.ascii_letters + string.digits) for _ in range(7))
             try:
                 cur.execute("insert into listItems (listID,listItemID,listItem) values(%s,%s,%s)", (
                     listId, listItemId, listItem))

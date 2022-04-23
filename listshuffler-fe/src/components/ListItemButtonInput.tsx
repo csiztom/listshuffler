@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react'
 import { ReactElement } from 'react'
 
-interface UIListItemProps
+interface ListItemButtonInputProps
     extends Pick<InputProps, 'onChange'>,
         Omit<ButtonProps, 'onChange'> {
     editing?: boolean
@@ -16,13 +16,13 @@ interface UIListItemProps
     id: string
 }
 
-const UIListItem = ({
+const ListItemButtonInput = ({
     editing,
     name,
     id,
     onChange,
     ...props
-}: UIListItemProps): ReactElement => {
+}: ListItemButtonInputProps): ReactElement => {
     const toast = useToast()
     const onClick = () => {
         var data = [
@@ -71,4 +71,4 @@ const UIListItem = ({
     )
 }
 
-export default UIListItem
+export default ListItemButtonInput

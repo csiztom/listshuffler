@@ -1,6 +1,6 @@
 import theme from './styles/theme'
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
-import { Start, InstancePage } from './pages'
+import { StartPage, InstancePage } from './pages'
 import { Routes, Route } from 'react-router-dom'
 import '@fontsource/catamaran/200.css'
 import PairedPage from './pages/PairedPage'
@@ -12,7 +12,7 @@ const App = () => {
             <ColorModeScript initialColorMode={theme.config.initialColorMode} />
             <ChakraProvider theme={theme}>
                 <Routes>
-                    <Route index element={<Start />} />
+                    <Route index element={<StartPage />} />
                     <Route path='instance'>
                         <Route path=":id" element={<InstancePage/>}/>
                         <Route path=":id/pairs" element={<PairedPage/>}/>

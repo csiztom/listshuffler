@@ -13,52 +13,52 @@ import {
     NumberInputField,
     Tooltip,
 } from '@chakra-ui/react'
-import { Dispatch, ReactElement, SetStateAction, useMemo } from 'react'
-import useEditLists from '../hooks/useEditLists'
-import { AbstractList, AbstractListItem } from '../types/main'
+import { ReactElement, useMemo } from 'react'
+import useListEditor from '../hooks/useListEditor'
+import { AbstractList } from '../types/main'
 import Card from './Card'
-import UIListItem from './UIListItem'
+import ListItemButtonInput from './ListItemButtonInput'
 
-interface UIListProps extends Pick<ButtonProps, 'isLoading'> {
-    items: Array<AbstractListItem>
-    setLists: Dispatch<SetStateAction<AbstractList[]>>
-    editable?: boolean
-    editing?: boolean
-    name: string
-    multiplicity?: number
+interface ListCardProps extends Pick<ButtonProps, 'isLoading'> {
+    lists: AbstractList[]
+    setLists: (list: AbstractList[]) => void
     listId: string
+    editing?: boolean
 }
 
-const UIList = ({
-    items,
+const ListCard = ({
+    lists,
     setLists,
-    editable = true,
+    listId,
     editing = false,
     isLoading: parentIsLoading,
-    name,
-    multiplicity = 1,
-    listId,
     ...props
-}: UIListProps): ReactElement => {
-    const [
+}: ListCardProps): ReactElement => {
+    const {
         editList,
         deleteList,
         addListItem,
         editListItem,
         deleteListItem,
-        changeMultiplicity,
-    ] = useEditLists(setLists)
+        editMultiplicity,
+    } = useListEditor(lists, setLists)
+    const list = useMemo(
+        () => lists.find((li) => li.listID === listId),
+        [lists, listId],
+    )
     const generatedItems = useMemo(
         () =>
-            items.map((it) => (
+            list?.listItems.map((it) => (
                 <ButtonGroup isAttached variant="solid" key={it.listItemID}>
-                    <UIListItem
+                    <ListItemButtonInput
                         id={it.listItemID}
                         name={it.listItem}
                         editing={editing}
                         onChange={(e) =>
-                            editListItem &&
-                            editListItem(listId, it.listItemID, e.target.value)
+                            editListItem(list, {
+                                ...it,
+                                listItem: e.target.value,
+                            })
                         }
                         isLoading={parentIsLoading}
                     />
@@ -68,10 +68,7 @@ const UIList = ({
                                 colorScheme="red"
                                 borderRadius="button"
                                 p={2}
-                                onClick={() =>
-                                    deleteListItem &&
-                                    deleteListItem(listId, it.listItemID)
-                                }
+                                onClick={() => deleteListItem(list, it)}
                                 isLoading={parentIsLoading}
                             >
                                 <DeleteIcon />
@@ -80,11 +77,11 @@ const UIList = ({
                     )}
                 </ButtonGroup>
             )),
-        [items, listId, editing, parentIsLoading, deleteListItem, editListItem],
+        [list, editing, parentIsLoading, deleteListItem, editListItem],
     )
     return (
         <Card {...props}>
-            {name !== undefined && editing ? (
+            {list?.listName !== undefined && editing ? (
                 <Tooltip hasArrow label="Edit list name">
                     <Input
                         colorScheme="secondary"
@@ -94,21 +91,21 @@ const UIList = ({
                         fontSize="xsmall"
                         size="sm"
                         w="fit-content"
-                        defaultValue={name}
-                        htmlSize={name.length}
+                        defaultValue={list.listName}
+                        htmlSize={list.listName.length}
                         backdropFilter="blur(16px) saturate(180%)"
                         bgColor="card"
                         onChange={(e) =>
-                            editList && editList(listId, e.target.value)
+                            editList({ ...list, listName: e.target.value })
                         }
                     />
                 </Tooltip>
             ) : (
                 <Text mt={-4} mb={2} color="text" fontSize="small">
-                    {name}
+                    {list?.listName}
                 </Text>
             )}
-            {generatedItems.length > 0 && (
+            {generatedItems && generatedItems.length > 0 && (
                 <Stack
                     direction="row"
                     gap={4}
@@ -120,14 +117,14 @@ const UIList = ({
                     {generatedItems}
                 </Stack>
             )}
-            {editing && (
+            {editing && list && (
                 <Stack
                     direction="row"
                     gap={4}
                     spacing={0}
                     align="center"
                     wrap="wrap"
-                    mt={generatedItems.length ? 4 : 0}
+                    mt={generatedItems?.length ? 4 : 0}
                     justifyContent="center"
                 >
                     {deleteList && (
@@ -136,7 +133,7 @@ const UIList = ({
                                 colorScheme="red"
                                 borderRadius="button"
                                 p={2}
-                                onClick={() => deleteList(listId)}
+                                onClick={() => deleteList(list)}
                                 isLoading={parentIsLoading}
                             >
                                 {<DeleteIcon />}
@@ -149,7 +146,7 @@ const UIList = ({
                                 colorScheme="primary"
                                 borderRadius="button"
                                 p={2}
-                                onClick={() => addListItem(listId)}
+                                onClick={() => addListItem(list)}
                                 isLoading={parentIsLoading}
                             >
                                 {<AddIcon />}
@@ -161,15 +158,20 @@ const UIList = ({
                             <NumberInput
                                 isRequired
                                 step={1}
-                                defaultValue={multiplicity}
+                                defaultValue={list.multiplicity}
                                 min={1}
                                 max={5}
                                 maxW={24}
                                 onChange={(str, num) =>
-                                    changeMultiplicity &&
-                                    (str !== ''
-                                        ? changeMultiplicity(listId, num)
-                                        : changeMultiplicity(listId, 0))
+                                    str !== ''
+                                        ? editMultiplicity({
+                                              ...list,
+                                              multiplicity: num,
+                                          })
+                                        : editMultiplicity({
+                                              ...list,
+                                              multiplicity: 0,
+                                          })
                                 }
                             >
                                 <NumberInputField bgColor="card" />
@@ -186,4 +188,4 @@ const UIList = ({
     )
 }
 
-export default UIList
+export default ListCard

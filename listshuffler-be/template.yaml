@@ -274,6 +274,18 @@ Resources:
           Properties:
             Schedule: rate(1 day)
             Enabled: True
+  TimedShuffleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: timed_shuffle.app.handler
+      Role: arn:aws:iam::392215370007:role/lambda-vpc-role
+      Events:
+        ScheduledEvent:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 day)
+            Enabled: True
   PatchShuffleFunction:
     Type: AWS::Serverless::Function
     Properties:

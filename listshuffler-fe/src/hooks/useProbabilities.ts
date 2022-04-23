@@ -1,5 +1,5 @@
 import { useToast } from '@chakra-ui/react'
-import { useState, useEffect, Dispatch, SetStateAction } from 'react'
+import { useState, useEffect } from 'react'
 import { AbstractListItem } from '../types/main'
 
 interface Probabilities {
@@ -10,20 +10,24 @@ const useProbabilities = (
     id: string | undefined,
     listId: string | undefined,
     listItems: { [key: string]: AbstractListItem },
-    setLoading: Dispatch<SetStateAction<boolean>>,
-): [Probabilities, Dispatch<SetStateAction<Probabilities>>, () => void] => {
-    const [probabilities, setProbabilities] = useState<Probabilities>({})
+    setLoading?: { on: () => void; off: () => void },
+): {
+    probs: Probabilities
+    setProbs: (probs: Probabilities) => void
+    saveProbs: () => void
+} => {
+    const [probs, setProbs] = useState<Probabilities>({})
     const toast = useToast()
 
-    const save = () => {
+    const saveProbs = () => {
         if (!id || !listId) return
-        setLoading(true)
+        setLoading && setLoading.on()
         fetch(process.env.REACT_APP_API_URL + '/probabilities', {
             method: 'PATCH',
             body: JSON.stringify({
                 adminID: id,
                 listID: listId,
-                probabilities: probabilities,
+                probabilities: probs,
             }),
         })
             .then(() =>
@@ -45,12 +49,12 @@ const useProbabilities = (
                     isClosable: true,
                 }),
             )
-            .then(() => setLoading(false))
+            .then(setLoading && setLoading.off)
     }
 
     useEffect(() => {
         if (!id || !listId) return
-        setLoading(true)
+        setLoading && setLoading.on()
         fetch(
             process.env.REACT_APP_API_URL +
                 '/probabilities?adminID=' +
@@ -63,7 +67,7 @@ const useProbabilities = (
         )
             .then((response) => response.ok && response.json())
             .then((response) => {
-                setProbabilities(response['probabilities'])
+                setProbs(response['probabilities'])
             })
             .catch(() =>
                 toast({
@@ -75,10 +79,11 @@ const useProbabilities = (
                     isClosable: true,
                 }),
             )
-            .then(() => setLoading(false))
-    }, [id, listId, toast, setLoading, listItems])
+            .then(setLoading && setLoading.off)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id, listId, toast, listItems])
 
-    return [probabilities, setProbabilities, save]
+    return { probs, setProbs, saveProbs }
 }
 
 export default useProbabilities

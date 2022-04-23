@@ -27,8 +27,8 @@ def handler(event, context):
                 string.ascii_letters + string.digits) for _ in range(8))
             try:
                 cur.execute(
-                    """insert into instances (adminID,expiration,shuffled) 
-                    values(%s,DATE_ADD(SYSDATE(), INTERVAL 1 DAY),false)""", (adminId))
+                    """insert into instances (adminID,expiration,shuffled,uniqueInMul) 
+                    values(%s,DATE_ADD(SYSDATE(), INTERVAL 30 DAY),false,true)""", (adminId))
                 conn.commit()
             except:
                 logging.info("INFO: ID already there")

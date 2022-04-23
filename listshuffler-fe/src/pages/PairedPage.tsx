@@ -1,23 +1,23 @@
-import { Stack } from '@chakra-ui/react'
-import { ReactElement, useMemo, useState } from 'react'
+import { Stack, useBoolean } from '@chakra-ui/react'
+import { ReactElement, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import image from '../assets/drawing.svg'
-import { UIListItem } from '../components'
+import { ListItemButtonInput } from '../components'
 import Card from '../components/Card'
-import useLists from '../hooks/useLists'
+import useInstance from '../hooks/useInstance'
 import useShuffle from '../hooks/useShuffle'
 
 const PairedPage = (): ReactElement => {
     const { id } = useParams()
-    const [isLoading, setIsLoading] = useState(false)
-    const { shuffled, setShuffled, listItems } = useLists(id, setIsLoading)
-    const [pairs] = useShuffle(id, setIsLoading, shuffled, setShuffled)
+    const [isLoading, setIsLoading] = useBoolean(false)
+    const { instance, allListItems } = useInstance(id ?? '', setIsLoading)
+    const [pairs] = useShuffle(id, instance?.shuffled, setIsLoading)
 
     const generatedPairs = useMemo(
         () =>
             Object.keys(pairs).map(
                 (it) =>
-                    listItems && (
+                    allListItems && (
                         <Stack
                             direction="column"
                             gap={4}
@@ -27,11 +27,11 @@ const PairedPage = (): ReactElement => {
                             justifyContent="center"
                             key={it}
                         >
-                            {listItems[it] && (
+                            {allListItems[it] && (
                                 <>
-                                    <UIListItem
+                                    <ListItemButtonInput
                                         id={it}
-                                        name={listItems[it].listItem}
+                                        name={allListItems[it].listItem}
                                     />
                                     <Stack
                                         direction="row"
@@ -42,10 +42,10 @@ const PairedPage = (): ReactElement => {
                                         justifyContent="center"
                                     >
                                         {pairs[it].map((that) => (
-                                            <UIListItem
+                                            <ListItemButtonInput
                                                 id={that}
                                                 key={that}
-                                                name={listItems[that].listItem}
+                                                name={allListItems[that].listItem}
                                             />
                                         ))}
                                     </Stack>
@@ -54,7 +54,7 @@ const PairedPage = (): ReactElement => {
                         </Stack>
                     ),
             ),
-        [pairs, listItems],
+        [pairs, allListItems],
     )
 
     return (
