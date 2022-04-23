@@ -39,14 +39,21 @@ def handler(event, context):
                     "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
                 },
             }
-        
-        if shuffleTime != None: cur.execute("update instances set shuffleTime="+shuffleTime+", expiration=DATE_ADD("+shuffleTime+", INTERVAL 30 DAY) where adminID=%s", (
-            adminId))
-        if shuffledId != None: cur.execute("update instances set shuffledID=%s where adminID=%s", (
-            shuffledId, adminId))
-        if unique != None: cur.execute("update instances set uniqueInMul=%s where adminID=%s", (
-            unique, adminId))
-        conn.commit()
+        try:
+            if shuffleTime != None: cur.execute("update instances set shuffleTime="+shuffleTime+", expiration=DATE_ADD("+shuffleTime+", INTERVAL 30 DAY) where adminID=%s", (
+                adminId))
+            if shuffledId != None: cur.execute("update instances set shuffledID=%s where adminID=%s", (
+                shuffledId, adminId))
+            if unique != None: cur.execute("update instances set uniqueInMul=%s where adminID=%s", (
+                unique, adminId))
+            conn.commit()
+        except:
+            return {
+                "statusCode": 400,
+                "headers": {
+                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
+                },
+            }
 
     return {
         "statusCode": 200,
