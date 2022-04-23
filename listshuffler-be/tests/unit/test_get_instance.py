@@ -1,4 +1,5 @@
 import json
+import datetime
 from unittest import TestCase, mock
 from src.get_instance import app
 
@@ -23,7 +24,7 @@ class TestGetInstance(TestCase):
     def test_emptyInstance(self, mock_pymysql):
         mock_cursor = mock.MagicMock()
         mock_cursor.fetchall.return_value = []
-        mock_cursor.fetchone.return_value = ['id', 0, 'id2', True, None, '2000-10-26']
+        mock_cursor.fetchone.return_value = ['id', 0, 'id2', True, None, datetime.datetime(2020, 5, 17)]
         mock_pymysql.connect.return_value.cursor.return_value.__enter__.return_value = mock_cursor
         res = app.handler(apigw_event(), "")
 
@@ -37,7 +38,7 @@ class TestGetInstance(TestCase):
     def test_oneListInstance(self, mock_pymysql):
         mock_cursor = mock.MagicMock()
         mock_cursor.fetchall.return_value = [['id', 'name', 1]]
-        mock_cursor.fetchone.return_value = ['id', 0, 'id2', True, None, '2000-10-26']
+        mock_cursor.fetchone.return_value = ['id', 0, 'id2', True, None, datetime.datetime(2020, 5, 17)]
         mock_pymysql.connect.return_value.cursor.return_value.__enter__.return_value = mock_cursor
         res = app.handler(apigw_event(), "")
 
@@ -48,7 +49,7 @@ class TestGetInstance(TestCase):
     def test_moreListInstance(self, mock_pymysql):
         mock_cursor = mock.MagicMock()
         mock_cursor.fetchall.return_value = [['id', 'name', 1], ['id2', 'name2', 1]]
-        mock_cursor.fetchone.return_value = ['id', 0, 'id2', True, None, '2000-10-26']
+        mock_cursor.fetchone.return_value = ['id', 0, 'id2', True, None, datetime.datetime(2020, 5, 17)]
         mock_pymysql.connect.return_value.cursor.return_value.__enter__.return_value = mock_cursor
         res = app.handler(apigw_event(), "")
 
