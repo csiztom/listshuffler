@@ -5,6 +5,7 @@ import logging
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+
 def pair_up(list_w_sorted, used, pairs, unique=True):
     """Tries to pair up every listitem, if it fails
     it goes back until it finds everyone a pair, unless impossible,
@@ -79,7 +80,7 @@ def shuffle(admin_id, conn):
             lists[list_id] = {tup[0]: {} for tup in cur.fetchall()}
 
         # get probabilities
-        for listitem_id, listitem in lists[shuffled_list_id].items():
+        for listitem_id in lists[shuffled_list_id].keys():
             cur.execute("""select listItemID2, probability 
                 from public.probabilities 
                 where listItemID1=%s""", (listitem_id))
@@ -92,14 +93,16 @@ def shuffle(admin_id, conn):
             list_pairables[list_id] = []
             for i in range(multiplicities[list_id]):
                 sorted_pairables = []
-                for list_item_id in lists[shuffled_list_id].keys():
-                    probabilities = {
-                        otherListItem: lists[shuffled_list_id][listitem_id][otherListItem] * random.random(
-                        ) if otherListItem in lists[shuffled_list_id][listitem_id] else random.random(
-                        ) for otherListItem in lists[list_id] if otherListItem not in lists[shuffled_list_id][listitem_id] or lists[shuffled_list_id][listitem_id][otherListItem] > 0}
+                for list_item_id in random.sample(lists[shuffled_list_id].keys(), len(lists[shuffled_list_id])):
+                    probabilities = {}
+                    for otherListItem in lists[list_id]:
+                        if otherListItem in lists[shuffled_list_id][list_item_id]:
+                            if lists[shuffled_list_id][list_item_id][otherListItem] > 0:
+                                probabilities[otherListItem] = lists[shuffled_list_id][list_item_id][otherListItem] * random.random()
+                        else:
+                            probabilities[otherListItem] = random.random()
                     sorted_pairables.append([list_item_id, sorted(probabilities.keys(
                     ), reverse=True, key=lambda x: probabilities[x])])
-                random.shuffle(sorted_pairables)
                 list_pairables[list_id].append(sorted_pairables)
 
         # pair up shuffled list with others
@@ -107,18 +110,19 @@ def shuffle(admin_id, conn):
         for list_id in lists.keys():
             paired[list_id] = []
             for i in range(multiplicities[list_id]):
-                paired[list_id].append(pair_up(list_pairables[list_id][i], [], {}, unique))
+                paired[list_id].append(
+                    pair_up(list_pairables[list_id][i], [], {}, unique))
 
         # save results
         values = ''
         for list_id, list in paired.items():
             for i, dict in enumerate(list):
-                if dict == None: 
+                if dict == None:
                     logger.info("ERROR: Could not shuffle")
                     raise Exception("Could not shuffle")
                 for list_item_id1, list_item_id2 in dict.items():
                     values += " ('%s','%s','%i','%s')," % (list_item_id1,
-                                                            list_item_id2, i, list_id)
+                                                           list_item_id2, i, list_id)
         if (len(values) > 0):
             cur.execute(
                 "insert into pairs (listItemID1,listItemID2,multiplicity,listID2) values" + values[:-1])
