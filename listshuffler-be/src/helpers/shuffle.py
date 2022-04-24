@@ -30,9 +30,9 @@ def pair_up(list_w_sorted, used, pairs, unique=True):
         if unique and list_w_sorted[0][1][j] in used:
             j += 1
             continue
-        trying_pairs = pairs
+        trying_pairs = pairs.copy()
         trying_pairs[list_w_sorted[0][0]] = list_w_sorted[0][1][j]
-        trying_used = used
+        trying_used = used.copy()
         trying_used.append(list_w_sorted[0][1][j])
         ret = pair_up(list_w_sorted[1:], trying_used, trying_pairs, unique)
         if ret != None:
