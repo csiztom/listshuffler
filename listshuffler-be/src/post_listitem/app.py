@@ -47,6 +47,6 @@ def handler(event, context):
             logger.info("ERROR: Could not find random id")
             return http_response.response(508, "Could not assign id to item")
 
-    return http_response(200, {
+    return http_response.response(200, {
         "listItemID": listItemId
     })
