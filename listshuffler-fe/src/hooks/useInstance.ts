@@ -239,7 +239,6 @@ const useInstance = (
                         const prevList = instance.lists.find(
                             (val) => val.listID === curList.listID,
                         )
-                        console.log(curList, prevList)
                         return [
                             curList.listName === prevList?.listName &&
                             curList.multiplicity === prevList?.multiplicity

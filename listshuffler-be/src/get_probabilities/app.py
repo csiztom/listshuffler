@@ -1,23 +1,24 @@
 import logging
-import json
-import os
-import random
 
 try:
-    from helpers import rds_config, params
+    from helpers import rds_config, params, http_response
 except:  # for testing inside different root
-    from ..helpers import rds_config, params
+    from ..helpers import rds_config, params, http_response
 
 # logging
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+
 def handler(event, context):
     """
     This function gets the probabilities
     """
-    parameters = params.get_params(event, 'adminID', 'listID')
-    if type(parameters) is dict: return parameters
+    try:
+        parameters = params.get_params(event, 'adminID', 'listID')
+    except:
+        logger.info("ERROR: Bad parameters")
+        return http_response.response(400, "Missing or bad parameters")
     [adminId, shuffledListId] = parameters
 
     conn = rds_config.connect_rds()
@@ -25,12 +26,8 @@ def handler(event, context):
         cur.execute(
             "select adminID from public.instances where adminId=%s", (adminId))
         if (cur.fetchone() == None):
-            return {
-                "statusCode": 404,
-                "headers": {
-                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-                },
-            }
+            logger.info("ERROR: No corresponding admin id")
+            return http_response.response(404, "No corresponding id")
         cur.execute("""select distinct ID1, ID2, probability 
             from (select a.listItemID ID1, b.listItemID ID2 
             from ((public.listItems a natural join public.lists c) 
@@ -44,10 +41,4 @@ def handler(event, context):
                 probabilities[tup[0]] = {}
             probabilities[tup[0]][tup[1]] = tup[2] if tup[2] != None else 1
 
-    return {
-        "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-        },
-        "body": json.dumps({'probabilities': probabilities}),
-    }
+    return http_response.response(200, {'probabilities': probabilities})

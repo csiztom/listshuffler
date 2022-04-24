@@ -1,14 +1,9 @@
-import sys
 import logging
-import json
-import random
-import os
-import string
 
 try:
-    from helpers import rds_config, params
+    from helpers import rds_config, params, http_response
 except:  # for testing inside different root
-    from ..helpers import rds_config, params
+    from ..helpers import rds_config, params, http_response
 
 # logging
 logger = logging.getLogger()
@@ -19,8 +14,11 @@ def handler(event, context):
     """
     This function patches a list
     """
-    parameters = params.get_params(event, 'listID', 'listName', 'multiplicity')
-    if type(parameters) is dict: return parameters
+    try:
+        parameters = params.get_params(event, 'listID', 'listName', 'multiplicity')
+    except:
+        logger.info("ERROR: Bad parameters")
+        return http_response.response(400, "Missing or bad parameters")
     [listId, listName, multiplicity] = parameters
 
     conn = rds_config.connect_rds()
@@ -28,27 +26,14 @@ def handler(event, context):
         cur.execute(
             "select listID from public.lists where listID=%s", (listId))
         if (cur.fetchone() == None):
-            return {
-                "statusCode": 404,
-                "headers": {
-                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-                },
-            }
+            logger.info("ERROR: No corresponding list id")
+            return http_response.response(404, "No corresponding id")
         try:
             cur.execute("update lists set listName=%s, multiplicity=%s where listID=%s", (
                 listName, multiplicity, listId))
             conn.commit()
         except:
-            return {
-                "statusCode": 400,
-                "headers": {
-                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-                }
-            }
+            logger.info("ERROR: Could not update")
+            return http_response.response(400)
 
-    return {
-        "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-        }
-    }
+    return http_response.response(200)

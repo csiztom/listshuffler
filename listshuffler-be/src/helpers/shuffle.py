@@ -1,49 +1,46 @@
 import random
+import logging
 
+# logging
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
-def pair_up(lists, listId1, listId2, multiplicity, i, used, unique):
+def pair_up(list_w_sorted, used, pairs, unique=True):
     """Tries to pair up every listitem, if it fails
     it goes back until it finds everyone a pair, unless impossible,
     then it doesn't pair up anything
 
     Parameters:
-    lists (object): this is an object of the lists, lists being represented 
-        as objects of listitems and those of probabilities
-    listId1 (string): Paired up list id
-    listId2 (string): The list being paired with
-    multiplicity (int): how many pairs does one have of its own list
-    i (int): how far is the recursive program
-    used (array of listitem id strings): the items that have been paired up with
-    unique (bool): if each listitem pairs up with another listitem exclusively
+    list ([[string, [string]]]): tuples of unpaired listItemIDs like [[listItemID1, sorted [listItemID2]]]
+    used ([string]): array of used listItemID2s
+    pairs ({string: string}): already paired
+    unique (bool): if each listitem pairs up with another listitem exclusively, default True
 
     Returns:
-    0 if it went nicely, -1 if it failed
+    pairs ({string: string})
 
    """
-    if i >= len(lists[listId1]):
-        return 0
-    listItemId, probs = list(
-        enumerate(lists[listId1].items()))[i][1]
-    probs = probs[listId2][multiplicity]['probs']
+    if not len(list_w_sorted) > 0:
+        return pairs
     j = 0
     while True:
-        if not j < len(probs):
+        if not j < len(list_w_sorted[0][1]):
             break
-        if unique and probs[j] in used:
+        if unique and list_w_sorted[0][1][j] in used:
             j += 1
             continue
-        lists[listId1][listItemId][listId2][multiplicity]['pair'] = probs[j]
-        used.append(probs[j])
-        ret = pair_up(lists, listId1, listId2, multiplicity, i+1, used, unique)
-        if ret == 0:
-            return 0
-        del lists[listId1][listItemId][listId2][multiplicity]['pair']
-        used.remove(probs[j])
+        trying_pairs = pairs
+        trying_pairs[list_w_sorted[0][0]] = list_w_sorted[0][1][j]
+        trying_used = used
+        trying_used.append(list_w_sorted[0][1][j])
+        ret = pair_up(list_w_sorted[1:], trying_used, trying_pairs, unique)
+        if ret != None:
+            return ret
         j += 1
-    return -1
+    return None
 
 
-def shuffle(adminId, conn):
+def shuffle(admin_id, conn):
     """
     This shuffles the lists
     Parameters:
@@ -55,56 +52,80 @@ def shuffle(adminId, conn):
     lists
     """
     with conn.cursor() as cur:
-        cur.execute(
-            "select shuffled, shuffledID, uniqueInMul from public.instances where adminId=%s", (adminId))
-        [shuffled, shuffledListId, unique] = cur.fetchone()
-        if (shuffled): raise Exception("Already shuffled")
+        cur.execute("""select shuffled, shuffledID, uniqueInMul 
+            from public.instances 
+            where adminId=%s""", (admin_id))
+        [shuffled, shuffled_list_id, unique] = cur.fetchone()
+        if (shuffled):
+            logger.info("ERROR: Already shuffled")
+            raise Exception("Already shuffled")
 
-        # get lists 
-        cur.execute("select listID, multiplicity from public.instances i inner join public.lists l on i.adminID=l.adminID where i.adminId=%s",
-                    (adminId))
-        multiplicities = {tup[0]: tup[1] for tup in cur.fetchall()}
-        lists = {}
+        # get lists
+        cur.execute("""select listID, multiplicity 
+            from public.instances i inner join public.lists l on i.adminID=l.adminID 
+            where i.adminId=%s""", (admin_id))
+        multiplicities = {tup[0]: tup[1] if tup[0] !=
+                          shuffled_list_id else tup[1] - 1 for tup in cur.fetchall()}
+        if shuffled_list_id not in multiplicities.keys():
+            logger.info("ERROR: Wrong shuffled list id")
+            raise Exception("Wrong shuffled list id")
 
         # get list items
-        for listId in multiplicities.keys():
-            cur.execute("select listItemID from public.lists l inner join public.listItems li on li.listID=l.listID where li.listID=%s", 
-                        (listId))
-            lists[listId] = {tup[0]: {} for tup in cur.fetchall()}
+        lists = {}
+        for list_id in multiplicities.keys():
+            cur.execute("""select listItemID 
+                from public.lists l inner join public.listItems li on li.listID=l.listID 
+                where li.listID=%s""", (list_id))
+            lists[list_id] = {tup[0]: {} for tup in cur.fetchall()}
 
-        # get probabilities 
-        if shuffledListId not in lists: raise Exception("Wrong shuffled list id")
-        for listItemId, listItem in lists[shuffledListId].items():
-            cur.execute("select listItemID2, probability from public.probabilities where listItemID1=%s", 
-                        (listItemId))
-            customProbs = {tup[0]: tup[1] for tup in cur.fetchall()}
-            for listId in lists.keys():
-                lists[shuffledListId][listItemId][listId] = []
-                for i in range(multiplicities[listId] if listId != shuffledListId else multiplicities[listId] - 1):
-                    probs = {
-                        otherListItem: customProbs[otherListItem] * random.random(
-                        ) if otherListItem in customProbs else random.random(
-                        ) for otherListItem in lists[listId] if otherListItem not in customProbs or customProbs[otherListItem] > 0}
-                    lists[shuffledListId][listItemId][listId].append({'probs': sorted(probs.keys(
-                    ), reverse=True, key=lambda x: probs[x])})
+        # get probabilities
+        for listitem_id, listitem in lists[shuffled_list_id].items():
+            cur.execute("""select listItemID2, probability 
+                from public.probabilities 
+                where listItemID1=%s""", (listitem_id))
+            lists[shuffled_list_id][listitem_id] = {
+                tup[0]: tup[1] for tup in cur.fetchall()}
+
+        # set random values
+        list_pairables = {}
+        for list_id in lists.keys():
+            list_pairables[list_id] = []
+            for i in range(multiplicities[list_id]):
+                sorted_pairables = []
+                for list_item_id in lists[shuffled_list_id].keys():
+                    probabilities = {
+                        otherListItem: lists[shuffled_list_id][listitem_id][otherListItem] * random.random(
+                        ) if otherListItem in lists[shuffled_list_id][listitem_id] else random.random(
+                        ) for otherListItem in lists[list_id] if otherListItem not in lists[shuffled_list_id][listitem_id] or lists[shuffled_list_id][listitem_id][otherListItem] > 0}
+                    sorted_pairables.append([list_item_id, sorted(probabilities.keys(
+                    ), reverse=True, key=lambda x: probabilities[x])])
+                random.shuffle(sorted_pairables)
+                list_pairables[list_id].append(sorted_pairables)
 
         # pair up shuffled list with others
-        for listId in lists.keys():
-            for i in range(multiplicities[listId] if listId != shuffledListId else multiplicities[listId] - 1):
-                pair_up(lists, shuffledListId, listId, i, 0, [], unique)
+        paired = {}
+        for list_id in lists.keys():
+            paired[list_id] = []
+            for i in range(multiplicities[list_id]):
+                paired[list_id].append(pair_up(list_pairables[list_id][i], [], {}, unique))
 
         # save results
         values = ''
-        for listItemId, listItem in lists[shuffledListId].items():
-            for i, (listId, mListItem) in enumerate(listItem.items()):
-                for probs in mListItem:
-                    if 'pair' in probs:
-                        values += " ('%s','%s','%i','%s')," % (listItemId, probs['pair'], i, listId)
-        if (len(values) > 0): 
-            cur.execute("insert into pairs (listItemID1,listItemID2,multiplicity,listID2) values"+ values[:-1])
+        for list_id, list in paired.items():
+            for i, dict in enumerate(list):
+                if dict == None: 
+                    logger.info("ERROR: Could not shuffle")
+                    raise Exception("Could not shuffle")
+                for list_item_id1, list_item_id2 in dict.items():
+                    values += " ('%s','%s','%i','%s')," % (list_item_id1,
+                                                            list_item_id2, i, list_id)
+        if (len(values) > 0):
+            cur.execute(
+                "insert into pairs (listItemID1,listItemID2,multiplicity,listID2) values" + values[:-1])
             cur.execute("update instances set shuffled=true where adminID=%s", (
-                adminId))
+                admin_id))
             conn.commit()
-        conn.commit()
-
-    return lists
+            logger.info("SUCCESS: Successfully shuffled")
+        else:
+            logger.info("ERROR: No pairs")
+            raise Exception("Not enough pairs")

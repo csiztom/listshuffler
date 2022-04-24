@@ -1,14 +1,11 @@
-import sys
 import logging
-import json
 import random
-import os
 import string
 
 try:
-    from helpers import rds_config, params
+    from helpers import rds_config, params, http_response
 except:  # for testing inside different root
-    from ..helpers import rds_config, params
+    from ..helpers import rds_config, params, http_response
 
 # logging
 logger = logging.getLogger()
@@ -19,21 +16,21 @@ def handler(event, context):
     """
     This function creates a list to add list items to
     """
-    parameters = params.get_params(event, 'adminID', 'listName', 'multiplicity')
-    if type(parameters) is dict: return parameters
+    try:
+        parameters = params.get_params(
+            event, 'adminID', 'listName', 'multiplicity')
+    except:
+        logger.info("ERROR: Bad parameters")
+        return http_response.response(400, "Missing or bad parameters")
     [adminId, listName, multiplicity] = parameters
-    
+
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute(
             "select adminID from public.instances where adminId=%s", (adminId))
         if (cur.fetchone() == None):
-            return {
-                "statusCode": 404,
-                "headers": {
-                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-                },
-            }
+            logger.info("ERROR: No corresponding admin id")
+            return http_response.response(404, "No corresponding id")
         i = 0
         while i < 20:
             listId = ''.join(random.choice(
@@ -48,15 +45,9 @@ def handler(event, context):
                 continue
             break
         if i >= 20:
-            logger.error("ERROR: Could not find random id")
-            sys.exit()
+            logger.info("ERROR: Could not find random id")
+            return http_response.response(508, "Could not assign id to list")
 
-    return {
-        "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-        },
-        "body": json.dumps({
-            "listID": listId
-        }),
-    }
+    return http_response.response(200, {
+        "listID": listId
+    })

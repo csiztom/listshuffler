@@ -1,14 +1,9 @@
-import sys
 import logging
-import json
-import random
-import os
-import string
 
 try:
-    from helpers import rds_config, params
+    from helpers import rds_config, params, http_response
 except:  # for testing inside different root
-    from ..helpers import rds_config, params
+    from ..helpers import rds_config, params, http_response
 
 # logging
 logger = logging.getLogger()
@@ -19,12 +14,17 @@ def handler(event, context):
     """
     This function patches an instance
     """
-    parameters = params.get_params(event, 'adminID')
-    if type(parameters) is dict: return parameters
+    try:
+        parameters = params.get_params(event, 'adminID')
+    except:
+        logger.info("ERROR: Bad parameters")
+        return http_response.response(400, "Missing or bad parameters")
     [adminId] = parameters
 
-    parameters = params.has_params(event, 'shuffleTime', 'uniqueInMul', 'shuffledID')
-    shuffleTime = '"' + parameters['shuffleTime'] + '"' if parameters['shuffleTime'] != None else None
+    parameters = params.get_optional_params(
+        event, 'shuffleTime', 'uniqueInMul', 'shuffledID')
+    shuffleTime = '"' + parameters['shuffleTime'] + \
+        '"' if parameters['shuffleTime'] != None else None
     unique = parameters['uniqueInMul']
     shuffledId = parameters['shuffledID']
 
@@ -33,31 +33,23 @@ def handler(event, context):
         cur.execute(
             "select adminID from public.instances where adminId=%s", (adminId))
         if (cur.fetchone() == None):
-            return {
-                "statusCode": 404,
-                "headers": {
-                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-                },
-            }
+            logger.info("ERROR: No corresponding admin id")
+            return http_response.response(404, "No corresponding id")
         try:
-            if shuffleTime != None: cur.execute("update instances set shuffleTime="+shuffleTime+", expiration=DATE_ADD("+shuffleTime+", INTERVAL 30 DAY) where adminID=%s", (
-                adminId))
-            if shuffledId != None: cur.execute("update instances set shuffledID=%s where adminID=%s", (
-                shuffledId, adminId))
-            if unique != None: cur.execute("update instances set uniqueInMul=%s where adminID=%s", (
-                unique, adminId))
+            if shuffleTime != None:
+                cur.execute("""update instances 
+                    set shuffleTime="+shuffleTime+", expiration=DATE_ADD("+shuffleTime+", INTERVAL 30 DAY) 
+                    where adminID=%s""", (
+                    adminId))
+            if shuffledId != None:
+                cur.execute("update instances set shuffledID=%s where adminID=%s", (
+                    shuffledId, adminId))
+            if unique != None:
+                cur.execute("update instances set uniqueInMul=%s where adminID=%s", (
+                    unique, adminId))
             conn.commit()
         except:
-            return {
-                "statusCode": 400,
-                "headers": {
-                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-                },
-            }
+            logger.info("ERROR: Could not update")
+            return http_response.response(400)
 
-    return {
-        "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-        }
-    }
+    return http_response.response(200)

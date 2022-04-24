@@ -21,5 +21,7 @@ def handler(event, context):
         for adminId in cur.fetchall():
             try: 
                 shuffle.shuffle(adminId, conn)
+                logger.info("Success: Shuffle completed")
             except: 
+                logger.info("ERROR: Shuffle failed")
                 pass

@@ -1,11 +1,9 @@
 import logging
-import json
-import os
 
 try:
-    from helpers import rds_config, params
+    from helpers import rds_config, params, http_response
 except:  # for testing inside different root
-    from ..helpers import rds_config, params
+    from ..helpers import rds_config, params, http_response
 
 # logging
 logger = logging.getLogger()
@@ -16,8 +14,11 @@ def handler(event, context):
     """
     This function gets an instance
     """
-    parameters = params.get_params(event, 'adminID')
-    if type(parameters) is dict: return parameters
+    try:
+        parameters = params.get_params(event, 'adminID')
+    except:
+        logger.info("ERROR: Bad parameters")
+        return http_response.response(400, "Missing or bad parameters")
     [adminId] = parameters
 
     conn = rds_config.connect_rds()
@@ -26,12 +27,8 @@ def handler(event, context):
             "select adminID, shuffled, shuffledID, uniqueInMul, preset, shuffleTime from public.instances where adminId=%s", (adminId))
         instance = cur.fetchone()
         if (instance == None):
-            return {
-                "statusCode": 404,
-                "headers": {
-                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-                },
-            }
+            logger.info("ERROR: No corrseponding admin id")
+            return http_response.response(404, "No correesponding id")
         cur.execute("""select l.listID, listName, multiplicity 
             from public.instances i inner join public.lists l 
             on i.adminID=l.adminID where i.adminId=%s""",
@@ -51,17 +48,11 @@ def handler(event, context):
                 'listItem': tup[0],
             }, cur.fetchall()))
 
-    return {
-        "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-        },
-        "body": json.dumps({
-            'lists': result, 
-            'shuffled': instance[1], 
-            'shuffledID': instance[2], 
-            'uniqueInMul': instance[3], 
-            'preset': instance[4], 
-            'shuffleTime': str(instance[5].date()) if instance[5] != None else None,
-        }),
-    }
+    return http_response.response(200, {
+        'lists': result,
+        'shuffled': instance[1],
+        'shuffledID': instance[2],
+        'uniqueInMul': instance[3],
+        'preset': instance[4],
+        'shuffleTime': str(instance[5].date()) if instance[5] != None else None,
+    })

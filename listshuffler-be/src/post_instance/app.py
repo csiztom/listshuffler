@@ -1,14 +1,11 @@
-import sys
 import logging
-import json
 import random
-import os
 import string
 
 try:
-    from helpers import rds_config
+    from helpers import rds_config, http_response
 except:  # for testing inside different root
-    from ..helpers import rds_config
+    from ..helpers import rds_config, http_response
 
 # logging
 logger = logging.getLogger()
@@ -36,15 +33,9 @@ def handler(event, context):
                 continue
             break
         if i >= 20:
-            logger.error("ERROR: Could not find random id")
-            sys.exit()
+            logger.info("ERROR: Could not find valid id")
+            return http_response.response(508, "Could not assign id to instance")
 
-    return {
-        "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-        },
-        "body": json.dumps({
-            "adminID": str(adminId)
-        }),
-    }
+    return http_response.response(200, {
+        "adminID": str(adminId)
+    })

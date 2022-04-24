@@ -1,11 +1,10 @@
 import logging
-import json
 import os
 
 try:
-    from helpers import rds_config, params
+    from helpers import rds_config, params, http_response
 except:  # for testing inside different root
-    from ..helpers import rds_config, params
+    from ..helpers import rds_config, params, http_response
 
 # logging
 logger = logging.getLogger()
@@ -16,8 +15,11 @@ def handler(event, context):
     """
     This function deletes a list item
     """
-    parameters = params.get_params(event, 'listItemID')
-    if type(parameters) is dict: return parameters
+    try:
+        parameters = params.get_params(event, 'listItemID')
+    except:
+        logger.info("ERROR: Bad parameters")
+        return http_response.response(400, "Missing or bad parameters")
     [listItemId] = parameters
         
     conn = rds_config.connect_rds()

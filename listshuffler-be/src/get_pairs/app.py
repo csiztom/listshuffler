@@ -1,11 +1,9 @@
 import logging
-import json
-import os
 
 try:
-    from helpers import rds_config, params
+    from helpers import rds_config, params, http_response
 except:  # for testing inside different root
-    from ..helpers import rds_config, params
+    from ..helpers import rds_config, params, http_response
 
 # logging
 logger = logging.getLogger()
@@ -16,9 +14,11 @@ def handler(event, context):
     """
     This function gets the pairs
     """
-    parameters = params.get_params(event, 'adminID')
-    if type(parameters) is dict:
-        return parameters
+    try:
+        parameters = params.get_params(event, 'adminID')
+    except:
+        logger.info("ERROR: Bad parameters")
+        return http_response.response(400, "Missing or bad parameters")
     [adminId] = parameters
 
     conn = rds_config.connect_rds()
@@ -26,12 +26,8 @@ def handler(event, context):
         cur.execute(
             "select adminID from public.instances where adminId=%s", (adminId))
         if (cur.fetchone() == None):
-            return {
-                "statusCode": 404,
-                "headers": {
-                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-                },
-            }
+            logger.info("ERROR: No corresponding admin id")
+            return http_response.response(404, "No corresponding id")
         cur.execute(
             """select listItemID1, listItemID2 
             from public.pairs join (public.lists natural join public.listItems) 
@@ -42,10 +38,4 @@ def handler(event, context):
                 result[res[0]] = []
             result[res[0]].append(res[1])
 
-    return {
-        "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-        },
-        "body": json.dumps({'pairs': result, }),
-    }
+    return http_response.response(200, {'pairs': result, })
