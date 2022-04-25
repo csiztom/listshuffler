@@ -2,7 +2,7 @@ import logging
 
 try:
     from helpers import rds_config, params, http_response
-except:  # for testing inside different root
+except ImportError:  # for testing inside different root
     from ..helpers import rds_config, params, http_response
 
 # logging
@@ -16,22 +16,22 @@ def handler(event, context):
     """
     try:
         parameters = params.get_params(event, 'adminID')
-    except:
+    except params.MissingParamError:
         logger.info("ERROR: Bad parameters")
         return http_response.response(400, "Missing or bad parameters")
-    [adminId] = parameters
+    [admin_id] = parameters
 
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute(
-            "select adminID from public.instances where adminId=%s", (adminId))
+            "select adminID from public.instances where adminId=%s", (admin_id))
         if (cur.fetchone() == None):
             logger.info("ERROR: No corresponding admin id")
             return http_response.response(404, "No corresponding id")
         cur.execute(
             """select listItemID1, listItemID2 
             from public.pairs join (public.lists natural join public.listItems) 
-            on listItemID1=listItemID where adminID=%s""", (adminId))
+            on listItemID1=listItemID where adminID=%s""", (admin_id))
         result = {}
         for res in cur.fetchall():
             if res[0] not in result:

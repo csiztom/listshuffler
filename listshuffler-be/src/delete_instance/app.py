@@ -3,7 +3,7 @@ import os
 
 try:
     from helpers import rds_config, params, http_response
-except:  # for testing inside different root
+except ImportError:  # for testing inside different root
     from ..helpers import rds_config, params, http_response
 
 # logging
@@ -17,18 +17,13 @@ def handler(event, context):
     """
     try:
         parameters = params.get_params(event, 'adminID')
-    except:
+    except params.MissingParamError:
         return http_response.response(400, "Missing or bad parameters")
-    [adminId] = parameters
+    [admin_id] = parameters
         
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
-        cur.execute("DELETE FROM public.instances where adminID=%s", (adminId))
+        cur.execute("DELETE FROM public.instances where adminID=%s", (admin_id))
         conn.commit()
 
-    return {
-        "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-        },
-    }
+    return http_response.response(200)

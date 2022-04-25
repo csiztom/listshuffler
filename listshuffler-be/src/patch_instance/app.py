@@ -1,8 +1,10 @@
 import logging
 
+import pymysql
+
 try:
     from helpers import rds_config, params, http_response
-except:  # for testing inside different root
+except ImportError:  # for testing inside different root
     from ..helpers import rds_config, params, http_response
 
 # logging
@@ -16,39 +18,43 @@ def handler(event, context):
     """
     try:
         parameters = params.get_params(event, 'adminID')
-    except:
+    except params.MissingParamError:
         logger.info("ERROR: Bad parameters")
         return http_response.response(400, "Missing or bad parameters")
-    [adminId] = parameters
+    [admin_id] = parameters
 
     parameters = params.get_optional_params(
-        event, 'shuffleTime', 'uniqueInMul', 'shuffledID')
-    shuffleTime = '"' + parameters['shuffleTime'] + \
+        event, 'shuffleTime', 'uniqueInMul', 'shuffledID', 'preset')
+    shuffle_time = '"' + parameters['shuffleTime'] + \
         '"' if parameters['shuffleTime'] != None else None
     unique = parameters['uniqueInMul']
-    shuffledId = parameters['shuffledID']
+    shuffled_id = parameters['shuffledID']
+    preset = parameters['preset']
 
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute(
-            "select adminID from public.instances where adminId=%s", (adminId))
+            "select adminID from public.instances where adminId=%s", (admin_id))
         if (cur.fetchone() == None):
             logger.info("ERROR: No corresponding admin id")
             return http_response.response(404, "No corresponding id")
         try:
-            if shuffleTime != None:
+            if shuffle_time != None:
                 cur.execute("""update instances 
                     set shuffleTime="+shuffleTime+", expiration=DATE_ADD("+shuffleTime+", INTERVAL 30 DAY) 
                     where adminID=%s""", (
-                    adminId))
-            if shuffledId != None:
+                    admin_id))
+            if shuffled_id != None:
                 cur.execute("update instances set shuffledID=%s where adminID=%s", (
-                    shuffledId, adminId))
+                    shuffled_id, admin_id))
             if unique != None:
                 cur.execute("update instances set uniqueInMul=%s where adminID=%s", (
-                    unique, adminId))
+                    unique, admin_id))
+            if preset != None:
+                cur.execute("update instances set preset=%s where adminID=%s", (
+                    preset, admin_id))
             conn.commit()
-        except:
+        except pymysql.MySQLError:
             logger.info("ERROR: Could not update")
             return http_response.response(400)
 

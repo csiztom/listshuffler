@@ -1,6 +1,9 @@
 # config file containing credentials for RDS MySQL instance
 import json
 
+class MissingParamError(Exception):
+    pass
+
 def get_params(event, *params):
     """Tries to get the needed parameters for the lambda function
     from the event object
@@ -16,10 +19,18 @@ def get_params(event, *params):
    """
     ret = []
     for param in params:
-        try:
-            ret.append(json.loads(event['body'])[param])
-        except:
-            ret.append(event['queryStringParameters'][param])
+        if event['body'] != None:
+            try:
+                ret.append(json.loads(event['body'])[param])
+            except KeyError:
+                raise MissingParamError()
+        elif event['queryStringParameters'] != None:
+            try:
+                ret.append(event['queryStringParameters'][param])
+            except KeyError:
+                raise MissingParamError()
+        else:
+            raise MissingParamError()
     return ret
 
 def get_optional_params(event, *params):
@@ -37,9 +48,7 @@ def get_optional_params(event, *params):
     ret = {}
     for param in params:
         try:
-            ret[param] = json.loads(event['body'])[param]
-        except:
-            try: ret[param] = event['queryStringParameters'][param]
-            except:
-                ret[param] = None
+            ret[param] = get_params(event, param)[0]
+        except MissingParamError:
+            ret[param] = None
     return ret

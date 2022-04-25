@@ -2,7 +2,7 @@ import logging
 
 try:
     from helpers import rds_config, shuffle
-except:  # for testing inside different root
+except ImportError:  # for testing inside different root
     from ..helpers import rds_config, shuffle
 
 # logging
@@ -18,10 +18,11 @@ def handler(event, context):
     with conn.cursor() as cur:
         cur.execute(
             "select adminID from public.instances where shuffleTime < CURDATE()")
-        for adminId in cur.fetchall():
+        for admin_id in cur.fetchall():
             try: 
-                shuffle.shuffle(adminId, conn)
+                shuffle.shuffle(admin_id, conn)
                 logger.info("Success: Shuffle completed")
-            except: 
+            except shuffle.ShuffleError: 
                 logger.info("ERROR: Shuffle failed")
-                pass
+            except:
+                logger.info("ERROR: Failed unexpectedly")

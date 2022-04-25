@@ -6,6 +6,10 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 
+class ShuffleError(Exception):
+    pass
+
+
 def pair_up(list_w_sorted, used, pairs, unique=True):
     """Tries to pair up every listitem, if it fails
     it goes back until it finds everyone a pair, unless impossible,
@@ -59,7 +63,7 @@ def shuffle(admin_id, conn):
         [shuffled, shuffled_list_id, unique] = cur.fetchone()
         if (shuffled):
             logger.info("ERROR: Already shuffled")
-            raise Exception("Already shuffled")
+            raise ShuffleError("Already shuffled")
 
         # get lists
         cur.execute("""select listID, multiplicity 
@@ -69,7 +73,7 @@ def shuffle(admin_id, conn):
                           shuffled_list_id else tup[1] - 1 for tup in cur.fetchall()}
         if shuffled_list_id not in multiplicities.keys():
             logger.info("ERROR: Wrong shuffled list id")
-            raise Exception("Wrong shuffled list id")
+            raise ShuffleError("Wrong shuffled list id")
 
         # get list items
         lists = {}
@@ -93,7 +97,7 @@ def shuffle(admin_id, conn):
             list_pairables[list_id] = []
             for i in range(multiplicities[list_id]):
                 sorted_pairables = []
-                for list_item_id in random.sample(lists[shuffled_list_id].keys(), len(lists[shuffled_list_id])):
+                for list_item_id in random.sample(list(lists[shuffled_list_id].keys()), len(lists[shuffled_list_id])):
                     probabilities = {}
                     for otherListItem in lists[list_id]:
                         if otherListItem in lists[shuffled_list_id][list_item_id]:
@@ -115,11 +119,11 @@ def shuffle(admin_id, conn):
 
         # save results
         values = ''
-        for list_id, list in paired.items():
-            for i, dict in enumerate(list):
+        for list_id, paired_list in paired.items():
+            for i, dict in enumerate(paired_list):
                 if dict == None:
                     logger.info("ERROR: Could not shuffle")
-                    raise Exception("Could not shuffle")
+                    raise ShuffleError("Could not shuffle")
                 for list_item_id1, list_item_id2 in dict.items():
                     values += " ('%s','%s','%i','%s')," % (list_item_id1,
                                                            list_item_id2, i, list_id)
@@ -132,4 +136,4 @@ def shuffle(admin_id, conn):
             logger.info("SUCCESS: Successfully shuffled")
         else:
             logger.info("ERROR: No pairs")
-            raise Exception("Not enough pairs")
+            raise ShuffleError("Not enough pairs")

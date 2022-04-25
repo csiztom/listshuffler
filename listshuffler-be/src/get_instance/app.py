@@ -2,7 +2,7 @@ import logging
 
 try:
     from helpers import rds_config, params, http_response
-except:  # for testing inside different root
+except ImportError:  # for testing inside different root
     from ..helpers import rds_config, params, http_response
 
 # logging
@@ -16,15 +16,15 @@ def handler(event, context):
     """
     try:
         parameters = params.get_params(event, 'adminID')
-    except:
+    except params.MissingParamError:
         logger.info("ERROR: Bad parameters")
         return http_response.response(400, "Missing or bad parameters")
-    [adminId] = parameters
+    [admin_id] = parameters
 
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute(
-            "select adminID, shuffled, shuffledID, uniqueInMul, preset, shuffleTime from public.instances where adminId=%s", (adminId))
+            "select adminID, shuffled, shuffledID, uniqueInMul, preset, shuffleTime from public.instances where adminId=%s", (admin_id))
         instance = cur.fetchone()
         if (instance == None):
             logger.info("ERROR: No corrseponding admin id")
@@ -32,7 +32,7 @@ def handler(event, context):
         cur.execute("""select l.listID, listName, multiplicity 
             from public.instances i inner join public.lists l 
             on i.adminID=l.adminID where i.adminId=%s""",
-                    (adminId))
+                    (admin_id))
         result = list(map(lambda tup: {
             'listID': tup[0],
             'listName': tup[1],

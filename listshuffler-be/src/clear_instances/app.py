@@ -1,6 +1,6 @@
 try:
     from helpers import rds_config
-except:  # for testing inside different root
+except ImportError:  # for testing inside different root
     from ..helpers import rds_config
 
 

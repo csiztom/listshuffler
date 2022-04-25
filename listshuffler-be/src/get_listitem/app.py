@@ -1,8 +1,9 @@
 import logging
+import hashlib
 
 try:
     from helpers import rds_config, params, http_response
-except:  # for testing inside different root
+except ImportError:  # for testing inside different root
     from ..helpers import rds_config, params, http_response
 
 # logging
@@ -16,25 +17,25 @@ def handler(event, context):
     """
     try:
         parameters = params.get_params(event, 'listItemID')
-    except:
+    except params.MissingParamError:
         logger.info("ERROR: Bad parameters")
         return http_response.response(400, "Missing or bad parameters")
-    [listItemId] = parameters
+    [listitem_id] = parameters
 
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute("select listItem from listItems where listItemId=%s",
-                    (listItemId))
+                    (listitem_id))
         result = cur.fetchone()
         cur.execute("""select listItemID, listItem
             from public.pairs join public.listItems
             on listItemID2=listItemID
             where listItemID1=%s""",
-                    (listItemId))
-        pairs = {val[0]: val[1] for val in cur.fetchall()}
+                    (listitem_id))
+        pairs = {str(hashlib.sha384(val[0].encode())): val[1] for val in cur.fetchall()}
 
     return http_response.response(200 if result != None else 404, {
-        'listItemID': listItemId,
+        'listItemID': listitem_id,
         'listItem': result[0],
         'pairs': pairs,
     } if result != None else '')

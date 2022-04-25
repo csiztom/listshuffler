@@ -1,5 +1,6 @@
 from unittest import TestCase, mock
 from src.patch_list import app
+import pymysql
 
 def apigw_event():
     """ Generates API GW Event"""
@@ -20,7 +21,7 @@ class TestPatchList(TestCase):
     @mock.patch('src.helpers.rds_config.pymysql', autospec=True)
     def test_error(self, mock_pymysql):
         mock_cursor = mock.MagicMock()
-        mock_pymysql.connect.return_value.commit.side_effect = Exception('Test')
+        mock_pymysql.connect.return_value.commit.side_effect = pymysql.MySQLError('Test')
         mock_cursor.fetchone.return_value = ['id']
         mock_pymysql.connect.return_value.cursor.return_value.__enter__.return_value = mock_cursor
         assert app.handler(apigw_event(), "")['statusCode'] == 400

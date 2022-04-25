@@ -2,7 +2,7 @@ import os
 import json
 
 
-def response(status_code, body = {}):
+def response(status_code, body = None):
     """Returns an object containing the lambda response
 
     Parameters:
@@ -18,5 +18,5 @@ def response(status_code, body = {}):
         "headers": {
             "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
         },
-        "body": json.dumps(body)
+        "body": json.dumps(body) if body != None else None
     }

@@ -2,9 +2,11 @@ import logging
 import random
 import string
 
+import pymysql
+
 try:
     from helpers import rds_config, http_response
-except:  # for testing inside different root
+except ImportError:  # for testing inside different root
     from ..helpers import rds_config, http_response
 
 # logging
@@ -20,14 +22,14 @@ def handler(event, context):
     with conn.cursor() as cur:
         i = 0
         while i < 20:
-            adminId = ''.join(random.choice(
+            admin_id = ''.join(random.choice(
                 string.ascii_letters + string.digits) for _ in range(8))
             try:
                 cur.execute(
                     """insert into instances (adminID,expiration,shuffled,uniqueInMul) 
-                    values(%s,DATE_ADD(SYSDATE(), INTERVAL 30 DAY),false,true)""", (adminId))
+                    values(%s,DATE_ADD(SYSDATE(), INTERVAL 30 DAY),false,true)""", (admin_id))
                 conn.commit()
-            except:
+            except pymysql.MySQLError:
                 logging.info("INFO: ID already there")
                 i += 1
                 continue
@@ -37,5 +39,5 @@ def handler(event, context):
             return http_response.response(508, "Could not assign id to instance")
 
     return http_response.response(200, {
-        "adminID": str(adminId)
+        "adminID": str(admin_id)
     })

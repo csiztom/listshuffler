@@ -1,8 +1,10 @@
 import logging
 
+import pymysql
+
 try:
     from helpers import rds_config, params, http_response
-except:  # for testing inside different root
+except ImportError:  # for testing inside different root
     from ..helpers import rds_config, params, http_response
 
 # logging
@@ -16,23 +18,23 @@ def handler(event, context):
     """
     try:
         parameters = params.get_params(event, 'listItemID', 'listItem')
-    except:
+    except params.MissingParamError:
         logger.info("ERROR: Bad parameters")
         return http_response.response(400, "Missing or bad parameters")
-    [listItemId, listItem] = parameters
+    [listitem_id, listitem_name] = parameters
 
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute(
-            "select listItemID from public.listItems where listItemID=%s", (listItemId))
+            "select listItemID from public.listItems where listItemID=%s", (listitem_id))
         if (cur.fetchone() == None):
             logger.info("ERROR: No corresponding listitem id")
             return http_response.response(404, "No corresponding id")
         try:
             cur.execute("update listItems set listItem=%s where listItemID=%s", (
-                listItem, listItemId))
+                listitem_name, listitem_id))
             conn.commit()
-        except:
+        except pymysql.MySQLError:
             logger.info("ERROR: Could not update")
             return http_response.response(400)
 
