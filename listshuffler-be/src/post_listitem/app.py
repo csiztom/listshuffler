@@ -41,7 +41,7 @@ def handler(event, context):
                     list_id, listitem_id, listitem_name))
                 conn.commit()
             except pymysql.MySQLError:
-                logging.info("INFO: ID already there")
+                logger.info("INFO: ID already there")
                 i += 1
                 continue
             break

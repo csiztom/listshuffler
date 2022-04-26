@@ -1,5 +1,4 @@
 import logging
-import os
 
 try:
     from helpers import rds_config, params, http_response

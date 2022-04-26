@@ -42,7 +42,7 @@ def handler(event, context):
                     values(%s,%s,%s,%s)""", (admin_id, list_id, list_name, multiplicity))
                 conn.commit()
             except pymysql.MySQLError:
-                logging.info("INFO: ID already there")
+                logger.info("INFO: ID already there")
                 i += 1
                 continue
             break

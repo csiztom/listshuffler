@@ -30,7 +30,7 @@ def handler(event, context):
                     values(%s,DATE_ADD(SYSDATE(), INTERVAL 30 DAY),false,true)""", (admin_id))
                 conn.commit()
             except pymysql.MySQLError:
-                logging.info("INFO: ID already there")
+                logger.info("INFO: ID already there")
                 i += 1
                 continue
             break
