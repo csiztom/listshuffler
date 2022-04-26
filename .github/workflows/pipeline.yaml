@@ -123,7 +123,7 @@ jobs:
           pip install -r tests/requirements.txt
       - name: Integration tests
         working-directory: ${{ env.BE-DIR }}
-        run: python3.9 -m unittest discover tests/integration
+        run: LS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY_ID }} LS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} python3.9 -m unittest discover tests/integration
 
   build-and-deploy-prod:
     if: github.ref == 'refs/heads/main'
