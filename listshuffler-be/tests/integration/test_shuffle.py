@@ -49,5 +49,5 @@ class TestShuffle(TestCase):
         payload = json.loads(response['Payload'].read())
         print(payload)
         assert payload['statusCode'] == 200
-        assert str(int(hashlib.sha384(listitem_id2.encode()).hexdigest())) in json.loads(payload['body'])['pairs']
+        assert str(int(hashlib.sha384(listitem_id2.encode()).digest())) in json.loads(payload['body'])['pairs']
     
