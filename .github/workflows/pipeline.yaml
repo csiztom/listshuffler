@@ -108,6 +108,23 @@ jobs:
             OriginUrl=${TESTING_PAGE_ORIGIN} \
             Stage=test
 
+  integration-be:
+    needs: [build-and-deploy-test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Installing dependencies
+        working-directory: ${{ env.BE-DIR }}
+        run: |
+          pip install -U pip
+          pip install -r tests/requirements.txt
+      - name: Integration tests
+        working-directory: ${{ env.BE-DIR }}
+        run: python3.9 -m unittest discover tests/integration
+
   build-and-deploy-prod:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest

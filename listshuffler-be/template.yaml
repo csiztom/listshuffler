@@ -265,6 +265,7 @@ Resources:
   ClearInstancesFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}ClearInstances"
       CodeUri: src
       Handler: clear_instances.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
@@ -277,6 +278,7 @@ Resources:
   TimedShuffleFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${Stage}TimedShuffle"
       CodeUri: src
       Handler: timed_shuffle.app.handler
       Role: arn:aws:iam::392215370007:role/lambda-vpc-role
