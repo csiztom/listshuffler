@@ -27,7 +27,7 @@ def handler(event, context):
             try:
                 cur.execute(
                     """insert into instances (adminID,expiration,shuffled,uniqueInMul) 
-                    values(%s,DATE_ADD(SYSDATE(), INTERVAL 30 DAY),false,true)""", (admin_id))
+                    values(%s,DATE_ADD(SYSDATE(), INTERVAL 10 DAY),false,true)""", (admin_id))
                 conn.commit()
             except pymysql.MySQLError:
                 logger.info("INFO: ID already there")
