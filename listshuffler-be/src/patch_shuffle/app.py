@@ -31,8 +31,8 @@ def handler(event, context):
             return http_response.response(404, "No corresponding id")
     try:
         shuffle.shuffle(admin_id, conn)
-    except shuffle.ShuffleError:
-        logger.info("ERROR: Shuffle did not complete")
-        return http_response.response(400, "Bad shuffle")
+    except shuffle.ShuffleError as e:
+        logger.info("ERROR: Shuffle did not complete", str(e))
+        return http_response.response(400, "Bad shuffle: " + str(e))
     logger.info("SUCCESS: Shuffle complete")
     return http_response.response(200)

@@ -23,7 +23,7 @@ def handler(event, context):
             try:
                 shuffle.shuffle(admin_id, conn)
                 logger.info("Success: Shuffle completed")
-            except shuffle.ShuffleError:
-                logger.info("ERROR: Shuffle failed")
+            except shuffle.ShuffleError as e:
+                logger.info("ERROR: Shuffle failed", str(e))
             except:
                 logger.info("ERROR: Failed unexpectedly")
