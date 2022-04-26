@@ -26,6 +26,8 @@ def handler(event, context):
     with conn.cursor() as cur:
         cur.execute("SET SQL_SAFE_UPDATES = 0")
         cur.execute("DELETE FROM public.lists where listID=%s", (list_id))
+        cur.execute("update instances set shuffledID=%s where shuffledID=%s", (
+                    None, list_id))
         conn.commit()
 
     return http_response.response(200)

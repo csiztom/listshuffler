@@ -46,14 +46,21 @@ def handler(event, context):
 
         for it1, prob in prev_probs.items():
             for it2, val in prob.items():
-                if probs[it1][it2] != val:
-                    try:
-                        cur.execute("""insert into probabilities (listItemID1,listItemID2,probability) values(%s,%s,%s) 
-                            on duplicate key update probability=%s""", (
-                            it1, it2, probs[it1][it2], probs[it1][it2]))
-                    except pymysql.MySQLError:
-                        logger.info("ERROR: Could not insert")
-                        return http_response.response(400)
+                try:
+                    if probs[it1][it2] != val:
+                        try:
+                            cur.execute("""insert into probabilities (listItemID1,listItemID2,probability) values(%s,%s,%s) 
+                                on duplicate key update probability=%s""", (
+                                it1, it2, probs[it1][it2], probs[it1][it2]))
+                        except pymysql.MySQLError:
+                            logger.info("ERROR: Could not insert")
+                            return http_response.response(400)
+                except TypeError: 
+                    logger.info("ERROR: Bad probabilities format")
+                    return http_response.response(400, "Bad format")
+                except KeyError: 
+                    logger.info("ERROR: Missing keys")
+                    return http_response.response(400, "Missing keys")
         conn.commit()
 
     return http_response.response(200)
