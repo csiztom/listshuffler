@@ -2,17 +2,20 @@ import json
 from unittest import TestCase, mock
 from src.get_listitem import app
 
+
 def good_api_event():
     return {
         "body": '{ "listItemID": "id"}',
         "queryStringParameters": None
     }
 
+
 def bad_api_event():
     return {
         "body": None,
         "queryStringParameters": None
     }
+
 
 class TestGetListitem(TestCase):
     def test_bad_api_call(self):
@@ -42,7 +45,8 @@ class TestGetListitem(TestCase):
     @mock.patch('src.helpers.rds_config.pymysql', autospec=True)
     def test_paired_listitem(self, mock_pymysql):
         mock_cursor = mock.MagicMock()
-        mock_cursor.fetchall.return_value = [['id1','item'],['id2','item'],['id3','item']]
+        mock_cursor.fetchall.return_value = [
+            ['id1', 'item'], ['id2', 'item'], ['id3', 'item']]
         mock_cursor.fetchone.return_value = ['name']
         mock_pymysql.connect.return_value.cursor.return_value.__enter__.return_value = mock_cursor
         res = app.handler(good_api_event(), "")

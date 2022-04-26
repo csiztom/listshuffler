@@ -55,10 +55,10 @@ def handler(event, context):
                         except pymysql.MySQLError:
                             logger.info("ERROR: Could not insert")
                             return http_response.response(400)
-                except TypeError: 
+                except TypeError:
                     logger.info("ERROR: Bad probabilities format")
                     return http_response.response(400, "Bad format")
-                except KeyError: 
+                except KeyError:
                     logger.info("ERROR: Missing keys")
                     return http_response.response(400, "Missing keys")
         conn.commit()

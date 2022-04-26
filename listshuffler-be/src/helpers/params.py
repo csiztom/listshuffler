@@ -1,8 +1,10 @@
 # config file containing credentials for RDS MySQL instance
 import json
 
+
 class MissingParamError(Exception):
     pass
+
 
 def get_params(event, *params):
     """Tries to get the needed parameters for the lambda function
@@ -32,6 +34,7 @@ def get_params(event, *params):
         else:
             raise MissingParamError()
     return ret
+
 
 def get_optional_params(event, *params):
     """Tries to get the optional parameters for the lambda function

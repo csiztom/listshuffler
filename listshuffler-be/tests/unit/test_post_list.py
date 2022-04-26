@@ -3,17 +3,20 @@ from src.post_list import app
 import pymysql
 import json
 
+
 def good_api_event():
     return {
         "body": '{ "adminID": "id", "listName": "hello", "multiplicity": 1 }',
         "queryStringParameters": None
     }
 
+
 def bad_api_event():
     return {
         "body": None,
         "queryStringParameters": None
     }
+
 
 class TestPostList(TestCase):
     def test_bad_api_call(self):
@@ -29,7 +32,8 @@ class TestPostList(TestCase):
     @mock.patch('src.helpers.rds_config.pymysql', autospec=True)
     def test_error(self, mock_pymysql):
         mock_cursor = mock.MagicMock()
-        mock_pymysql.connect.return_value.commit.side_effect = pymysql.MySQLError('Test')
+        mock_pymysql.connect.return_value.commit.side_effect = pymysql.MySQLError(
+            'Test')
         mock_pymysql.connect.return_value.cursor.return_value.__enter__.return_value = mock_cursor
         assert app.handler(good_api_event(), "")['statusCode'] == 508
 

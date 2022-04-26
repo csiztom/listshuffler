@@ -13,6 +13,7 @@ db_name = "public"
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+
 def connect_rds():
     """Tries to connect to the database
 

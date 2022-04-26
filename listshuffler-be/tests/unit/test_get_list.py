@@ -2,17 +2,20 @@ import json
 from unittest import TestCase, mock
 from src.get_list import app
 
+
 def good_api_event():
     return {
         "body": '{ "listID": "that"}',
         "queryStringParameters": None
     }
 
+
 def bad_api_event():
     return {
         "body": None,
         "queryStringParameters": None
     }
+
 
 class TestGetList(TestCase):
     def test_bad_api_call(self):

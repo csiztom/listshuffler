@@ -2,7 +2,7 @@ import os
 import json
 
 
-def response(status_code, body = None):
+def response(status_code, body=None):
     """Returns an object containing the lambda response
 
     Parameters:

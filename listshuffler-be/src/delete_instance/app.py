@@ -19,7 +19,7 @@ def handler(event, context):
     except params.MissingParamError:
         return http_response.response(400, "Missing or bad parameters")
     [admin_id] = parameters
-        
+
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute("DELETE FROM public.instances where adminID=%s", (admin_id))

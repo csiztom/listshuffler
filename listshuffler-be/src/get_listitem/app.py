@@ -32,7 +32,8 @@ def handler(event, context):
             on listItemID2=listItemID
             where listItemID1=%s""",
                     (listitem_id))
-        pairs = {str(hashlib.sha384(val[0].encode())): val[1] for val in cur.fetchall()}
+        pairs = {str(hashlib.sha384(val[0].encode())): val[1]
+                 for val in cur.fetchall()}
 
     return http_response.response(200 if result != None else 404, {
         'listItemID': listitem_id,

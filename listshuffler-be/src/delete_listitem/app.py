@@ -21,11 +21,12 @@ def handler(event, context):
         logger.info("ERROR: Bad parameters")
         return http_response.response(400, "Missing or bad parameters")
     [listitem_id] = parameters
-        
+
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute("SET SQL_SAFE_UPDATES = 0")
-        cur.execute("DELETE FROM public.listItems where listItemID=%s", (listitem_id))
+        cur.execute(
+            "DELETE FROM public.listItems where listItemID=%s", (listitem_id))
         conn.commit()
 
     return http_response.response(200)

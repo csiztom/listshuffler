@@ -11,6 +11,7 @@ except ImportError:  # for testing inside different root
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+
 def handler(event, context):
     """
     This shuffles the lists
@@ -27,7 +28,7 @@ def handler(event, context):
             "select adminID from public.instances where adminId=%s", (admin_id))
         if (cur.fetchone() == None):
             logger.info("ERROR: No corresponding admin id")
-            return http_response.response(404,"No corresponding id")
+            return http_response.response(404, "No corresponding id")
     try:
         shuffle.shuffle(admin_id, conn)
     except shuffle.ShuffleError:

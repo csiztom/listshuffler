@@ -17,7 +17,8 @@ def handler(event, context):
     This function patches a list
     """
     try:
-        parameters = params.get_params(event, 'listID', 'listName', 'multiplicity')
+        parameters = params.get_params(
+            event, 'listID', 'listName', 'multiplicity')
     except params.MissingParamError:
         logger.info("ERROR: Bad parameters")
         return http_response.response(400, "Missing or bad parameters")

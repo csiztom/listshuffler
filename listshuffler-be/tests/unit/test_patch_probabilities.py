@@ -1,6 +1,7 @@
 from unittest import TestCase, mock
 from src.patch_probabilities import app
 
+
 def good_api_event():
     return {
         "body": """{ 
@@ -27,11 +28,13 @@ def good_api_event():
         "queryStringParameters": None
     }
 
+
 def bad_api_event():
     return {
         "body": None,
         "queryStringParameters": None
     }
+
 
 def bad_type_api_event():
     return {
@@ -42,6 +45,7 @@ def bad_type_api_event():
         }""",
         "queryStringParameters": None
     }
+
 
 def bad_keys_api_event():
     return {
@@ -69,6 +73,7 @@ def bad_keys_api_event():
         "queryStringParameters": None
     }
 
+
 class TestPatchInstance(TestCase):
     def test_bad_api_call(self):
         assert app.handler(bad_api_event(), "")['statusCode'] == 400
@@ -93,7 +98,8 @@ class TestPatchInstance(TestCase):
     def test_success(self, mock_pymysql):
         mock_cursor = mock.MagicMock()
         mock_cursor.fetchone.return_value = ['id', 'id']
-        mock_cursor.fetchall.return_value = [['id', 'id2', 1],['id2', 'id2', 1],['id2', 'id3', 1]]
+        mock_cursor.fetchall.return_value = [
+            ['id', 'id2', 1], ['id2', 'id2', 1], ['id2', 'id3', 1]]
         mock_pymysql.connect.return_value.cursor.return_value.__enter__.return_value = mock_cursor
         assert app.handler(good_api_event(), "")['statusCode'] == 200
 
@@ -101,7 +107,8 @@ class TestPatchInstance(TestCase):
     def test_bad_type(self, mock_pymysql):
         mock_cursor = mock.MagicMock()
         mock_cursor.fetchone.return_value = ['id', 'id']
-        mock_cursor.fetchall.return_value = [['id', 'id2', 1],['id2', 'id2', 1],['id2', 'id3', 1]]
+        mock_cursor.fetchall.return_value = [
+            ['id', 'id2', 1], ['id2', 'id2', 1], ['id2', 'id3', 1]]
         mock_pymysql.connect.return_value.cursor.return_value.__enter__.return_value = mock_cursor
         assert app.handler(bad_type_api_event(), "")['statusCode'] == 400
 
@@ -109,6 +116,7 @@ class TestPatchInstance(TestCase):
     def test_bad_keys(self, mock_pymysql):
         mock_cursor = mock.MagicMock()
         mock_cursor.fetchone.return_value = ['id', 'id']
-        mock_cursor.fetchall.return_value = [['id', 'id2', 1],['id2', 'id2', 1],['id2', 'id3', 1]]
+        mock_cursor.fetchall.return_value = [
+            ['id', 'id2', 1], ['id2', 'id2', 1], ['id2', 'id3', 1]]
         mock_pymysql.connect.return_value.cursor.return_value.__enter__.return_value = mock_cursor
         assert app.handler(bad_keys_api_event(), "")['statusCode'] == 400
