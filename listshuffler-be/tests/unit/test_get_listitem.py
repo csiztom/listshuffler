@@ -46,7 +46,7 @@ class TestGetListitem(TestCase):
     def test_paired_listitem(self, mock_pymysql):
         mock_cursor = mock.MagicMock()
         mock_cursor.fetchall.return_value = [
-            ['id1', 'item'], ['id2', 'item'], ['id3', 'item']]
+            ['id1', 'item', 1], ['id2', 'item', 1], ['id3', 'item', 1]]
         mock_cursor.fetchone.return_value = ['name']
         mock_pymysql.connect.return_value.cursor.return_value.__enter__.return_value = mock_cursor
         res = app.handler(good_api_event(), "")
