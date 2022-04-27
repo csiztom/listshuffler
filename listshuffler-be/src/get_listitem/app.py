@@ -27,12 +27,12 @@ def handler(event, context):
         cur.execute("select listItem from listItems where listItemId=%s",
                     (listitem_id))
         result = cur.fetchone()
-        cur.execute("""select listItemID, listItem
+        cur.execute("""select listItemID, listItem, multiplicity
             from public.pairs join public.listItems
             on listItemID2=listItemID
             where listItemID1=%s""",
                     (listitem_id))
-        pairs = {str(int(hashlib.sha384(val[0].encode()).hexdigest(),16)): val[1]
+        pairs = {str(int(hashlib.sha384((val[0]+str(val[2])).encode()).hexdigest(),16)): val[1]
                  for val in cur.fetchall()}
 
     return http_response.response(200 if result != None else 404, {
