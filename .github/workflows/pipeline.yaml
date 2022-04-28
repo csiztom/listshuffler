@@ -40,7 +40,7 @@ jobs:
         run: npm run build:test
       - name: Unit tests
         working-directory: ${{ env.FE-DIR }}
-        run: CI=true npm test
+        run: npm test
 
   test-be:
     if: github.ref == 'refs/heads/test'

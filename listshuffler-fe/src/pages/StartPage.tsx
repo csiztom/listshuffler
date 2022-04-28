@@ -35,7 +35,7 @@ const StartPage = (): ReactElement => {
                 (resp) =>
                     resp.adminID && navigate('./instance/' + resp.adminID),
             )
-            .catch(() =>
+            .catch(() => {
                 toast({
                     title: 'Error occurred. :/',
                     description:
@@ -43,9 +43,9 @@ const StartPage = (): ReactElement => {
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
-                }),
-            )
-            .then(setIsLoading.off)
+                })
+                setIsLoading.off()
+            })
     }
 
     const signIn = (str: string) => {
@@ -63,7 +63,7 @@ const StartPage = (): ReactElement => {
                         resp.listItemID &&
                         navigate('./listitem/' + resp.listItemID),
                 )
-                .catch(() =>
+                .catch(() => {
                     toast({
                         title: 'Error occurred. :/',
                         description:
@@ -71,9 +71,9 @@ const StartPage = (): ReactElement => {
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
-                    }),
-                )
-                .then(setIsLoading.off)
+                    })
+                    setIsLoading.off()
+                })
         else if (str.length === 6)
             fetch(process.env.REACT_APP_API_URL + '/listitem', {
                 method: 'POST',
@@ -88,7 +88,7 @@ const StartPage = (): ReactElement => {
                         resp.listItemID &&
                         navigate('./listitem/' + resp.listItemID),
                 )
-                .catch(() =>
+                .catch(() => {
                     toast({
                         title: 'Error occurred. :/',
                         description:
@@ -96,16 +96,16 @@ const StartPage = (): ReactElement => {
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
-                    }),
-                )
-                .then(setIsLoading.off)
+                    })
+                    setIsLoading.off()
+                })
         else if (str.length === 8)
             fetch(process.env.REACT_APP_API_URL + '/instance?adminID=' + str, {
                 method: 'GET',
             })
                 .then((response) => response.ok && response.json())
                 .then(() => navigate('./instance/' + str))
-                .catch(() =>
+                .catch(() => {
                     toast({
                         title: 'Error occurred. :/',
                         description:
@@ -113,9 +113,9 @@ const StartPage = (): ReactElement => {
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
-                    }),
-                )
-                .then(setIsLoading.off)
+                    })
+                    setIsLoading.off()
+                })
         else {
             toast({
                 title: 'Wrong code length',

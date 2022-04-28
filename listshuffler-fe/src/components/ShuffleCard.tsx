@@ -12,6 +12,7 @@ import {
     Stack,
 } from '@chakra-ui/react'
 import { ReactElement, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AbstractInstance } from '../types/main'
 import Card from './Card'
 
@@ -30,87 +31,97 @@ const ShuffleCard = ({
     disabled,
     shuffle,
 }: ShuffleCardProps): ReactElement => {
+    const navigate = useNavigate()
     const { onOpen, onClose, isOpen } = useDisclosure()
     const [value, setValue] = useState<string>()
     return (
         <Card zIndex={1}>
-            <ButtonGroup>
-                <Tooltip hasArrow label="Shuffle lists">
-                    <Button
-                        colorScheme="primary"
-                        borderRadius="button"
-                        p={2}
-                        isLoading={isLoading}
-                        disabled={
-                            instance?.shuffled ||
-                            !instance?.shuffledID ||
-                            disabled ||
-                            isLoading
-                        }
-                        onClick={() => {
-                            instance?.shuffledID && shuffle()
-                        }}
-                    >
-                        Shuffle now
-                    </Button>
-                </Tooltip>
-                <Popover
-                    isOpen={isOpen}
-                    returnFocusOnClose={false}
-                    onOpen={onOpen}
-                    onClose={onClose}
-                    closeOnBlur={true}
+            {instance?.shuffled ? (
+                <Tooltip hasArrow label="See the pairs">
+                <Button
+                    colorScheme="primary"
+                    borderRadius="button"
+                    p={2}
+                    isLoading={isLoading}
+                    onClick={() => navigate('./pairs')}
                 >
-                    <PopoverTrigger>
+                    Pairs
+                </Button>
+            </Tooltip>
+            ) : (
+                <ButtonGroup>
+                    <Tooltip hasArrow label="Shuffle lists">
                         <Button
-                            colorScheme="secondary"
+                            colorScheme="primary"
                             borderRadius="button"
                             p={2}
                             isLoading={isLoading}
                             disabled={
-                                disabled ||
-                                !instance?.shuffledID ||
-                                instance?.shuffled ||
-                                isLoading
+                                !instance?.shuffledID || disabled || isLoading
                             }
-                            onClick={() => (isOpen ? onClose() : onOpen())}
+                            onClick={() => {
+                                instance?.shuffledID && shuffle()
+                            }}
                         >
-                            Time
+                            Shuffle now
                         </Button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                        <PopoverArrow />
-                        <Stack direction="row" padding={2}>
-                            <Input
-                                type="date"
-                                defaultValue={instance?.shuffleTime ?? ''}
-                                onChange={(e) => setValue(e.target.value)}
-                            />
+                    </Tooltip>
+                    <Popover
+                        isOpen={isOpen}
+                        returnFocusOnClose={false}
+                        onOpen={onOpen}
+                        onClose={onClose}
+                        closeOnBlur={true}
+                    >
+                        <PopoverTrigger>
                             <Button
-                                colorScheme="primary"
+                                colorScheme="secondary"
                                 borderRadius="button"
-                                p={4}
+                                p={2}
                                 isLoading={isLoading}
                                 disabled={
                                     disabled ||
                                     !instance?.shuffledID ||
-                                    instance?.shuffled ||
                                     isLoading
                                 }
-                                onClick={() => {
-                                    setInstance({
-                                        ...instance,
-                                        shuffleTime: value ?? null,
-                                    })
-                                    onClose()
-                                }}
+                                onClick={() => (isOpen ? onClose() : onOpen())}
                             >
-                                Save
+                                Time
                             </Button>
-                        </Stack>
-                    </PopoverContent>
-                </Popover>
-            </ButtonGroup>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                            <PopoverArrow />
+                            <Stack direction="row" padding={2}>
+                                <Input
+                                    type="date"
+                                    defaultValue={instance?.shuffleTime ?? ''}
+                                    onChange={(e) => setValue(e.target.value)}
+                                />
+                                <Button
+                                    colorScheme="primary"
+                                    borderRadius="button"
+                                    p={4}
+                                    isLoading={isLoading}
+                                    disabled={
+                                        disabled ||
+                                        !instance?.shuffledID ||
+                                        isLoading
+                                    }
+                                    onClick={() => {
+                                        setInstance({
+                                            ...instance,
+                                            shuffleTime: value ?? null,
+                                        })
+                                        onClose()
+                                    }}
+                                >
+                                    Save
+                                </Button>
+                            </Stack>
+                        </PopoverContent>
+                    </Popover>
+                </ButtonGroup>
+            )}
         </Card>
     )
 }

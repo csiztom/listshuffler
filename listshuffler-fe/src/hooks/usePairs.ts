@@ -1,5 +1,6 @@
 import { useToast } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
+import { AbstractInstance } from '../types/main'
 
 interface Pairs {
     [key: string]: Array<string>
@@ -9,6 +10,8 @@ const usePairs = (
     id: string | undefined,
     shuffled: boolean | undefined,
     setLoading?: { on: () => void; off: () => void },
+    instance?: AbstractInstance,
+    setInstance?: (instance: AbstractInstance) => void,
 ): [Pairs, () => void] => {
     const [pairs, setPairs] = useState<Pairs>({})
     const toast = useToast()
@@ -22,11 +25,16 @@ const usePairs = (
                 adminID: id,
             }),
         })
+            .then(
+                () =>
+                    setInstance &&
+                    instance &&
+                    setInstance({ ...instance, shuffled: true }),
+            )
             .catch(() =>
                 toast({
-                    title: 'Error occurred while loading pairs. :/',
-                    description:
-                        'Try reloading the webpage.',
+                    title: 'Error occurred while shuffling. :/',
+                    description: 'Try adjusting the parameters.',
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
@@ -47,9 +55,8 @@ const usePairs = (
             })
             .catch(() =>
                 toast({
-                    title: 'Error occurred, please refresh. :/',
-                    description:
-                        'In order to get the latest saved state refresh the page.',
+                    title: 'Error occurred while loading pairs. :/',
+                    description: 'Try reloading the page.',
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
@@ -57,7 +64,7 @@ const usePairs = (
             )
             .then(setLoading && setLoading.off)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id, toast, shuffled])
+    }, [id, shuffled])
 
     return [pairs, shuffle]
 }

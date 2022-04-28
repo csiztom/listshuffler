@@ -104,8 +104,7 @@ const useInstance = (
                 .catch(() =>
                     toast({
                         title: 'Error occurred while saving changes. :/',
-                        description:
-                            'Sorry for the inconvenience',
+                        description: 'Sorry for the inconvenience',
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
@@ -133,6 +132,9 @@ const useInstance = (
             )
         }
         editedInstance.lists && setEditedLists(editedInstance.lists)
+        editedInstance.shuffled &&
+            instance &&
+            setInstance({ ...instance, shuffled: editedInstance.shuffled })
     }
 
     const addList = () => {
@@ -177,8 +179,7 @@ const useInstance = (
             .catch(() =>
                 toast({
                     title: 'Error occurred while adding new list. :/',
-                    description:
-                        'Sorry for the inconvenience.',
+                    description: 'Sorry for the inconvenience.',
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
@@ -285,8 +286,7 @@ const useInstance = (
                 .catch(() =>
                     toast({
                         title: 'Error occurred while saving. :/',
-                        description:
-                            'Sorry for the inconvenience.',
+                        description: 'Sorry for the inconvenience.',
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
@@ -310,8 +310,7 @@ const useInstance = (
                 .catch(() =>
                     toast({
                         title: 'Error occurred while discarding changes. :/',
-                        description:
-                            'Sorry for the inconvenience.',
+                        description: 'Sorry for the inconvenience.',
                         status: 'error',
                         duration: 9000,
                         isClosable: true,

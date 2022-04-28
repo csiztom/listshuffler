@@ -31,7 +31,7 @@ const InstancePage = (): ReactElement => {
         setIsLoading,
     )
     const [openProbs, setOpenProbs] = useBoolean(false)
-    const shuffle = usePairs(id, instance?.shuffled, setIsLoading)[1]
+    const shuffle = usePairs(id, instance?.shuffled, setIsLoading, instance, setInstance)[1]
 
     const generatedLists = useMemo(
         () =>
