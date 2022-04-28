@@ -43,7 +43,7 @@ const useInstance = (
                 }),
             )
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id, toast, updateLists, updateEditedLists])
+    }, [id, updateLists, updateEditedLists])
 
     useEffect(
         () => instance && setEditedLists(instance.lists),
@@ -211,7 +211,7 @@ const useInstance = (
                 listID: list.listID,
                 listItem: item.listItem,
             }),
-        }).then((response) => response.ok && response.json())
+        })
 
     const saveListItem = (item: AbstractListItem) =>
         fetch(process.env.REACT_APP_API_URL + '/listitem', {
@@ -302,17 +302,7 @@ const useInstance = (
             Promise.all([
                 ...instance.lists.map((curList) =>
                     curList.inProgress
-                        ? deleteList(curList).then(() =>
-                              setInstance(
-                                  (instance) =>
-                                      instance && {
-                                          ...instance,
-                                          lists: instance.lists.filter(
-                                              (li) => !li.inProgress,
-                                          ),
-                                      },
-                              ),
-                          )
+                        ? deleteList(curList)
                         : Promise.resolve(),
                 ),
             ])

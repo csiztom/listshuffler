@@ -5,7 +5,7 @@ interface Pairs {
     [key: string]: Array<string>
 }
 
-const useShuffle = (
+const usePairs = (
     id: string | undefined,
     shuffled: boolean | undefined,
     setLoading?: { on: () => void; off: () => void },
@@ -62,4 +62,4 @@ const useShuffle = (
     return [pairs, shuffle]
 }
 
-export default useShuffle
+export default usePairs

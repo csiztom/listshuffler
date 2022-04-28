@@ -1,4 +1,4 @@
-type Preset = 'christmas' | undefined
+type Preset = 'christmas'
 
 export type AbstractListItem = { listItem: string; listItemID: string }
 
@@ -13,8 +13,8 @@ export type AbstractList = {
 export type AbstractInstance = {
     lists: Array<AbstractList>
     shuffled: boolean
-    shuffledID: string
+    shuffledID: string | null
     uniqueInMul: boolean
-    preset: Preset
+    preset: Preset | null
     shuffleTime: string | null
 }

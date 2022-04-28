@@ -9,7 +9,7 @@ import ShuffleCard from '../components/ShuffleCard'
 import ProbabilityInput from '../components/ProbabilityInput'
 import useInstance from '../hooks/useInstance'
 import useProbabilities from '../hooks/useProbabilities'
-import useShuffle from '../hooks/useShuffle'
+import usePairs from '../hooks/usePairs'
 
 const InstancePage = (): ReactElement => {
     const { id } = useParams()
@@ -31,7 +31,7 @@ const InstancePage = (): ReactElement => {
         setIsLoading,
     )
     const [openProbs, setOpenProbs] = useBoolean(false)
-    const shuffle = useShuffle(id, instance?.shuffled, setIsLoading)[1]
+    const shuffle = usePairs(id, instance?.shuffled, setIsLoading)[1]
 
     const generatedLists = useMemo(
         () =>

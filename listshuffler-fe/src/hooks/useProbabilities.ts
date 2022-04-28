@@ -81,7 +81,7 @@ const useProbabilities = (
             )
             .then(setLoading && setLoading.off)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id, listId, toast, listItems])
+    }, [id, listId, listItems])
 
     return { probs, setProbs, saveProbs }
 }

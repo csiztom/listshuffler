@@ -40,7 +40,6 @@ const ListCard = ({
         addListItem,
         editListItem,
         deleteListItem,
-        editMultiplicity,
     } = useListEditor(lists, setLists)
     const list = useMemo(
         () => lists.find((li) => li.listID === listId),
@@ -164,11 +163,11 @@ const ListCard = ({
                                 maxW={24}
                                 onChange={(str, num) =>
                                     str !== ''
-                                        ? editMultiplicity({
+                                        ? editList({
                                               ...list,
                                               multiplicity: num,
                                           })
-                                        : editMultiplicity({
+                                        : editList({
                                               ...list,
                                               multiplicity: 0,
                                           })

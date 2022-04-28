@@ -5,13 +5,13 @@ import image from '../assets/drawing.svg'
 import { ListItemButtonInput } from '../components'
 import Card from '../components/Card'
 import useInstance from '../hooks/useInstance'
-import useShuffle from '../hooks/useShuffle'
+import usePairs from '../hooks/usePairs'
 
 const PairedPage = (): ReactElement => {
     const { id } = useParams()
     const [isLoading, setIsLoading] = useBoolean(false)
     const { instance, allListItems } = useInstance(id ?? '', setIsLoading)
-    const [pairs] = useShuffle(id, instance?.shuffled, setIsLoading)
+    const [pairs] = usePairs(id, instance?.shuffled, setIsLoading)
 
     const generatedPairs = useMemo(
         () =>

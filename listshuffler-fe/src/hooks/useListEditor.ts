@@ -10,7 +10,6 @@ const useListEditor = (
     addListItem: (list: AbstractList) => void
     editListItem: (list: AbstractList, item: AbstractListItem) => void
     deleteListItem: (list: AbstractList, item: AbstractListItem) => void
-    editMultiplicity: (list: AbstractList) => void
 } => {
     const [index, setIndex] = useState(0)
 
@@ -44,6 +43,7 @@ const useListEditor = (
                     ? {
                           ...it,
                           listName: list.listName,
+                          multiplicity: list.multiplicity
                       }
                     : it,
             ),
@@ -86,26 +86,12 @@ const useListEditor = (
         )
     }
 
-    const editMultiplicity = (list: AbstractList) => {
-        setLists(
-            lists.map((it) =>
-                it.listID === list.listID
-                    ? {
-                          ...it,
-                          multiplicity: list.multiplicity,
-                      }
-                    : it,
-            ),
-        )
-    }
-
     return {
         editList,
         deleteList,
         addListItem,
         editListItem,
         deleteListItem,
-        editMultiplicity,
     }
 }
 
