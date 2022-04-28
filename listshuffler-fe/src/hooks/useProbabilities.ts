@@ -1,4 +1,4 @@
-import { useToast } from '@chakra-ui/react'
+import { useBoolean, useToast } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { AbstractListItem } from '../types/main'
 
@@ -18,6 +18,7 @@ const useProbabilities = (
 } => {
     const [probs, setProbs] = useState<Probabilities>({})
     const toast = useToast()
+    const [updateProbs, setUpdateProbs] = useBoolean()
 
     const saveProbs = () => {
         if (!id || !listId) return
@@ -41,15 +42,16 @@ const useProbabilities = (
             )
             .catch(() =>
                 toast({
-                    title: 'Error occurred, please refresh. :/',
+                    title: 'Error occurred while saving probabilities. :/',
                     description:
-                        'In order to get the latest saved state refresh the page.',
+                        'Sorry for the inconvenience.',
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
                 }),
             )
             .then(setLoading && setLoading.off)
+            .then(setUpdateProbs.toggle)
     }
 
     useEffect(() => {
@@ -71,9 +73,9 @@ const useProbabilities = (
             })
             .catch(() =>
                 toast({
-                    title: 'Error occurred, please refresh. :/',
+                    title: 'Error occurred while loading probabilities. :/',
                     description:
-                        'In order to get the latest saved state refresh the page.',
+                        'Try reloading the page.',
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
@@ -81,7 +83,7 @@ const useProbabilities = (
             )
             .then(setLoading && setLoading.off)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id, listId, listItems])
+    }, [id, listId, listItems, updateProbs])
 
     return { probs, setProbs, saveProbs }
 }

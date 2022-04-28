@@ -26,7 +26,7 @@ const InstancePage = (): ReactElement => {
     } = useInstance(id ?? 'null', setIsLoading, setEditing)
     const { probs, setProbs, saveProbs } = useProbabilities(
         id,
-        instance?.shuffledID,
+        instance?.shuffledID || undefined,
         allListItems,
         setIsLoading,
     )

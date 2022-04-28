@@ -80,12 +80,12 @@ const useInstance = (
     )
 
     const updateInstance = (editedInstance: AbstractInstance) => {
-        setLoading && setLoading.on()
         if (
             editedInstance.shuffleTime !== instance?.shuffleTime ||
             editedInstance.uniqueInMul !== instance?.uniqueInMul ||
             editedInstance.shuffledID !== instance?.shuffledID
         ) {
+            setLoading && setLoading.on()
             fetch(process.env.REACT_APP_API_URL + '/instance', {
                 method: 'PATCH',
                 body: JSON.stringify({
@@ -101,17 +101,18 @@ const useInstance = (
                         : {}),
                 }),
             })
-                .then(setLoading && setLoading.off)
                 .catch(() =>
                     toast({
-                        title: 'Error occurred, please refresh. :/',
+                        title: 'Error occurred while saving changes. :/',
                         description:
-                            'In order to get the latest saved state refresh the page.',
+                            'Sorry for the inconvenience',
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
                     }),
                 )
+                .then(setLoading && setLoading.off)
+                .then(setUpdateLists.toggle)
             setInstance(
                 instance
                     ? {
@@ -130,7 +131,7 @@ const useInstance = (
                       }
                     : undefined,
             )
-        } else setLoading && setLoading.off()
+        }
         editedInstance.lists && setEditedLists(editedInstance.lists)
     }
 
@@ -173,17 +174,17 @@ const useInstance = (
                         },
                 )
             })
-            .then(setLoading && setLoading.off)
             .catch(() =>
                 toast({
-                    title: 'Error occurred, please refresh. :/',
+                    title: 'Error occurred while adding new list. :/',
                     description:
-                        'In order to get the latest saved state refresh the page.',
+                        'Sorry for the inconvenience.',
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
                 }),
             )
+            .then(setLoading && setLoading.off)
     }
 
     const saveList = (list: AbstractList) =>
@@ -272,9 +273,6 @@ const useInstance = (
                         : deleteList(prevList),
                 ),
             ])
-                .then(setLoading && setLoading.off)
-                .then(setUpdateLists.toggle)
-                .then(setEditing && setEditing.off)
                 .then(() =>
                     toast({
                         title: 'Lists successfully saved',
@@ -286,14 +284,17 @@ const useInstance = (
                 )
                 .catch(() =>
                     toast({
-                        title: 'Error occurred, please refresh. :/',
+                        title: 'Error occurred while saving. :/',
                         description:
-                            'In order to get the latest saved state refresh the page.',
+                            'Sorry for the inconvenience.',
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
                     }),
                 )
+                .then(setLoading && setLoading.off)
+                .then(setUpdateLists.toggle)
+                .then(setEditing && setEditing.off)
     }
 
     const revertLists = () => {
@@ -306,19 +307,19 @@ const useInstance = (
                         : Promise.resolve(),
                 ),
             ])
-                .then(setUpdateEditedLists.toggle)
-                .then(setLoading && setLoading.off)
-                .then(setEditing && setEditing.off)
                 .catch(() =>
                     toast({
-                        title: 'Error occurred, please refresh. :/',
+                        title: 'Error occurred while discarding changes. :/',
                         description:
-                            'In order to get the latest saved state refresh the page.',
+                            'Sorry for the inconvenience.',
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
                     }),
                 )
+                .then(setUpdateEditedLists.toggle)
+                .then(setLoading && setLoading.off)
+                .then(setEditing && setEditing.off)
     }
 
     return {

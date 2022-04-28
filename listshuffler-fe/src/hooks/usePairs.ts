@@ -22,17 +22,17 @@ const usePairs = (
                 adminID: id,
             }),
         })
-            .then(setLoading && setLoading.off)
             .catch(() =>
                 toast({
-                    title: 'Error occurred, please refresh. :/',
+                    title: 'Error occurred while loading pairs. :/',
                     description:
-                        'In order to get the latest saved state refresh the page.',
+                        'Try reloading the webpage.',
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
                 }),
             )
+            .then(setLoading && setLoading.off)
     }
 
     useEffect(() => {
