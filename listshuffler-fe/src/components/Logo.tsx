@@ -1,8 +1,8 @@
 import { ReactElement } from 'react'
-import { Image, useColorMode } from '@chakra-ui/react'
+import { Image, ImageProps, useColorMode } from '@chakra-ui/react'
 import { logo_light, logo_dark, logo_small } from '../assets'
 
-interface LogoProps {
+interface LogoProps extends ImageProps {
     size?: 'small'
 }
 
@@ -22,6 +22,7 @@ const Logo = (props: LogoProps): ReactElement => {
             marginInline="auto"
             alignContent="center"
             alt="Logo of Listshuffler"
+            {...props}
         />
     )
 }

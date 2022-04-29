@@ -1,4 +1,4 @@
-import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
+import { AddIcon, CopyIcon, DeleteIcon } from '@chakra-ui/icons'
 import {
     Button,
     Stack,
@@ -12,6 +12,7 @@ import {
     NumberDecrementStepper,
     NumberInputField,
     Tooltip,
+    useToast,
 } from '@chakra-ui/react'
 import { ReactElement, useMemo } from 'react'
 import useListEditor from '../hooks/useListEditor'
@@ -34,17 +35,30 @@ const ListCard = ({
     isLoading: parentIsLoading,
     ...props
 }: ListCardProps): ReactElement => {
-    const {
-        editList,
-        deleteList,
-        addListItem,
-        editListItem,
-        deleteListItem,
-    } = useListEditor(lists, setLists)
+    const { editList, deleteList, addListItem, editListItem, deleteListItem } =
+        useListEditor(lists, setLists)
+    const toast = useToast()
     const list = useMemo(
         () => lists.find((li) => li.listID === listId),
         [lists, listId],
     )
+    const onClickCopy = () => {
+        var data = [
+            new ClipboardItem({
+                'text/plain': new Blob([listId], { type: 'text/plain' }),
+            }),
+        ]
+        navigator.clipboard.write(data).then(() =>
+            toast({
+                title: 'Code copied to clipboard.',
+                description:
+                    'You can now share this with the respective users.',
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            }),
+        )
+    }
     const generatedItems = useMemo(
         () =>
             list?.listItems.map((it) => (
@@ -114,6 +128,19 @@ const ListCard = ({
                     justifyContent="center"
                 >
                     {generatedItems}
+                    {!editing && (
+                        <Tooltip hasArrow label="Copy list invite code">
+                            <Button
+                                colorScheme="primary"
+                                borderRadius="button"
+                                onClick={onClickCopy}
+                                p={2}
+                                {...props}
+                            >
+                                <CopyIcon />
+                            </Button>
+                        </Tooltip>
+                    )}
                 </Stack>
             )}
             {editing && list && (

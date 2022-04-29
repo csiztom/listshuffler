@@ -1,7 +1,6 @@
-import { Stack, useBoolean } from '@chakra-ui/react'
+import { Spinner, Stack, Text, useBoolean } from '@chakra-ui/react'
 import { ReactElement, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import image from '../assets/drawing.svg'
 import { ListItemButtonInput } from '../components'
 import Card from '../components/Card'
 import useInstance from '../hooks/useInstance'
@@ -45,7 +44,9 @@ const PairedPage = (): ReactElement => {
                                             <ListItemButtonInput
                                                 id={that}
                                                 key={that}
-                                                name={allListItems[that].listItem}
+                                                name={
+                                                    allListItems[that].listItem
+                                                }
                                             />
                                         ))}
                                     </Stack>
@@ -58,17 +59,16 @@ const PairedPage = (): ReactElement => {
     )
 
     return (
-        <Stack
-            direction="column"
-            gap={4}
-            bgImage={image}
-            w="100vw"
-            h="100vh"
-            p="8"
-            overflow="auto"
-            align="center"
-        >
-            {!isLoading && (
+        <>
+            {(isLoading || Object.keys(pairs).length === 0) && (
+                <Card>
+                    <Stack direction="column" align="center">
+                        <Text>Please wait</Text>
+                        <Spinner color="primary.500" />
+                    </Stack>
+                </Card>
+            )}
+            {!isLoading && generatedPairs.length > 0 && (
                 <Card>
                     <Stack
                         direction="column"
@@ -82,7 +82,7 @@ const PairedPage = (): ReactElement => {
                     </Stack>
                 </Card>
             )}
-        </Stack>
+        </>
     )
 }
 

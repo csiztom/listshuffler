@@ -1,7 +1,7 @@
-import { Stack, useToast } from '@chakra-ui/react'
+import { CheckIcon, EditIcon } from '@chakra-ui/icons'
+import { Button, Stack, Tooltip, useBoolean, useToast } from '@chakra-ui/react'
 import { ReactElement, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import image from '../assets/drawing.svg'
 import { ListItemButtonInput } from '../components'
 import Card from '../components/Card'
 
@@ -9,12 +9,13 @@ const ListItemPage = (): ReactElement => {
     const { id } = useParams()
     const [pairs, setPairs] = useState<{ [key: string]: string }>({})
     const [name, setName] = useState('')
-    const [isLoading, setIsLoading] = useState(false)
+    const [editing, setEditing] = useBoolean(false)
+    const [isLoading, setIsLoading] = useBoolean(false)
     const toast = useToast()
 
     useEffect(() => {
         if (!id) return
-        setIsLoading(true)
+        setIsLoading.on()
         fetch(process.env.REACT_APP_API_URL + '/listitem?listItemID=' + id, {
             method: 'GET',
         })
@@ -33,8 +34,34 @@ const ListItemPage = (): ReactElement => {
                     isClosable: true,
                 }),
             )
-            .then(() => setIsLoading(false))
+            .then(setIsLoading.off)
     }, [id, toast, setIsLoading])
+
+    useEffect(() => {
+        if (!id) return
+        if (!name) return
+        if (editing) return
+        setIsLoading.on()
+        fetch(process.env.REACT_APP_API_URL + '/listitem', {
+            method: 'PATCH',
+            body: JSON.stringify({
+                listItemID: id,
+                listItem: name,
+            }),
+        })
+            .catch(() =>
+                toast({
+                    title: 'Error occurred while saving name, please refresh. :/',
+                    description:
+                        'In order to get the latest saved state refresh the page.',
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                }),
+            )
+            .then(setIsLoading.off)
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [editing])
 
     const generatedPairs = useMemo(
         () =>
@@ -49,7 +76,11 @@ const ListItemPage = (): ReactElement => {
                 >
                     {
                         <>
-                            <ListItemButtonInput id={it} name={pairs[it]} disabled />
+                            <ListItemButtonInput
+                                id={it}
+                                name={pairs[it]}
+                                disabled
+                            />
                         </>
                     }
                 </Stack>
@@ -58,16 +89,7 @@ const ListItemPage = (): ReactElement => {
     )
 
     return (
-        <Stack
-            direction="column"
-            gap={4}
-            bgImage={image}
-            w="100vw"
-            h="100vh"
-            p="8"
-            overflow="auto"
-            align="center"
-        >
+        <>
             <Card>
                 <Stack
                     direction="column"
@@ -77,11 +99,32 @@ const ListItemPage = (): ReactElement => {
                     wrap="wrap"
                     justifyContent="center"
                 >
-                    {id && <ListItemButtonInput id={id} name={name} isLoading={isLoading}/>}
+                    {id && (
+                        <ListItemButtonInput
+                            id={id}
+                            name={name}
+                            isLoading={isLoading}
+                            editing={editing}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    )}
                     {generatedPairs}
+                    {Object.keys(pairs).length === 0 && (
+                        <Tooltip hasArrow label={editing ? 'Save' : 'Edit'}>
+                            <Button
+                                colorScheme="primary"
+                                borderRadius="button"
+                                p={2}
+                                isLoading={isLoading}
+                                onClick={setEditing.toggle}
+                            >
+                                {editing ? <CheckIcon /> : <EditIcon />}
+                            </Button>
+                        </Tooltip>
+                    )}
                 </Stack>
             </Card>
-        </Stack>
+        </>
     )
 }
 

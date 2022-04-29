@@ -1,7 +1,6 @@
 import { Stack, Grid, useBoolean, Spinner, Text } from '@chakra-ui/react'
 import { ReactElement, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import image from '../assets/drawing.svg'
 import { ListCard } from '../components'
 import Card from '../components/Card'
 import EditorCard from '../components/EditorCard'
@@ -73,16 +72,7 @@ const InstancePage = (): ReactElement => {
     )
 
     return (
-        <Stack
-            direction="column"
-            gap={4}
-            bgImage={image}
-            w="100vw"
-            h="100vh"
-            p="8"
-            overflow="auto"
-            align="center"
-        >
+        <>
             {!instance && (
                 <Card>
                     <Stack direction="column" align="center">
@@ -104,7 +94,7 @@ const InstancePage = (): ReactElement => {
             ) : (
                 generatedLists
             )}
-            {instance?.shuffled ||
+            {!instance?.shuffled &&
                 (instance && (
                     <EditorCard
                         editing={editing}
@@ -130,7 +120,7 @@ const InstancePage = (): ReactElement => {
                     shuffle={shuffle}
                 />
             )}
-        </Stack>
+        </>
     )
 }
 
