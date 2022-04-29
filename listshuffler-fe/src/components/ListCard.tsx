@@ -25,6 +25,7 @@ interface ListCardProps extends Pick<ButtonProps, 'isLoading'> {
     setLists: (list: AbstractList[]) => void
     listId: string
     editing?: boolean
+    shuffled?: boolean
 }
 
 const ListCard = ({
@@ -33,6 +34,7 @@ const ListCard = ({
     listId,
     editing = false,
     isLoading: parentIsLoading,
+    shuffled = false,
     ...props
 }: ListCardProps): ReactElement => {
     const { editList, deleteList, addListItem, editListItem, deleteListItem } =
@@ -128,7 +130,7 @@ const ListCard = ({
                     justifyContent="center"
                 >
                     {generatedItems}
-                    {!editing && (
+                    {!editing && !shuffled && (
                         <Tooltip hasArrow label="Copy list invite code">
                             <Button
                                 colorScheme="primary"

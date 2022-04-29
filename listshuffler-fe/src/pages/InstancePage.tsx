@@ -44,6 +44,7 @@ const InstancePage = (): ReactElement => {
                     setLists={(lists) =>
                         setInstance({ ...instance, lists: lists })
                     }
+                    shuffled={instance.shuffled}
                 />
             )),
         [instance, isLoading, editing, setInstance],
