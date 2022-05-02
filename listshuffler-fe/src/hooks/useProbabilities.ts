@@ -1,5 +1,6 @@
 import { useBoolean, useToast } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
+import { useIntl } from 'react-intl'
 import { AbstractListItem } from '../types/main'
 
 interface Probabilities {
@@ -19,6 +20,7 @@ const useProbabilities = (
     const [probs, setProbs] = useState<Probabilities>({})
     const toast = useToast()
     const [updateProbs, setUpdateProbs] = useBoolean()
+    const intl = useIntl()
 
     const saveProbs = () => {
         if (!id || !listId) return
@@ -31,10 +33,19 @@ const useProbabilities = (
                 probabilities: probs,
             }),
         })
+            .then((response) => {
+                if (!response.ok) throw Error('not 2xx answer')
+            })
             .then(() =>
                 toast({
-                    title: 'Probabilities successfully saved',
-                    description: 'You can shuffle now!',
+                    title: intl.formatMessage({
+                        id: 'probs-saved',
+                        defaultMessage: 'Probabilities successfully saved',
+                    }),
+                    description: intl.formatMessage({
+                        id: 'you-can-shuffle',
+                        defaultMessage: 'You can shuffle now!',
+                    }),
                     status: 'success',
                     duration: 9000,
                     isClosable: true,
@@ -42,9 +53,14 @@ const useProbabilities = (
             )
             .catch(() =>
                 toast({
-                    title: 'Error occurred while saving probabilities. :/',
-                    description:
-                        'Sorry for the inconvenience.',
+                    title: intl.formatMessage({
+                        id: 'error-saving',
+                        defaultMessage: 'Error occurred while saving. :/',
+                    }),
+                    description: intl.formatMessage({
+                        id: 'sorry-inconvenience',
+                        defaultMessage: 'Sorry for the inconvenience.',
+                    }),
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
@@ -67,15 +83,24 @@ const useProbabilities = (
                 method: 'GET',
             },
         )
-            .then((response) => response.ok && response.json())
+            .then((response) => {
+                if (response.ok) return response.json()
+                else throw Error('not 2xx answer')
+            })
             .then((response) => {
                 setProbs(response['probabilities'])
             })
             .catch(() =>
                 toast({
-                    title: 'Error occurred while loading probabilities. :/',
-                    description:
-                        'Try reloading the page.',
+                    title: intl.formatMessage({
+                        id: 'error-loading-probs',
+                        defaultMessage:
+                            'Error occurred while loading probabilities. :/',
+                    }),
+                    description: intl.formatMessage({
+                        id: 'try-reloading',
+                        defaultMessage: 'Try reloading the page.',
+                    }),
                     status: 'error',
                     duration: 9000,
                     isClosable: true,

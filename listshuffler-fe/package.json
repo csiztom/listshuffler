@@ -8,6 +8,8 @@
         "@emotion/react": "^11.8.1",
         "@emotion/styled": "^11.8.1",
         "@fontsource/catamaran": "^4.5.3",
+        "@formatjs/cli": "^4.8.4",
+        "@formatjs/ts-transformer": "^3.9.4",
         "@testing-library/jest-dom": "^5.16.1",
         "@testing-library/react": "^12.1.2",
         "@testing-library/react-hooks": "^8.0.0",
@@ -21,6 +23,7 @@
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "react-focus-lock": "^2.8.1",
+        "react-intl": "^5.25.1",
         "react-router-dom": "^6.2.1",
         "react-scripts": "^5.0.0",
         "ts-jest": "^27.1.4",
@@ -33,7 +36,10 @@
         "build:test": "REACT_APP_ENV=test npm run build",
         "build:prod": "REACT_APP_ENV=prod npm run build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "extract": "formatjs extract 'src/**/!(*.d).ts*' --out-file src/lang/en.json",
+        "compile:hu": "formatjs compile 'src/lang/hu.json' --ast --out-file src/compiled-lang/hu.json",
+        "compile:en": "formatjs compile 'src/lang/en.json' --ast --out-file src/compiled-lang/en.json"
     },
     "eslintConfig": {
         "extends": [
@@ -52,5 +58,9 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "eslint": "^8.14.0",
+        "eslint-plugin-formatjs": "^3.1.1"
     }
 }

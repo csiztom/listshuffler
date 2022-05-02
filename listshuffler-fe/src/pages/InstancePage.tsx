@@ -1,4 +1,10 @@
-import { Stack, Grid, useBoolean, Spinner, Text } from '@chakra-ui/react'
+import {
+    Stack,
+    Grid,
+    useBoolean,
+    Spinner,
+    Text,
+} from '@chakra-ui/react'
 import { ReactElement, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { ListCard } from '../components'
@@ -9,6 +15,7 @@ import ProbabilityInput from '../components/ProbabilityInput'
 import useInstance from '../hooks/useInstance'
 import useProbabilities from '../hooks/useProbabilities'
 import usePairs from '../hooks/usePairs'
+import { useIntl } from 'react-intl'
 
 const InstancePage = (): ReactElement => {
     const { id } = useParams()
@@ -22,6 +29,7 @@ const InstancePage = (): ReactElement => {
         revertLists,
         saveLists,
         setInstance,
+        deleteInstance,
     } = useInstance(id ?? 'null', setIsLoading, setEditing)
     const { probs, setProbs, saveProbs } = useProbabilities(
         id,
@@ -30,7 +38,14 @@ const InstancePage = (): ReactElement => {
         setIsLoading,
     )
     const [openProbs, setOpenProbs] = useBoolean(false)
-    const shuffle = usePairs(id, instance?.shuffled, setIsLoading, instance, setInstance)[1]
+    const shuffle = usePairs(
+        id,
+        instance?.shuffled,
+        setIsLoading,
+        instance,
+        setInstance,
+    )[1]
+    const intl = useIntl()
 
     const generatedLists = useMemo(
         () =>
@@ -54,64 +69,114 @@ const InstancePage = (): ReactElement => {
         () =>
             probs &&
             openProbs &&
-            Object.keys(probs).map((p1) =>
-                Object.keys(probs[p1]).map((p2) => (
-                    <ProbabilityInput
-                        listItem1={allListItems[p1]}
-                        listItem2={allListItems[p2]}
-                        probability={probs[p1][p2]}
-                        key={p1 + p2}
-                        onChange={(str, num) => {
-                            const tmp = probs
-                            tmp[p1][p2] = num
-                            setProbs(tmp)
-                        }}
-                    />
-                )),
-            ),
+            Object.keys(probs).map((p1) => (
+                <Card>
+                    <Grid
+                        templateColumns="1fr 1fr 1fr"
+                        gap={5}
+                        justifyItems="center"
+                    >
+                        {Object.keys(probs[p1]).map((p2) => (
+                            <ProbabilityInput
+                                listItem1={allListItems[p1]}
+                                listItem2={allListItems[p2]}
+                                probability={probs[p1][p2]}
+                                key={p1 + p2}
+                                onChange={(str, num) => {
+                                    const tmp = probs
+                                    tmp[p1][p2] = num
+                                    setProbs(tmp)
+                                }}
+                            />
+                        ))}
+                    </Grid>
+                </Card>
+            )),
         [probs, allListItems, setProbs, openProbs],
     )
 
     return (
         <>
+            {instance && !openProbs && (
+                <Card>
+                    <Text fontSize="lg">
+                        {intl.formatMessage({
+                            id: 'bookmark-this-page',
+                            defaultMessage:
+                                'Bookmark this page if you want to come back later.',
+                        })}
+                        <br />{' '}
+                        {intl.formatMessage({
+                            id: 'this-admin-page',
+                            defaultMessage: 'This is the admin page.',
+                        })}
+                    </Text>
+                </Card>
+            )}
+            {instance && !openProbs && multiplicitySum < 2 && (
+                <Card>
+                    <Text fontSize="md">
+                        {intl.formatMessage({
+                            id: 'you-need-multiplicity',
+                            defaultMessage:
+                                'You need at least two lists or a list with at least 2 multiplicity to shuffle',
+                        })}
+                    </Text>
+                </Card>
+            )}
+            {instance && openProbs && (
+                <Card>
+                    <Text fontSize="lg">
+                        {intl.formatMessage({
+                            id: 'you-can-set-multipliers',
+                            defaultMessage:
+                                'You can set multipliers that affect the shuffle process',
+                        })}
+                        <br />
+                        {intl.formatMessage({
+                            id: 'item-pair-multiplier',
+                            defaultMessage: 'item | pair | multiplier',
+                        })}
+                        <br />
+                        {intl.formatMessage({
+                            id: 'zero-cannot',
+                            defaultMessage: 'zero = cannot be paired',
+                        })}
+                    </Text>
+                </Card>
+            )}
             {!instance && (
                 <Card>
                     <Stack direction="column" align="center">
-                        <Text>Please wait</Text>
+                        <Text>
+                            {intl.formatMessage({
+                                id: 'please-wait',
+                                defaultMessage: 'Please wait',
+                            })}
+                        </Text>
                         <Spinner color="primary.500" />
                     </Stack>
                 </Card>
             )}
-            {openProbs && generatedProbabilities ? (
-                <Card>
-                    <Grid
-                        templateColumns="3fr 1fr"
-                        gap={5}
-                        justifyItems="center"
-                    >
-                        {generatedProbabilities}
-                    </Grid>
-                </Card>
-            ) : (
-                generatedLists
+            {openProbs && generatedProbabilities
+                ? generatedProbabilities
+                : generatedLists}
+            {!instance?.shuffled && instance && (
+                <EditorCard
+                    editing={editing}
+                    setEditing={setEditing}
+                    isLoading={isLoading}
+                    instance={instance}
+                    setInstance={setInstance}
+                    multiplicity={multiplicitySum}
+                    cancelEdited={revertLists}
+                    addList={addList}
+                    saveEdited={saveLists}
+                    probabilityEditor={openProbs}
+                    setProbabilityEditor={setOpenProbs}
+                    saveProbabilities={saveProbs}
+                />
             )}
-            {!instance?.shuffled &&
-                (instance && (
-                    <EditorCard
-                        editing={editing}
-                        setEditing={setEditing}
-                        isLoading={isLoading}
-                        instance={instance}
-                        setInstance={setInstance}
-                        multiplicity={multiplicitySum}
-                        cancelEdited={revertLists}
-                        addList={addList}
-                        saveEdited={saveLists}
-                        probabilityEditor={openProbs}
-                        setProbabilityEditor={setOpenProbs}
-                        saveProbabilities={saveProbs}
-                    />
-                ))}
             {!openProbs && instance && (
                 <ShuffleCard
                     isLoading={isLoading}
@@ -119,6 +184,7 @@ const InstancePage = (): ReactElement => {
                     setInstance={setInstance}
                     disabled={multiplicitySum < 2}
                     shuffle={shuffle}
+                    deleteInstance={deleteInstance}
                 />
             )}
         </>

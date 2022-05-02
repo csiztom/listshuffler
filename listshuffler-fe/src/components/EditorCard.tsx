@@ -3,7 +3,6 @@ import {
     CheckIcon,
     ChevronDownIcon,
     CloseIcon,
-    DeleteIcon,
     EditIcon,
     StarIcon,
 } from '@chakra-ui/icons'
@@ -17,8 +16,10 @@ import {
     MenuList,
     MenuItem,
     Switch,
+    Text,
 } from '@chakra-ui/react'
 import { ReactElement } from 'react'
+import { useIntl } from 'react-intl'
 import { AbstractInstance } from '../types/main'
 import Card from './Card'
 
@@ -51,6 +52,7 @@ const EditorCard = ({
     setProbabilityEditor,
     saveProbabilities,
 }: EditorCardProps): ReactElement => {
+    const intl = useIntl()
     return (
         <Card zIndex={2}>
             <Stack
@@ -63,21 +65,36 @@ const EditorCard = ({
             >
                 {editing ? (
                     <>
+                        {editing && (
+                            <Tooltip
+                                hasArrow
+                                label={intl.formatMessage({
+                                    id: 'cancel',
+                                    defaultMessage: 'Cancel',
+                                })}
+                            >
+                                <Button
+                                    colorScheme="red"
+                                    borderRadius="button"
+                                    p={2}
+                                    isLoading={isLoading}
+                                    onClick={cancelEdited}
+                                >
+                                    <CloseIcon mr={2} />
+                                    {intl.formatMessage({
+                                        id: 'cancel',
+                                        defaultMessage: 'Cancel',
+                                    })}
+                                </Button>
+                            </Tooltip>
+                        )}
                         <Tooltip
                             hasArrow
-                            label={editing ? 'Cancel' : 'Delete instance'}
+                            label={intl.formatMessage({
+                                id: 'add-list',
+                                defaultMessage: 'Add list',
+                            })}
                         >
-                            <Button
-                                colorScheme="red"
-                                borderRadius="button"
-                                p={2}
-                                isLoading={isLoading}
-                                onClick={cancelEdited}
-                            >
-                                {editing ? <CloseIcon /> : <DeleteIcon />}
-                            </Button>
-                        </Tooltip>
-                        <Tooltip hasArrow label="Add list">
                             <Button
                                 colorScheme="primary"
                                 borderRadius="button"
@@ -85,10 +102,20 @@ const EditorCard = ({
                                 onClick={addList}
                                 isLoading={isLoading}
                             >
-                                {<AddIcon />}
+                                <AddIcon mr={2} />
+                                {intl.formatMessage({
+                                    id: 'add-list',
+                                    defaultMessage: 'Add list',
+                                })}
                             </Button>
                         </Tooltip>
-                        <Tooltip hasArrow label="Save">
+                        <Tooltip
+                            hasArrow
+                            label={intl.formatMessage({
+                                id: 'save',
+                                defaultMessage: 'Save',
+                            })}
+                        >
                             <Button
                                 colorScheme="primary"
                                 borderRadius="button"
@@ -96,12 +123,22 @@ const EditorCard = ({
                                 isLoading={isLoading}
                                 onClick={saveEdited}
                             >
-                                <CheckIcon />
+                                <CheckIcon mr={2} />
+                                {intl.formatMessage({
+                                    id: 'save',
+                                    defaultMessage: 'Save',
+                                })}
                             </Button>
                         </Tooltip>
                     </>
                 ) : probabilityEditor ? (
-                    <Tooltip hasArrow label="Edit probabilities">
+                    <Tooltip
+                        hasArrow
+                        label={intl.formatMessage({
+                            id: 'save-probs',
+                            defaultMessage: 'Save probabilities',
+                        })}
+                    >
                         <Button
                             colorScheme="secondary"
                             borderRadius="button"
@@ -118,7 +155,11 @@ const EditorCard = ({
                                     setProbabilityEditor.off()
                             }}
                         >
-                            <CheckIcon />
+                            <CheckIcon mr={2} />
+                            {intl.formatMessage({
+                                id: 'save-probs',
+                                defaultMessage: 'Save probabilities',
+                            })}
                         </Button>
                     </Tooltip>
                 ) : (
@@ -126,7 +167,11 @@ const EditorCard = ({
                         <Menu>
                             <Tooltip
                                 hasArrow
-                                label="Which list will you shuffle for"
+                                label={intl.formatMessage({
+                                    id: 'which-will-shuffle-for',
+                                    defaultMessage:
+                                        'Which list do you want to shuffle pairs for?',
+                                })}
                             >
                                 <MenuButton
                                     as={Button}
@@ -137,7 +182,11 @@ const EditorCard = ({
                                     disabled={multiplicity < 2 || isLoading}
                                     p={2}
                                 >
-                                    {instance.shuffledID ?? 'Select'}
+                                    {instance.shuffledID ??
+                                        intl.formatMessage({
+                                            id: 'select-main',
+                                            defaultMessage: 'Select main list',
+                                        })}
                                 </MenuButton>
                             </Tooltip>
                             <MenuList>
@@ -158,7 +207,13 @@ const EditorCard = ({
                                     ))}
                             </MenuList>
                         </Menu>
-                        <Tooltip hasArrow label="Edit lists">
+                        <Tooltip
+                            hasArrow
+                            label={intl.formatMessage({
+                                id: 'edit-lists',
+                                defaultMessage: 'Edit lists',
+                            })}
+                        >
                             <Button
                                 colorScheme="primary"
                                 borderRadius="button"
@@ -166,24 +221,50 @@ const EditorCard = ({
                                 isLoading={isLoading}
                                 onClick={setEditing.on}
                             >
-                                <EditIcon />
+                                <EditIcon mr={2} />
+                                {intl.formatMessage({
+                                    id: 'edit-lists',
+                                    defaultMessage: 'Edit lists',
+                                })}
                             </Button>
                         </Tooltip>
-
-                        <Switch
-                            colorScheme="primary"
-                            borderRadius="button"
-                            p={2}
-                            disabled={isLoading}
-                            defaultChecked={instance.uniqueInMul}
-                            onChange={(e) =>
-                                setInstance({
-                                    ...instance,
-                                    uniqueInMul: e.target.checked,
-                                })
-                            }
-                        />
-                        <Tooltip hasArrow label="Edit probabilities">
+                        <Tooltip
+                            hasArrow
+                            label={intl.formatMessage({
+                                id: 'unique-pairs',
+                                defaultMessage:
+                                    'Unique pairs per list multiplicity',
+                            })}
+                        >
+                            <Stack direction="row" align="center">
+                                <Text>
+                                    {intl.formatMessage({
+                                        id: 'unique',
+                                        defaultMessage: 'Unique:',
+                                    })}
+                                </Text>
+                                <Switch
+                                    colorScheme="primary"
+                                    borderRadius="button"
+                                    p={2}
+                                    disabled={isLoading}
+                                    defaultChecked={instance.uniqueInMul}
+                                    onChange={(e) =>
+                                        setInstance({
+                                            ...instance,
+                                            uniqueInMul: e.target.checked,
+                                        })
+                                    }
+                                />
+                            </Stack>
+                        </Tooltip>
+                        <Tooltip
+                            hasArrow
+                            label={intl.formatMessage({
+                                id: 'edit-probs',
+                                defaultMessage: 'Edit probabilities',
+                            })}
+                        >
                             <Button
                                 colorScheme="secondary"
                                 borderRadius="button"
@@ -196,7 +277,11 @@ const EditorCard = ({
                                 }
                                 onClick={setProbabilityEditor?.on}
                             >
-                                <StarIcon />
+                                <StarIcon mr={2} />
+                                {intl.formatMessage({
+                                    id: 'edit-probs',
+                                    defaultMessage: 'Edit probabilities',
+                                })}
                             </Button>
                         </Tooltip>
                     </>

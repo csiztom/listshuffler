@@ -1,6 +1,5 @@
 import {
     Button,
-    ButtonGroup,
     NumberDecrementStepper,
     NumberIncrementStepper,
     NumberInput,
@@ -10,6 +9,7 @@ import {
     Tooltip,
 } from '@chakra-ui/react'
 import { ReactElement } from 'react'
+import { useIntl } from 'react-intl'
 import { AbstractListItem } from '../types/main'
 
 interface ProbabilityInputProps extends Pick<NumberInputProps, 'onChange'> {
@@ -25,31 +25,40 @@ const ProbabilityInput = ({
     onChange,
     ...props
 }: ProbabilityInputProps): ReactElement => {
+    const intl = useIntl()
     return (
         <>
-            <ButtonGroup isAttached>
-                <Tooltip hasArrow label={listItem1?.listItemID}>
-                    <Button
-                        colorScheme="secondary"
-                        borderRadius="button"
-                        fontSize="sm"
-                        {...props}
-                    >
-                        {listItem1.listItem}
-                    </Button>
-                </Tooltip>
-                <Tooltip hasArrow label={listItem2?.listItemID}>
-                    <Button
-                        colorScheme="secondary"
-                        borderRadius="button"
-                        fontSize="sm"
-                        {...props}
-                    >
-                        {listItem2.listItem}
-                    </Button>
-                </Tooltip>
-            </ButtonGroup>
-            <Tooltip hasArrow label="Change probability">
+            <Tooltip hasArrow label={listItem1?.listItemID}>
+                <Button
+                    colorScheme="primary"
+                    borderRadius="button"
+                    fontSize="sm"
+                    {...props}
+                >
+                    {listItem1.listItem}
+                </Button>
+            </Tooltip>
+            <Tooltip hasArrow label={listItem2?.listItemID}>
+                <Button
+                    colorScheme={
+                        listItem2?.listItemID === listItem1?.listItemID
+                            ? 'primary'
+                            : 'secondary'
+                    }
+                    borderRadius="button"
+                    fontSize="sm"
+                    {...props}
+                >
+                    {listItem2.listItem}
+                </Button>
+            </Tooltip>
+            <Tooltip
+                hasArrow
+                label={intl.formatMessage({
+                    id: 'change-probability',
+                    defaultMessage: 'Change probability',
+                })}
+            >
                 <NumberInput
                     isRequired
                     step={1}

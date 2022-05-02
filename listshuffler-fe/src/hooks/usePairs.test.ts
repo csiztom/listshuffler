@@ -4,6 +4,13 @@ import { renderHook } from '@testing-library/react-hooks'
 import { act } from 'react-dom/test-utils'
 import usePairs from './usePairs'
 
+jest.mock('react-intl', () => ({
+    ...(jest.requireActual('react-intl') as any),
+    useIntl: () => ({
+        formatMessage: (obj: {defaultMessage: string, id: string}) => obj.defaultMessage
+    }),
+}))
+
 describe('usePairs', () => {
     beforeEach(() => {
         fetch.resetMocks()

@@ -1,5 +1,6 @@
 import { useToast } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
+import { useIntl } from 'react-intl'
 import { AbstractInstance } from '../types/main'
 
 interface Pairs {
@@ -15,6 +16,7 @@ const usePairs = (
 ): [Pairs, () => void] => {
     const [pairs, setPairs] = useState<Pairs>({})
     const toast = useToast()
+    const intl = useIntl()
 
     const shuffle = () => {
         if (!id || shuffled) return
@@ -25,6 +27,9 @@ const usePairs = (
                 adminID: id,
             }),
         })
+            .then((response) => {
+                if (!response.ok) throw Error('not 2xx answer')
+            })
             .then(
                 () =>
                     setInstance &&
@@ -33,8 +38,14 @@ const usePairs = (
             )
             .catch(() =>
                 toast({
-                    title: 'Error occurred while shuffling. :/',
-                    description: 'Try adjusting the parameters.',
+                    title: intl.formatMessage({
+                        id: 'error-occurred-shuffle',
+                        defaultMessage: 'Error occurred while shuffling. :/',
+                    }),
+                    description: intl.formatMessage({
+                        id: 'try-adjusting',
+                        defaultMessage: 'Try adjusting the parameters.',
+                    }),
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
@@ -49,14 +60,24 @@ const usePairs = (
         fetch(process.env.REACT_APP_API_URL + '/pairs?adminID=' + id, {
             method: 'GET',
         })
-            .then((response) => response.ok && response.json())
+            .then((response) => {
+                if (response.ok) return response.json()
+                else throw Error('not 2xx answer')
+            })
             .then((response) => {
                 setPairs(response['pairs'])
             })
             .catch(() =>
                 toast({
-                    title: 'Error occurred while loading pairs. :/',
-                    description: 'Try reloading the page.',
+                    title: intl.formatMessage({
+                        id: 'error-loading-pairs',
+                        defaultMessage:
+                            'Error occurred while loading pairs. :/',
+                    }),
+                    description: intl.formatMessage({
+                        id: 'try-reloading',
+                        defaultMessage: 'Try reloading the page.',
+                    }),
                     status: 'error',
                     duration: 9000,
                     isClosable: true,

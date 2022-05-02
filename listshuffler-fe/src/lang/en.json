@@ -1,0 +1,266 @@
+{
+  "accept": {
+    "defaultMessage": "Accept"
+  },
+  "add-item": {
+    "defaultMessage": "Add item"
+  },
+  "add-list": {
+    "defaultMessage": "Add list"
+  },
+  "add-list-item": {
+    "defaultMessage": "Add list item"
+  },
+  "bookmark-this-page": {
+    "defaultMessage": "Bookmark this page if you want to come back later."
+  },
+  "cancel": {
+    "defaultMessage": "Cancel"
+  },
+  "change-multiplicity": {
+    "defaultMessage": "Change multiplicity"
+  },
+  "change-probability": {
+    "defaultMessage": "Change probability"
+  },
+  "code": {
+    "defaultMessage": "Code"
+  },
+  "code-copied": {
+    "defaultMessage": "Code copied to clipboard"
+  },
+  "code-generated": {
+    "defaultMessage": "code-generated item"
+  },
+  "copy-code": {
+    "defaultMessage": "Copy code"
+  },
+  "copy-invite-code": {
+    "defaultMessage": "Copy invite code"
+  },
+  "copy-list-code": {
+    "defaultMessage": "Copy list invite code"
+  },
+  "couldnt-create-instance": {
+    "defaultMessage": "Couldn’t create new instance, maybe try reloading the page and trying again."
+  },
+  "couldnt-in-instance": {
+    "defaultMessage": "Couldn’t log into instance, maybe the code provided was wrong."
+  },
+  "couldnt-in-list": {
+    "defaultMessage": "Couldn’t log into list, maybe the code provided was wrong."
+  },
+  "couldnt-in-listitem": {
+    "defaultMessage": "Couldn’t log into listitem, maybe the code provided was wrong."
+  },
+  "create-lists": {
+    "defaultMessage": "Create lists"
+  },
+  "create-your-own": {
+    "defaultMessage": "Create your own lists and shuffle"
+  },
+  "delete": {
+    "defaultMessage": "Delete"
+  },
+  "delete-instance": {
+    "defaultMessage": "Delete instance"
+  },
+  "delete-item": {
+    "defaultMessage": "Delete item"
+  },
+  "delete-list": {
+    "defaultMessage": "Delete list"
+  },
+  "delete-list-item": {
+    "defaultMessage": "Delete list item"
+  },
+  "do-you-delete-instance": {
+    "defaultMessage": "Do you really want to delete the whole instance? You will need to start over again if you want to shuffle."
+  },
+  "do-you-delete-item": {
+    "defaultMessage": "Do you really want to delete this item? You will be returned to the homepage."
+  },
+  "do-you-delete-list": {
+    "defaultMessage": "Do you really want to delete this list?"
+  },
+  "edit": {
+    "defaultMessage": "Edit"
+  },
+  "edit-list-item": {
+    "defaultMessage": "Edit list item name"
+  },
+  "edit-list-name": {
+    "defaultMessage": "Edit list name"
+  },
+  "edit-lists": {
+    "defaultMessage": "Edit lists"
+  },
+  "edit-probs": {
+    "defaultMessage": "Edit probabilities"
+  },
+  "error occurred": {
+    "defaultMessage": "Error occurred. :/"
+  },
+  "error-adding-list": {
+    "defaultMessage": "Error occurred while adding new list. :/"
+  },
+  "error-deleting": {
+    "defaultMessage": "Error occurred while deleting. :/"
+  },
+  "error-deleting-instance": {
+    "defaultMessage": "Error occurred while deleting instance. :/"
+  },
+  "error-discarding": {
+    "defaultMessage": "Error occurred while discarding changes. :/"
+  },
+  "error-id-not-found": {
+    "defaultMessage": "Error, ID not found. :/"
+  },
+  "error-loading-item": {
+    "defaultMessage": "Error occurred while loading item. :/"
+  },
+  "error-loading-pairs": {
+    "defaultMessage": "Error occurred while loading pairs. :/"
+  },
+  "error-loading-probs": {
+    "defaultMessage": "Error occurred while loading probabilities. :/"
+  },
+  "error-occurred-shuffle": {
+    "defaultMessage": "Error occurred while shuffling. :/"
+  },
+  "error-saving": {
+    "defaultMessage": "Error occurred while saving. :/"
+  },
+  "error-saving-changes": {
+    "defaultMessage": "Error occurred while saving changes. :/"
+  },
+  "gdpr-contact": {
+    "defaultMessage": "If you have any questions, write an email to listshuffler@gmail.com"
+  },
+  "gdpr-cookie-info": {
+    "defaultMessage": "We use store IDs in your browser to keep you signed in. If you do not accept this, we will not store anything. If you do, the browser settings decide."
+  },
+  "gdpr-cookies": {
+    "defaultMessage": "Cookies or similar"
+  },
+  "gdpr-note-alias": {
+    "defaultMessage": "Note that we do not recommend you to share any private data with us. If you are worried about the names leaking please use aliases."
+  },
+  "gdpr-privacy": {
+    "defaultMessage": "Privacy"
+  },
+  "gdpr-private-data": {
+    "defaultMessage": "Private data"
+  },
+  "gdpr-rights": {
+    "defaultMessage": "When you name a list or its item we store that so next time you log in, the names remain. When you delete a list, everything about it deletes, like its name. Same applies for its items. We delete every instance a month after its creation, so even if you forgot to delete it, it will do so automatically."
+  },
+  "gdpr-storage": {
+    "defaultMessage": "Said all that, we store all the aforementioned data in safe databases away from any bad actor, on Amazon Web Services in Frankfurt. Only the people with the right access will be able to see your data and they are requied not to do so by policy."
+  },
+  "gdpr-stored-info": {
+    "defaultMessage": "We are committed to your right to security. We do not store any information about you, other than the names you give the lists and their items."
+  },
+  "gdpr-your-data": {
+    "defaultMessage": "Your Data"
+  },
+  "instance-if-ever": {
+    "defaultMessage": "Instance does not exist now, if it ever had."
+  },
+  "item-pair-multiplier": {
+    "defaultMessage": "item | pair | multiplier"
+  },
+  "lists-saved": {
+    "defaultMessage": "Lists successfully saved"
+  },
+  "logo-of": {
+    "defaultMessage": "Logo of Listshuffler"
+  },
+  "new-list": {
+    "defaultMessage": "New List"
+  },
+  "no-matching": {
+    "defaultMessage": "Couldn’t find matching object, check code and try again!"
+  },
+  "please-wait": {
+    "defaultMessage": "Please wait"
+  },
+  "probs-saved": {
+    "defaultMessage": "Probabilities successfully saved"
+  },
+  "save": {
+    "defaultMessage": "Save"
+  },
+  "save-probs": {
+    "defaultMessage": "Save probabilities"
+  },
+  "see-the-pairs": {
+    "defaultMessage": "See the pairs"
+  },
+  "select-main": {
+    "defaultMessage": "Select main list"
+  },
+  "show-pairs": {
+    "defaultMessage": "Show pairs"
+  },
+  "shuffle-lists": {
+    "defaultMessage": "Shuffle lists"
+  },
+  "shuffle-now": {
+    "defaultMessage": "Shuffle now"
+  },
+  "sorry-inconvenience": {
+    "defaultMessage": "Sorry for the inconvenience."
+  },
+  "these-are-pairs": {
+    "defaultMessage": "These are your pairs."
+  },
+  "this-admin-page": {
+    "defaultMessage": "This is the admin page."
+  },
+  "this-list-item": {
+    "defaultMessage": "This is a list item page."
+  },
+  "timed-shuffle": {
+    "defaultMessage": "Timed shuffle"
+  },
+  "try-adjusting": {
+    "defaultMessage": "Try adjusting the parameters."
+  },
+  "try-reloading": {
+    "defaultMessage": "Try reloading the page."
+  },
+  "unique": {
+    "defaultMessage": "Unique:"
+  },
+  "unique-pairs": {
+    "defaultMessage": "Unique pairs per list multiplicity"
+  },
+  "use-code": {
+    "defaultMessage": "Use Code"
+  },
+  "which-will-shuffle-for": {
+    "defaultMessage": "Which list do you want to shuffle pairs for?"
+  },
+  "wrong-length": {
+    "defaultMessage": "Wrong code length"
+  },
+  "you-can-set-multipliers": {
+    "defaultMessage": "You can set multipliers that affect the shuffle process"
+  },
+  "you-can-share": {
+    "defaultMessage": "You can now share this with the to-be list pairs"
+  },
+  "you-can-shuffle": {
+    "defaultMessage": "You can shuffle now!"
+  },
+  "you-have-code": {
+    "defaultMessage": "You have a code?"
+  },
+  "you-need-multiplicity": {
+    "defaultMessage": "You need at least two lists or a list with at least 2 multiplicity to shuffle"
+  },
+  "zero-cannot": {
+    "defaultMessage": "zero = cannot be paired"
+  }
+}

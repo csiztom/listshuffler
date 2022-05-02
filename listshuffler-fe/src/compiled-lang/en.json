@@ -1,0 +1,530 @@
+{
+  "accept": [
+    {
+      "type": 0,
+      "value": "Accept"
+    }
+  ],
+  "add-item": [
+    {
+      "type": 0,
+      "value": "Add item"
+    }
+  ],
+  "add-list": [
+    {
+      "type": 0,
+      "value": "Add list"
+    }
+  ],
+  "add-list-item": [
+    {
+      "type": 0,
+      "value": "Add list item"
+    }
+  ],
+  "bookmark-this-page": [
+    {
+      "type": 0,
+      "value": "Bookmark this page if you want to come back later."
+    }
+  ],
+  "cancel": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "change-multiplicity": [
+    {
+      "type": 0,
+      "value": "Change multiplicity"
+    }
+  ],
+  "change-probability": [
+    {
+      "type": 0,
+      "value": "Change probability"
+    }
+  ],
+  "code": [
+    {
+      "type": 0,
+      "value": "Code"
+    }
+  ],
+  "code-copied": [
+    {
+      "type": 0,
+      "value": "Code copied to clipboard"
+    }
+  ],
+  "code-generated": [
+    {
+      "type": 0,
+      "value": "code-generated item"
+    }
+  ],
+  "copy-code": [
+    {
+      "type": 0,
+      "value": "Copy code"
+    }
+  ],
+  "copy-invite-code": [
+    {
+      "type": 0,
+      "value": "Copy invite code"
+    }
+  ],
+  "copy-list-code": [
+    {
+      "type": 0,
+      "value": "Copy list invite code"
+    }
+  ],
+  "couldnt-create-instance": [
+    {
+      "type": 0,
+      "value": "Couldn’t create new instance, maybe try reloading the page and trying again."
+    }
+  ],
+  "couldnt-in-instance": [
+    {
+      "type": 0,
+      "value": "Couldn’t log into instance, maybe the code provided was wrong."
+    }
+  ],
+  "couldnt-in-list": [
+    {
+      "type": 0,
+      "value": "Couldn’t log into list, maybe the code provided was wrong."
+    }
+  ],
+  "couldnt-in-listitem": [
+    {
+      "type": 0,
+      "value": "Couldn’t log into listitem, maybe the code provided was wrong."
+    }
+  ],
+  "create-lists": [
+    {
+      "type": 0,
+      "value": "Create lists"
+    }
+  ],
+  "create-your-own": [
+    {
+      "type": 0,
+      "value": "Create your own lists and shuffle"
+    }
+  ],
+  "delete": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "delete-instance": [
+    {
+      "type": 0,
+      "value": "Delete instance"
+    }
+  ],
+  "delete-item": [
+    {
+      "type": 0,
+      "value": "Delete item"
+    }
+  ],
+  "delete-list": [
+    {
+      "type": 0,
+      "value": "Delete list"
+    }
+  ],
+  "delete-list-item": [
+    {
+      "type": 0,
+      "value": "Delete list item"
+    }
+  ],
+  "do-you-delete-instance": [
+    {
+      "type": 0,
+      "value": "Do you really want to delete the whole instance? You will need to start over again if you want to shuffle."
+    }
+  ],
+  "do-you-delete-item": [
+    {
+      "type": 0,
+      "value": "Do you really want to delete this item? You will be returned to the homepage."
+    }
+  ],
+  "do-you-delete-list": [
+    {
+      "type": 0,
+      "value": "Do you really want to delete this list?"
+    }
+  ],
+  "edit": [
+    {
+      "type": 0,
+      "value": "Edit"
+    }
+  ],
+  "edit-list-item": [
+    {
+      "type": 0,
+      "value": "Edit list item name"
+    }
+  ],
+  "edit-list-name": [
+    {
+      "type": 0,
+      "value": "Edit list name"
+    }
+  ],
+  "edit-lists": [
+    {
+      "type": 0,
+      "value": "Edit lists"
+    }
+  ],
+  "edit-probs": [
+    {
+      "type": 0,
+      "value": "Edit probabilities"
+    }
+  ],
+  "error occurred": [
+    {
+      "type": 0,
+      "value": "Error occurred. :/"
+    }
+  ],
+  "error-adding-list": [
+    {
+      "type": 0,
+      "value": "Error occurred while adding new list. :/"
+    }
+  ],
+  "error-deleting": [
+    {
+      "type": 0,
+      "value": "Error occurred while deleting. :/"
+    }
+  ],
+  "error-deleting-instance": [
+    {
+      "type": 0,
+      "value": "Error occurred while deleting instance. :/"
+    }
+  ],
+  "error-discarding": [
+    {
+      "type": 0,
+      "value": "Error occurred while discarding changes. :/"
+    }
+  ],
+  "error-id-not-found": [
+    {
+      "type": 0,
+      "value": "Error, ID not found. :/"
+    }
+  ],
+  "error-loading-item": [
+    {
+      "type": 0,
+      "value": "Error occurred while loading item. :/"
+    }
+  ],
+  "error-loading-pairs": [
+    {
+      "type": 0,
+      "value": "Error occurred while loading pairs. :/"
+    }
+  ],
+  "error-loading-probs": [
+    {
+      "type": 0,
+      "value": "Error occurred while loading probabilities. :/"
+    }
+  ],
+  "error-occurred-shuffle": [
+    {
+      "type": 0,
+      "value": "Error occurred while shuffling. :/"
+    }
+  ],
+  "error-saving": [
+    {
+      "type": 0,
+      "value": "Error occurred while saving. :/"
+    }
+  ],
+  "error-saving-changes": [
+    {
+      "type": 0,
+      "value": "Error occurred while saving changes. :/"
+    }
+  ],
+  "gdpr-contact": [
+    {
+      "type": 0,
+      "value": "If you have any questions, write an email to listshuffler@gmail.com"
+    }
+  ],
+  "gdpr-cookie-info": [
+    {
+      "type": 0,
+      "value": "We use store IDs in your browser to keep you signed in. If you do not accept this, we will not store anything. If you do, the browser settings decide."
+    }
+  ],
+  "gdpr-cookies": [
+    {
+      "type": 0,
+      "value": "Cookies or similar"
+    }
+  ],
+  "gdpr-note-alias": [
+    {
+      "type": 0,
+      "value": "Note that we do not recommend you to share any private data with us. If you are worried about the names leaking please use aliases."
+    }
+  ],
+  "gdpr-privacy": [
+    {
+      "type": 0,
+      "value": "Privacy"
+    }
+  ],
+  "gdpr-private-data": [
+    {
+      "type": 0,
+      "value": "Private data"
+    }
+  ],
+  "gdpr-rights": [
+    {
+      "type": 0,
+      "value": "When you name a list or its item we store that so next time you log in, the names remain. When you delete a list, everything about it deletes, like its name. Same applies for its items. We delete every instance a month after its creation, so even if you forgot to delete it, it will do so automatically."
+    }
+  ],
+  "gdpr-storage": [
+    {
+      "type": 0,
+      "value": "Said all that, we store all the aforementioned data in safe databases away from any bad actor, on Amazon Web Services in Frankfurt. Only the people with the right access will be able to see your data and they are requied not to do so by policy."
+    }
+  ],
+  "gdpr-stored-info": [
+    {
+      "type": 0,
+      "value": "We are committed to your right to security. We do not store any information about you, other than the names you give the lists and their items."
+    }
+  ],
+  "gdpr-your-data": [
+    {
+      "type": 0,
+      "value": "Your Data"
+    }
+  ],
+  "instance-if-ever": [
+    {
+      "type": 0,
+      "value": "Instance does not exist now, if it ever had."
+    }
+  ],
+  "item-pair-multiplier": [
+    {
+      "type": 0,
+      "value": "item | pair | multiplier"
+    }
+  ],
+  "lists-saved": [
+    {
+      "type": 0,
+      "value": "Lists successfully saved"
+    }
+  ],
+  "logo-of": [
+    {
+      "type": 0,
+      "value": "Logo of Listshuffler"
+    }
+  ],
+  "new-list": [
+    {
+      "type": 0,
+      "value": "New List"
+    }
+  ],
+  "no-matching": [
+    {
+      "type": 0,
+      "value": "Couldn’t find matching object, check code and try again!"
+    }
+  ],
+  "please-wait": [
+    {
+      "type": 0,
+      "value": "Please wait"
+    }
+  ],
+  "probs-saved": [
+    {
+      "type": 0,
+      "value": "Probabilities successfully saved"
+    }
+  ],
+  "save": [
+    {
+      "type": 0,
+      "value": "Save"
+    }
+  ],
+  "save-probs": [
+    {
+      "type": 0,
+      "value": "Save probabilities"
+    }
+  ],
+  "see-the-pairs": [
+    {
+      "type": 0,
+      "value": "See the pairs"
+    }
+  ],
+  "select-main": [
+    {
+      "type": 0,
+      "value": "Select main list"
+    }
+  ],
+  "show-pairs": [
+    {
+      "type": 0,
+      "value": "Show pairs"
+    }
+  ],
+  "shuffle-lists": [
+    {
+      "type": 0,
+      "value": "Shuffle lists"
+    }
+  ],
+  "shuffle-now": [
+    {
+      "type": 0,
+      "value": "Shuffle now"
+    }
+  ],
+  "sorry-inconvenience": [
+    {
+      "type": 0,
+      "value": "Sorry for the inconvenience."
+    }
+  ],
+  "these-are-pairs": [
+    {
+      "type": 0,
+      "value": "These are your pairs."
+    }
+  ],
+  "this-admin-page": [
+    {
+      "type": 0,
+      "value": "This is the admin page."
+    }
+  ],
+  "this-list-item": [
+    {
+      "type": 0,
+      "value": "This is a list item page."
+    }
+  ],
+  "timed-shuffle": [
+    {
+      "type": 0,
+      "value": "Timed shuffle"
+    }
+  ],
+  "try-adjusting": [
+    {
+      "type": 0,
+      "value": "Try adjusting the parameters."
+    }
+  ],
+  "try-reloading": [
+    {
+      "type": 0,
+      "value": "Try reloading the page."
+    }
+  ],
+  "unique": [
+    {
+      "type": 0,
+      "value": "Unique:"
+    }
+  ],
+  "unique-pairs": [
+    {
+      "type": 0,
+      "value": "Unique pairs per list multiplicity"
+    }
+  ],
+  "use-code": [
+    {
+      "type": 0,
+      "value": "Use Code"
+    }
+  ],
+  "which-will-shuffle-for": [
+    {
+      "type": 0,
+      "value": "Which list do you want to shuffle pairs for?"
+    }
+  ],
+  "wrong-length": [
+    {
+      "type": 0,
+      "value": "Wrong code length"
+    }
+  ],
+  "you-can-set-multipliers": [
+    {
+      "type": 0,
+      "value": "You can set multipliers that affect the shuffle process"
+    }
+  ],
+  "you-can-share": [
+    {
+      "type": 0,
+      "value": "You can now share this with the to-be list pairs"
+    }
+  ],
+  "you-can-shuffle": [
+    {
+      "type": 0,
+      "value": "You can shuffle now!"
+    }
+  ],
+  "you-have-code": [
+    {
+      "type": 0,
+      "value": "You have a code?"
+    }
+  ],
+  "you-need-multiplicity": [
+    {
+      "type": 0,
+      "value": "You need at least two lists or a list with at least 2 multiplicity to shuffle"
+    }
+  ],
+  "zero-cannot": [
+    {
+      "type": 0,
+      "value": "zero = cannot be paired"
+    }
+  ]
+}

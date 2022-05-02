@@ -5,6 +5,20 @@ import { act } from 'react-dom/test-utils'
 import useInstance from './useInstance'
 import { AbstractInstance } from '../types/main'
 
+const mockedUsedNavigate = jest.fn()
+
+jest.mock('react-router-dom', () => ({
+    ...(jest.requireActual('react-router-dom') as any),
+    useNavigate: () => mockedUsedNavigate,
+}))
+
+jest.mock('react-intl', () => ({
+    ...(jest.requireActual('react-intl') as any),
+    useIntl: () => ({
+        formatMessage: (obj: {defaultMessage: string, id: string}) => obj.defaultMessage
+    }),
+}))
+
 describe('useInstance', () => {
     beforeEach(() => {
         fetch.resetMocks()
@@ -115,6 +129,36 @@ describe('useInstance', () => {
                 id7: { listItem: 'Name', listItemID: 'id7' },
                 id8: { listItem: 'Name', listItemID: 'id8' },
             })
+        })
+    })
+    describe('deleteInstance', () => {
+        it('deletes instance', async () => {
+            const instance: AbstractInstance = {
+                shuffledID: null,
+                lists: [],
+                shuffled: false,
+                shuffleTime: null,
+                uniqueInMul: true,
+                preset: null,
+            }
+            fetch.mockResponse(JSON.stringify(instance))
+            const adminId = 'admin_id'
+            const { result, waitForNextUpdate } = renderHook(() =>
+                useInstance(adminId),
+            )
+            await waitForNextUpdate()
+            act(() => {
+                result.current.deleteInstance()
+            })
+            expect(fetch).toHaveBeenCalledWith(
+                process.env.REACT_APP_API_URL + '/instance',
+                {
+                    method: 'DELETE',
+                    body: JSON.stringify({
+                        adminID: adminId,
+                    }),
+                },
+            )
         })
     })
     describe('updateInstance', () => {
@@ -291,48 +335,53 @@ describe('useInstance', () => {
             await waitForNextUpdate()
             expect(result.current.instance).toEqual(editedInstance)
             expect(fetch).toHaveBeenCalledWith(
-                process.env.REACT_APP_API_URL + '/list', {
+                process.env.REACT_APP_API_URL + '/list',
+                {
                     method: 'PATCH',
                     body: JSON.stringify({
                         listID: 'list_id',
                         listName: 'New Name',
                         multiplicity: 2,
                     }),
-                }
+                },
             )
             expect(fetch).toHaveBeenCalledWith(
-                process.env.REACT_APP_API_URL + '/list', {
+                process.env.REACT_APP_API_URL + '/list',
+                {
                     method: 'DELETE',
                     body: JSON.stringify({
                         listID: 'list_id2',
                     }),
-                }
+                },
             )
             expect(fetch).toHaveBeenCalledWith(
-                process.env.REACT_APP_API_URL + '/listitem', {
+                process.env.REACT_APP_API_URL + '/listitem',
+                {
                     method: 'POST',
                     body: JSON.stringify({
                         listID: 'list_id',
                         listItem: 'New Item',
                     }),
-                }
+                },
             )
             expect(fetch).toHaveBeenCalledWith(
-                process.env.REACT_APP_API_URL + '/listitem', {
+                process.env.REACT_APP_API_URL + '/listitem',
+                {
                     method: 'PATCH',
                     body: JSON.stringify({
                         listItem: 'New Name',
                         listItemID: 'id2',
                     }),
-                }
+                },
             )
             expect(fetch).toHaveBeenCalledWith(
-                process.env.REACT_APP_API_URL + '/listitem', {
+                process.env.REACT_APP_API_URL + '/listitem',
+                {
                     method: 'DELETE',
                     body: JSON.stringify({
                         listItemID: 'id1',
                     }),
-                }
+                },
             )
         })
     })
@@ -361,7 +410,7 @@ describe('useInstance', () => {
                         listName: 'New List',
                         listItems: [],
                         multiplicity: 1,
-                        inProgress: true
+                        inProgress: true,
                     },
                 ],
                 shuffled: false,
@@ -392,7 +441,7 @@ describe('useInstance', () => {
                         listName: 'New List',
                         listItems: [],
                         multiplicity: 1,
-                        inProgress: true
+                        inProgress: true,
                     },
                 ],
             }
@@ -404,12 +453,13 @@ describe('useInstance', () => {
             })
             await waitForNextUpdate()
             expect(fetch).toHaveBeenCalledWith(
-                process.env.REACT_APP_API_URL + '/list', {
+                process.env.REACT_APP_API_URL + '/list',
+                {
                     method: 'DELETE',
                     body: JSON.stringify({
                         listID: 'list_id3',
                     }),
-                }
+                },
             )
         })
     })

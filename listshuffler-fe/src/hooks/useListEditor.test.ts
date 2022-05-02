@@ -3,6 +3,13 @@ import { act } from 'react-dom/test-utils'
 import { AbstractList } from '../types/main'
 import useListEditor from './useListEditor'
 
+jest.mock('react-intl', () => ({
+    ...(jest.requireActual('react-intl') as any),
+    useIntl: () => ({
+        formatMessage: (obj: {defaultMessage: string, id: string}) => obj.defaultMessage
+    }),
+}))
+
 describe('useListEditor', () => {
     describe('addListItem', () => {
         it('adds first listitem', () => {

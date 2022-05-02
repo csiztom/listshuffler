@@ -1,15 +1,6 @@
 import {
-    Button,
     Grid,
     GridItem,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    Text,
     useBoolean,
     useDisclosure,
     useToast,
@@ -18,28 +9,52 @@ import { ReactElement, useState } from 'react'
 import { Logo, ActionCard } from '../components'
 import image from '../assets/drawing.svg'
 import { useNavigate } from 'react-router-dom'
+import GDPRModal from '../components/GDPRModal'
+import { useIntl } from 'react-intl'
 
 const StartPage = (): ReactElement => {
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useBoolean(false)
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const {
+        isOpen: loginOpen,
+        onOpen: onLoginOpen,
+        onClose: onLoginClose,
+    } = useDisclosure()
+    const {
+        isOpen: createOpen,
+        onOpen: onCreateOpen,
+        onClose: onCreateClose,
+    } = useDisclosure()
     const toast = useToast()
-    const [code, setCode] = useState<string>()
+    const [code, setCode] = useState<string>(
+        localStorage.getItem('loginID') ?? '',
+    )
+    const intl = useIntl()
+
     const createInstance = () => {
         setIsLoading.on()
         fetch(process.env.REACT_APP_API_URL + '/instance', {
             method: 'POST',
         })
-            .then((response) => response.ok && response.json())
-            .then(
-                (resp) =>
-                    resp.adminID && navigate('./instance/' + resp.adminID),
-            )
+            .then((response) => {
+                if (response.ok) return response.json()
+                else throw Error('not 2xx answer')
+            })
+            .then((resp) => {
+                resp.adminID && localStorage.setItem('loginID', resp.adminID)
+                resp.adminID && navigate('./instance/' + resp.adminID)
+            })
             .catch(() => {
                 toast({
-                    title: 'Error occurred. :/',
-                    description:
-                        'Couldn’t create new instance, maybe try reloading the page and trying again.',
+                    title: intl.formatMessage({
+                        id: 'error occurred',
+                        defaultMessage: 'Error occurred. :/',
+                    }),
+                    description: intl.formatMessage({
+                        id: 'couldnt-create-instance',
+                        defaultMessage:
+                            'Couldn’t create new instance, maybe try reloading the page and trying again.',
+                    }),
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
@@ -57,17 +72,26 @@ const StartPage = (): ReactElement => {
                     method: 'GET',
                 },
             )
-                .then((response) => response.ok && response.json())
-                .then(
-                    (resp) =>
-                        resp.listItemID &&
-                        navigate('./listitem/' + resp.listItemID),
-                )
+                .then((response) => {
+                    if (response.ok) return response.json()
+                    else throw Error('not 2xx answer')
+                })
+                .then((resp) => {
+                    resp.listItemID &&
+                        localStorage.setItem('loginID', resp.listItemID)
+                    resp.listItemID && navigate('./listitem/' + resp.listItemID)
+                })
                 .catch(() => {
                     toast({
-                        title: 'Error occurred. :/',
-                        description:
-                            'Couldn’t find matching list item, check code and try again!',
+                        title: intl.formatMessage({
+                            id: 'error occurred',
+                            defaultMessage: 'Error occurred. :/',
+                        }),
+                        description: intl.formatMessage({
+                            id: 'couldnt-in-listitem',
+                            defaultMessage:
+                                'Couldn’t log into listitem, maybe the code provided was wrong.',
+                        }),
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
@@ -79,20 +103,32 @@ const StartPage = (): ReactElement => {
                 method: 'POST',
                 body: JSON.stringify({
                     listID: str,
-                    listItem: 'Auto-Generated Item',
+                    listItem: intl.formatMessage({
+                        id: 'code-generated',
+                        defaultMessage: 'code-generated item',
+                    }),
                 }),
             })
-                .then((response) => response.ok && response.json())
-                .then(
-                    (resp) =>
-                        resp.listItemID &&
-                        navigate('./listitem/' + resp.listItemID),
-                )
+                .then((response) => {
+                    if (response.ok) return response.json()
+                    else throw Error('not 2xx answer')
+                })
+                .then((resp) => {
+                    resp.listItemID &&
+                        localStorage.setItem('loginID', resp.listItemID)
+                    resp.listItemID && navigate('./listitem/' + resp.listItemID)
+                })
                 .catch(() => {
                     toast({
-                        title: 'Error occurred. :/',
-                        description:
-                            'Couldn’t find matching list, check code and try again!',
+                        title: intl.formatMessage({
+                            id: 'error occurred',
+                            defaultMessage: 'Error occurred. :/',
+                        }),
+                        description: intl.formatMessage({
+                            id: 'couldnt-in-list',
+                            defaultMessage:
+                                'Couldn’t log into list, maybe the code provided was wrong.',
+                        }),
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
@@ -103,13 +139,25 @@ const StartPage = (): ReactElement => {
             fetch(process.env.REACT_APP_API_URL + '/instance?adminID=' + str, {
                 method: 'GET',
             })
-                .then((response) => response.ok && response.json())
-                .then(() => navigate('./instance/' + str))
+                .then((response) => {
+                    if (response.ok) return response.json()
+                    else throw Error('not 2xx answer')
+                })
+                .then(() => {
+                    str && localStorage.setItem('loginID', str)
+                    str && navigate('./instance/' + str)
+                })
                 .catch(() => {
                     toast({
-                        title: 'Error occurred. :/',
-                        description:
-                            'Couldn’t find matching instance, check code and try again!',
+                        title: intl.formatMessage({
+                            id: 'error occurred',
+                            defaultMessage: 'Error occurred. :/',
+                        }),
+                        description: intl.formatMessage({
+                            id: 'couldnt-in-instance',
+                            defaultMessage:
+                                'Couldn’t log into instance, maybe the code provided was wrong.',
+                        }),
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
@@ -118,9 +166,15 @@ const StartPage = (): ReactElement => {
                 })
         else {
             toast({
-                title: 'Wrong code length',
-                description:
-                    'Couldn’t find matching object, check code and try again!',
+                title: intl.formatMessage({
+                    id: 'wrong-length',
+                    defaultMessage: 'Wrong code length',
+                }),
+                description: intl.formatMessage({
+                    id: 'no-matching',
+                    defaultMessage:
+                        'Couldn’t find matching object, check code and try again!',
+                }),
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
@@ -152,56 +206,64 @@ const StartPage = (): ReactElement => {
             </GridItem>
             <GridItem rowSpan={1} colSpan={2}>
                 <ActionCard
-                    title="Create your own list"
-                    buttonText="Create lists"
-                    onButtonClick={createInstance}
+                    title={intl.formatMessage({
+                        id: 'create-your-own',
+                        defaultMessage: 'Create your own lists and shuffle',
+                    })}
+                    buttonText={intl.formatMessage({
+                        id: 'create-lists',
+                        defaultMessage: 'Create lists',
+                    })}
+                    onButtonClick={onCreateOpen}
                     isLoading={isLoading}
                 />
+                <GDPRModal
+                    isOpen={createOpen}
+                    onClose={onCreateClose}
+                    onSecondaryClick={() => {
+                        localStorage.clear()
+                        onCreateClose()
+                    }}
+                    onPrimaryClick={() => {
+                        onCreateClose()
+                        createInstance()
+                    }}
+                ></GDPRModal>
             </GridItem>
             <GridItem rowSpan={1} colSpan={2}>
                 <ActionCard
-                    title="You have a code?"
-                    buttonText="Use code"
+                    title={intl.formatMessage({
+                        id: 'you-have-code',
+                        defaultMessage: 'You have a code?',
+                    })}
+                    buttonText={intl.formatMessage({
+                        id: 'use-code',
+                        defaultMessage: 'Use Code',
+                    })}
                     hasInput
-                    inputPlaceholder="Code"
+                    inputPlaceholder={intl.formatMessage({
+                        id: 'code',
+                        defaultMessage: 'Code',
+                    })}
+                    defaultValue={code}
                     isLoading={isLoading}
                     onButtonClick={(str) => {
                         setCode(str)
-                        str.length === 6 ? onOpen() : signIn(str)
+                        onLoginOpen()
                     }}
                 />
-                <Modal isOpen={isOpen} onClose={onClose}>
-                    <ModalOverlay />
-                    <ModalContent>
-                        <ModalHeader>Modal Title</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                            <Text>
-                                Are you sure you want to create a new item in
-                                the list (with your code)?
-                            </Text>
-                        </ModalBody>
-
-                        <ModalFooter>
-                            <Button
-                                colorScheme="secondary"
-                                mr={3}
-                                onClick={onClose}
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                colorScheme="primary"
-                                onClick={() => {
-                                    onClose()
-                                    code && signIn(code)
-                                }}
-                            >
-                                Yes
-                            </Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </Modal>
+                <GDPRModal
+                    isOpen={loginOpen}
+                    onClose={onLoginClose}
+                    onSecondaryClick={() => {
+                        localStorage.clear()
+                        onLoginClose()
+                    }}
+                    onPrimaryClick={() => {
+                        onLoginClose()
+                        code && signIn(code)
+                    }}
+                ></GDPRModal>
             </GridItem>
         </Grid>
     )

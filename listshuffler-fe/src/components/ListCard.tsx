@@ -13,11 +13,14 @@ import {
     NumberInputField,
     Tooltip,
     useToast,
+    useDisclosure,
 } from '@chakra-ui/react'
 import { ReactElement, useMemo } from 'react'
+import { useIntl } from 'react-intl'
 import useListEditor from '../hooks/useListEditor'
 import { AbstractList } from '../types/main'
 import Card from './Card'
+import DeleteModal from './DeleteModal'
 import ListItemButtonInput from './ListItemButtonInput'
 
 interface ListCardProps extends Pick<ButtonProps, 'isLoading'> {
@@ -44,6 +47,8 @@ const ListCard = ({
         () => lists.find((li) => li.listID === listId),
         [lists, listId],
     )
+    const { isOpen, onClose, onOpen } = useDisclosure()
+    const intl = useIntl()
     const onClickCopy = () => {
         var data = [
             new ClipboardItem({
@@ -52,9 +57,15 @@ const ListCard = ({
         ]
         navigator.clipboard.write(data).then(() =>
             toast({
-                title: 'Code copied to clipboard.',
-                description:
-                    'You can now share this with the respective users.',
+                title: intl.formatMessage({
+                    id: 'code-copied',
+                    defaultMessage: 'Code copied to clipboard',
+                }),
+                description: intl.formatMessage({
+                    id: 'you-can-share',
+                    defaultMessage:
+                        'You can now share this with the to-be list pairs',
+                }),
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
@@ -78,7 +89,13 @@ const ListCard = ({
                         isLoading={parentIsLoading}
                     />
                     {editing && (
-                        <Tooltip hasArrow label="Delete list item">
+                        <Tooltip
+                            hasArrow
+                            label={intl.formatMessage({
+                                id: 'delete-list-item',
+                                defaultMessage: 'Delete list item',
+                            })}
+                        >
                             <Button
                                 colorScheme="red"
                                 borderRadius="button"
@@ -92,12 +109,18 @@ const ListCard = ({
                     )}
                 </ButtonGroup>
             )),
-        [list, editing, parentIsLoading, deleteListItem, editListItem],
+        [list, editing, parentIsLoading, deleteListItem, editListItem, intl],
     )
     return (
         <Card {...props}>
             {list?.listName !== undefined && editing ? (
-                <Tooltip hasArrow label="Edit list name">
+                <Tooltip
+                    hasArrow
+                    label={intl.formatMessage({
+                        id: 'edit-list-name',
+                        defaultMessage: 'Edit list name',
+                    })}
+                >
                     <Input
                         colorScheme="secondary"
                         borderRadius="button"
@@ -120,7 +143,27 @@ const ListCard = ({
                     {list?.listName}
                 </Text>
             )}
-            {generatedItems && generatedItems.length > 0 && (
+            {list && (
+                <DeleteModal
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    onSecondaryClick={onClose}
+                    onPrimaryClick={() => {
+                        onClose()
+                        deleteList(list)
+                    }}
+                    header={intl.formatMessage({
+                        id: 'delete-list',
+                        defaultMessage: 'Delete list',
+                    })}
+                    text={intl.formatMessage({
+                        id: 'do-you-delete-list',
+                        defaultMessage:
+                            'Do you really want to delete this list?',
+                    })}
+                />
+            )}
+            {generatedItems && (
                 <Stack
                     direction="row"
                     gap={4}
@@ -131,7 +174,13 @@ const ListCard = ({
                 >
                     {generatedItems}
                     {!editing && !shuffled && (
-                        <Tooltip hasArrow label="Copy list invite code">
+                        <Tooltip
+                            hasArrow
+                            label={intl.formatMessage({
+                                id: 'copy-list-code',
+                                defaultMessage: 'Copy list invite code',
+                            })}
+                        >
                             <Button
                                 colorScheme="primary"
                                 borderRadius="button"
@@ -139,7 +188,11 @@ const ListCard = ({
                                 p={2}
                                 {...props}
                             >
-                                <CopyIcon />
+                                <CopyIcon mr={2} />
+                                {intl.formatMessage({
+                                    id: 'copy-invite-code',
+                                    defaultMessage: 'Copy invite code',
+                                })}
                             </Button>
                         </Tooltip>
                     )}
@@ -155,21 +208,37 @@ const ListCard = ({
                     mt={generatedItems?.length ? 4 : 0}
                     justifyContent="center"
                 >
-                    {deleteList && (
-                        <Tooltip hasArrow label="Delete list">
+                    {
+                        <Tooltip
+                            hasArrow
+                            label={intl.formatMessage({
+                                id: 'delete-list',
+                                defaultMessage: 'Delete list',
+                            })}
+                        >
                             <Button
                                 colorScheme="red"
                                 borderRadius="button"
                                 p={2}
-                                onClick={() => deleteList(list)}
+                                onClick={onOpen}
                                 isLoading={parentIsLoading}
                             >
-                                {<DeleteIcon />}
+                                <DeleteIcon mr={2} />
+                                {intl.formatMessage({
+                                    id: 'delete-list',
+                                    defaultMessage: 'Delete list',
+                                })}
                             </Button>
                         </Tooltip>
-                    )}
+                    }
                     {addListItem && (
-                        <Tooltip hasArrow label="Add list item">
+                        <Tooltip
+                            hasArrow
+                            label={intl.formatMessage({
+                                id: 'add-list-item',
+                                defaultMessage: 'Add list item',
+                            })}
+                        >
                             <Button
                                 colorScheme="primary"
                                 borderRadius="button"
@@ -177,12 +246,22 @@ const ListCard = ({
                                 onClick={() => addListItem(list)}
                                 isLoading={parentIsLoading}
                             >
-                                {<AddIcon />}
+                                <AddIcon mr={2} />
+                                {intl.formatMessage({
+                                    id: 'add-item',
+                                    defaultMessage: 'Add item',
+                                })}
                             </Button>
                         </Tooltip>
                     )}
                     {
-                        <Tooltip hasArrow label="Change multiplicity">
+                        <Tooltip
+                            hasArrow
+                            label={intl.formatMessage({
+                                id: 'change-multiplicity',
+                                defaultMessage: 'Change multiplicity',
+                            })}
+                        >
                             <NumberInput
                                 isRequired
                                 step={1}

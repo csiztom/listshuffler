@@ -7,6 +7,7 @@ import {
     useToast,
 } from '@chakra-ui/react'
 import { ReactElement } from 'react'
+import { useIntl } from 'react-intl'
 
 interface ListItemButtonInputProps
     extends Pick<InputProps, 'onChange'>,
@@ -14,6 +15,7 @@ interface ListItemButtonInputProps
     editing?: boolean
     name: string
     id: string
+    primary?: boolean
 }
 
 const ListItemButtonInput = ({
@@ -21,9 +23,11 @@ const ListItemButtonInput = ({
     name,
     id,
     onChange,
+    primary,
     ...props
 }: ListItemButtonInputProps): ReactElement => {
     const toast = useToast()
+    const intl = useIntl()
     const onClick = () => {
         var data = [
             new ClipboardItem({
@@ -32,9 +36,15 @@ const ListItemButtonInput = ({
         ]
         navigator.clipboard.write(data).then(() =>
             toast({
-                title: 'Code copied to clipboard.',
-                description:
-                    'You can now share this with the respective users.',
+                title: intl.formatMessage({
+                    id: 'code-copied',
+                    defaultMessage: 'Code copied to clipboard',
+                }),
+                description: intl.formatMessage({
+                    id: 'you-can-share',
+                    defaultMessage:
+                        'You can now share this with the to-be list pairs',
+                }),
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
@@ -42,7 +52,10 @@ const ListItemButtonInput = ({
         )
     }
     return editing ? (
-        <Tooltip hasArrow label="Edit list item name">
+        <Tooltip hasArrow label={intl.formatMessage({
+            id: 'edit-list-item',
+            defaultMessage: 'Edit list item name',
+        })}>
             <Input
                 colorScheme="secondary"
                 borderRadius="button"
@@ -57,9 +70,12 @@ const ListItemButtonInput = ({
             />
         </Tooltip>
     ) : (
-        <Tooltip hasArrow label="Copy code">
+        <Tooltip hasArrow label={intl.formatMessage({
+            id: 'copy-code',
+            defaultMessage: 'Copy code',
+        })}>
             <Button
-                colorScheme="secondary"
+                colorScheme={primary ? 'primary' : 'secondary'}
                 borderRadius="button"
                 onClick={onClick}
                 p={2}

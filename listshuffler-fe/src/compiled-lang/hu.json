@@ -1,0 +1,530 @@
+{
+  "accept": [
+    {
+      "type": 0,
+      "value": "Elfogad"
+    }
+  ],
+  "add-item": [
+    {
+      "type": 0,
+      "value": "Elem hozzáadása"
+    }
+  ],
+  "add-list": [
+    {
+      "type": 0,
+      "value": "Lista hozzáadása"
+    }
+  ],
+  "add-list-item": [
+    {
+      "type": 0,
+      "value": "Listaelem hozzáadása"
+    }
+  ],
+  "bookmark-this-page": [
+    {
+      "type": 0,
+      "value": "Tedd el könyvjelzőként, ha vissza akarsz jönni később."
+    }
+  ],
+  "cancel": [
+    {
+      "type": 0,
+      "value": "Mégse"
+    }
+  ],
+  "change-multiplicity": [
+    {
+      "type": 0,
+      "value": "Multiplicitás változatása"
+    }
+  ],
+  "change-probability": [
+    {
+      "type": 0,
+      "value": "Valószínűségek változtatása"
+    }
+  ],
+  "code": [
+    {
+      "type": 0,
+      "value": "Kód"
+    }
+  ],
+  "code-copied": [
+    {
+      "type": 0,
+      "value": "A kód a vágólapra lett másolva"
+    }
+  ],
+  "code-generated": [
+    {
+      "type": 0,
+      "value": "kód által létrehozott elem"
+    }
+  ],
+  "copy-code": [
+    {
+      "type": 0,
+      "value": "Kód másolása"
+    }
+  ],
+  "copy-invite-code": [
+    {
+      "type": 0,
+      "value": "Meghívó kód másolása"
+    }
+  ],
+  "copy-list-code": [
+    {
+      "type": 0,
+      "value": "Listába meghívó kód másolása"
+    }
+  ],
+  "couldnt-create-instance": [
+    {
+      "type": 0,
+      "value": "Nem lehet közeget létrehozni, esetleg próbálja meg az oldal újratöltését."
+    }
+  ],
+  "couldnt-in-instance": [
+    {
+      "type": 0,
+      "value": "Nem tud a közegbe belépni, lehet a kód rossz."
+    }
+  ],
+  "couldnt-in-list": [
+    {
+      "type": 0,
+      "value": "Nem tud a listába belépni, lehet a kód rossz."
+    }
+  ],
+  "couldnt-in-listitem": [
+    {
+      "type": 0,
+      "value": "Nem tud a listaelembe belépni, lehet a kód rossz."
+    }
+  ],
+  "create-lists": [
+    {
+      "type": 0,
+      "value": "Listák létrehozása"
+    }
+  ],
+  "create-your-own": [
+    {
+      "type": 0,
+      "value": "Hozd létre a saját listáidat és keverj"
+    }
+  ],
+  "delete": [
+    {
+      "type": 0,
+      "value": "Törlés"
+    }
+  ],
+  "delete-instance": [
+    {
+      "type": 0,
+      "value": "Közeg törlése"
+    }
+  ],
+  "delete-item": [
+    {
+      "type": 0,
+      "value": "Elem törlése"
+    }
+  ],
+  "delete-list": [
+    {
+      "type": 0,
+      "value": "Lista törlése"
+    }
+  ],
+  "delete-list-item": [
+    {
+      "type": 0,
+      "value": "Listaelem törlése"
+    }
+  ],
+  "do-you-delete-instance": [
+    {
+      "type": 0,
+      "value": "Tényleg ki akarja törölni az egész közeget? Ha keverni akar, az elejéről kell majd kezdenie"
+    }
+  ],
+  "do-you-delete-item": [
+    {
+      "type": 0,
+      "value": "Tényleg ki akarja törölni ezt az elemet? Vissza fog lépni a főoldalra."
+    }
+  ],
+  "do-you-delete-list": [
+    {
+      "type": 0,
+      "value": "Tényleg ki akarja törölni ezt a listát?"
+    }
+  ],
+  "edit": [
+    {
+      "type": 0,
+      "value": "Szerkesztés"
+    }
+  ],
+  "edit-list-item": [
+    {
+      "type": 0,
+      "value": "Listaelem nevének változtatása"
+    }
+  ],
+  "edit-list-name": [
+    {
+      "type": 0,
+      "value": "Lista nevének változtatása"
+    }
+  ],
+  "edit-lists": [
+    {
+      "type": 0,
+      "value": "Listák szerkesztése"
+    }
+  ],
+  "edit-probs": [
+    {
+      "type": 0,
+      "value": "Valószínűségek változtatása"
+    }
+  ],
+  "error occurred": [
+    {
+      "type": 0,
+      "value": "Hiba történt. :/"
+    }
+  ],
+  "error-adding-list": [
+    {
+      "type": 0,
+      "value": "Hiba történt új lista hozzáadásakor. :/"
+    }
+  ],
+  "error-deleting": [
+    {
+      "type": 0,
+      "value": "Hiba történt törlés közben. :/"
+    }
+  ],
+  "error-deleting-instance": [
+    {
+      "type": 0,
+      "value": "Hiba történt a közeg törlése közben. :/"
+    }
+  ],
+  "error-discarding": [
+    {
+      "type": 0,
+      "value": "Hiba történt a változtatások visszaállításakor. :/"
+    }
+  ],
+  "error-id-not-found": [
+    {
+      "type": 0,
+      "value": "Hiba, nem létezik ez az azonosító. :/"
+    }
+  ],
+  "error-loading-item": [
+    {
+      "type": 0,
+      "value": "Hiba történt betöltéskor. :/"
+    }
+  ],
+  "error-loading-pairs": [
+    {
+      "type": 0,
+      "value": "Hiba történt a párok betöltése közben. :/"
+    }
+  ],
+  "error-loading-probs": [
+    {
+      "type": 0,
+      "value": "Hiba történt a valószínűségek betöltése közben. :/"
+    }
+  ],
+  "error-occurred-shuffle": [
+    {
+      "type": 0,
+      "value": "Nem sikerült keverni. :/"
+    }
+  ],
+  "error-saving": [
+    {
+      "type": 0,
+      "value": "Hiba történt mentés közben. :/"
+    }
+  ],
+  "error-saving-changes": [
+    {
+      "type": 0,
+      "value": "Hiba történt a változtatások mentése közben. :/"
+    }
+  ],
+  "gdpr-contact": [
+    {
+      "type": 0,
+      "value": "Ha kérdése van, írjon emailt a listshuffler@gmail.com címre."
+    }
+  ],
+  "gdpr-cookie-info": [
+    {
+      "type": 0,
+      "value": "We use store IDs in your browser to keep you signed in. If you do not accept this, we will not store anything. If you do, the browser settings decide."
+    }
+  ],
+  "gdpr-cookies": [
+    {
+      "type": 0,
+      "value": "Cookies or similar"
+    }
+  ],
+  "gdpr-note-alias": [
+    {
+      "type": 0,
+      "value": "Note that we do not recommend you to share any private data with us. If you are worried about the names leaking please use aliases."
+    }
+  ],
+  "gdpr-privacy": [
+    {
+      "type": 0,
+      "value": "Személyes adatok"
+    }
+  ],
+  "gdpr-private-data": [
+    {
+      "type": 0,
+      "value": "Private data"
+    }
+  ],
+  "gdpr-rights": [
+    {
+      "type": 0,
+      "value": "When you name a list or its item we store that so next time you log in, the names remain. When you delete a list, everything about it deletes, like its name. Same applies for its items. We delete every instance a month after its creation, so even if you forgot to delete it, it will do so automatically."
+    }
+  ],
+  "gdpr-storage": [
+    {
+      "type": 0,
+      "value": "Said all that, we store all the aforementioned data in safe databases away from any bad actor, on Amazon Web Services in Frankfurt. Only the people with the right access will be able to see your data and they are requied not to do so by policy."
+    }
+  ],
+  "gdpr-stored-info": [
+    {
+      "type": 0,
+      "value": "We are committed to your right to security. We do not store any information about you, other than the names you give the lists and their items."
+    }
+  ],
+  "gdpr-your-data": [
+    {
+      "type": 0,
+      "value": "Adataid"
+    }
+  ],
+  "instance-if-ever": [
+    {
+      "type": 0,
+      "value": "Instance does not exist now, if it ever had."
+    }
+  ],
+  "item-pair-multiplier": [
+    {
+      "type": 0,
+      "value": "item | pair | multiplier"
+    }
+  ],
+  "lists-saved": [
+    {
+      "type": 0,
+      "value": "Lists successfully saved"
+    }
+  ],
+  "logo-of": [
+    {
+      "type": 0,
+      "value": "Logo of Listshuffler"
+    }
+  ],
+  "new-list": [
+    {
+      "type": 0,
+      "value": "New List"
+    }
+  ],
+  "no-matching": [
+    {
+      "type": 0,
+      "value": "Couldn’t find matching object, check code and try again!"
+    }
+  ],
+  "please-wait": [
+    {
+      "type": 0,
+      "value": "Please wait"
+    }
+  ],
+  "probs-saved": [
+    {
+      "type": 0,
+      "value": "Probabilities successfully saved"
+    }
+  ],
+  "save": [
+    {
+      "type": 0,
+      "value": "Save"
+    }
+  ],
+  "save-probs": [
+    {
+      "type": 0,
+      "value": "Save probabilities"
+    }
+  ],
+  "see-the-pairs": [
+    {
+      "type": 0,
+      "value": "See the pairs"
+    }
+  ],
+  "select-main": [
+    {
+      "type": 0,
+      "value": "Select main list"
+    }
+  ],
+  "show-pairs": [
+    {
+      "type": 0,
+      "value": "Show pairs"
+    }
+  ],
+  "shuffle-lists": [
+    {
+      "type": 0,
+      "value": "Shuffle lists"
+    }
+  ],
+  "shuffle-now": [
+    {
+      "type": 0,
+      "value": "Shuffle now"
+    }
+  ],
+  "sorry-inconvenience": [
+    {
+      "type": 0,
+      "value": "Sorry for the inconvenience."
+    }
+  ],
+  "these-are-pairs": [
+    {
+      "type": 0,
+      "value": "These are your pairs."
+    }
+  ],
+  "this-admin-page": [
+    {
+      "type": 0,
+      "value": "This is the admin page."
+    }
+  ],
+  "this-list-item": [
+    {
+      "type": 0,
+      "value": "This is a list item page."
+    }
+  ],
+  "timed-shuffle": [
+    {
+      "type": 0,
+      "value": "Timed shuffle"
+    }
+  ],
+  "try-adjusting": [
+    {
+      "type": 0,
+      "value": "Try adjusting the parameters."
+    }
+  ],
+  "try-reloading": [
+    {
+      "type": 0,
+      "value": "Try reloading the page."
+    }
+  ],
+  "unique": [
+    {
+      "type": 0,
+      "value": "Unique:"
+    }
+  ],
+  "unique-pairs": [
+    {
+      "type": 0,
+      "value": "Unique pairs per list multiplicity"
+    }
+  ],
+  "use-code": [
+    {
+      "type": 0,
+      "value": "Use Code"
+    }
+  ],
+  "which-will-shuffle-for": [
+    {
+      "type": 0,
+      "value": "Which list do you want to shuffle pairs for?"
+    }
+  ],
+  "wrong-length": [
+    {
+      "type": 0,
+      "value": "Wrong code length"
+    }
+  ],
+  "you-can-set-multipliers": [
+    {
+      "type": 0,
+      "value": "You can set multipliers that affect the shuffle process"
+    }
+  ],
+  "you-can-share": [
+    {
+      "type": 0,
+      "value": "You can now share this with the to-be list pairs"
+    }
+  ],
+  "you-can-shuffle": [
+    {
+      "type": 0,
+      "value": "You can shuffle now!"
+    }
+  ],
+  "you-have-code": [
+    {
+      "type": 0,
+      "value": "You have a code?"
+    }
+  ],
+  "you-need-multiplicity": [
+    {
+      "type": 0,
+      "value": "You need at least two lists or a list with at least 2 multiplicity to shuffle"
+    }
+  ],
+  "zero-cannot": [
+    {
+      "type": 0,
+      "value": "zero = cannot be paired"
+    }
+  ]
+}

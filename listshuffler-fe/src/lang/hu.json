@@ -1,0 +1,266 @@
+{
+  "accept": {
+    "defaultMessage": "Elfogad"
+  },
+  "add-item": {
+    "defaultMessage": "Elem hozzáadása"
+  },
+  "add-list": {
+    "defaultMessage": "Lista hozzáadása"
+  },
+  "add-list-item": {
+    "defaultMessage": "Listaelem hozzáadása"
+  },
+  "bookmark-this-page": {
+    "defaultMessage": "Tedd el könyvjelzőként, ha vissza akarsz jönni később."
+  },
+  "cancel": {
+    "defaultMessage": "Mégse"
+  },
+  "change-multiplicity": {
+    "defaultMessage": "Multiplicitás változatása"
+  },
+  "change-probability": {
+    "defaultMessage": "Valószínűségek változtatása"
+  },
+  "code": {
+    "defaultMessage": "Kód"
+  },
+  "code-copied": {
+    "defaultMessage": "A kód a vágólapra lett másolva"
+  },
+  "code-generated": {
+    "defaultMessage": "kód által létrehozott elem"
+  },
+  "copy-code": {
+    "defaultMessage": "Kód másolása"
+  },
+  "copy-invite-code": {
+    "defaultMessage": "Meghívó kód másolása"
+  },
+  "copy-list-code": {
+    "defaultMessage": "Listába meghívó kód másolása"
+  },
+  "couldnt-create-instance": {
+    "defaultMessage": "Nem lehet közeget létrehozni, esetleg próbálja meg az oldal újratöltését."
+  },
+  "couldnt-in-instance": {
+    "defaultMessage": "Nem tud a közegbe belépni, lehet a kód rossz."
+  },
+  "couldnt-in-list": {
+    "defaultMessage": "Nem tud a listába belépni, lehet a kód rossz."
+  },
+  "couldnt-in-listitem": {
+    "defaultMessage": "Nem tud a listaelembe belépni, lehet a kód rossz."
+  },
+  "create-lists": {
+    "defaultMessage": "Listák létrehozása"
+  },
+  "create-your-own": {
+    "defaultMessage": "Hozd létre a saját listáidat és keverj"
+  },
+  "delete": {
+    "defaultMessage": "Törlés"
+  },
+  "delete-instance": {
+    "defaultMessage": "Közeg törlése"
+  },
+  "delete-item": {
+    "defaultMessage": "Elem törlése"
+  },
+  "delete-list": {
+    "defaultMessage": "Lista törlése"
+  },
+  "delete-list-item": {
+    "defaultMessage": "Listaelem törlése"
+  },
+  "do-you-delete-instance": {
+    "defaultMessage": "Tényleg ki akarja törölni az egész közeget? Ha keverni akar, az elejéről kell majd kezdenie"
+  },
+  "do-you-delete-item": {
+    "defaultMessage": "Tényleg ki akarja törölni ezt az elemet? Vissza fog lépni a főoldalra."
+  },
+  "do-you-delete-list": {
+    "defaultMessage": "Tényleg ki akarja törölni ezt a listát?"
+  },
+  "edit": {
+    "defaultMessage": "Szerkesztés"
+  },
+  "edit-list-item": {
+    "defaultMessage": "Listaelem nevének változtatása"
+  },
+  "edit-list-name": {
+    "defaultMessage": "Lista nevének változtatása"
+  },
+  "edit-lists": {
+    "defaultMessage": "Listák szerkesztése"
+  },
+  "edit-probs": {
+    "defaultMessage": "Valószínűségek változtatása"
+  },
+  "error occurred": {
+    "defaultMessage": "Hiba történt. :/"
+  },
+  "error-adding-list": {
+    "defaultMessage": "Hiba történt új lista hozzáadásakor. :/"
+  },
+  "error-deleting": {
+    "defaultMessage": "Hiba történt törlés közben. :/"
+  },
+  "error-deleting-instance": {
+    "defaultMessage": "Hiba történt a közeg törlése közben. :/"
+  },
+  "error-discarding": {
+    "defaultMessage": "Hiba történt a változtatások visszaállításakor. :/"
+  },
+  "error-id-not-found": {
+    "defaultMessage": "Hiba, nem létezik ez az azonosító. :/"
+  },
+  "error-loading-item": {
+    "defaultMessage": "Hiba történt betöltéskor. :/"
+  },
+  "error-loading-pairs": {
+    "defaultMessage": "Hiba történt a párok betöltése közben. :/"
+  },
+  "error-loading-probs": {
+    "defaultMessage": "Hiba történt a valószínűségek betöltése közben. :/"
+  },
+  "error-occurred-shuffle": {
+    "defaultMessage": "Nem sikerült keverni. :/"
+  },
+  "error-saving": {
+    "defaultMessage": "Hiba történt mentés közben. :/"
+  },
+  "error-saving-changes": {
+    "defaultMessage": "Hiba történt a változtatások mentése közben. :/"
+  },
+  "gdpr-contact": {
+    "defaultMessage": "Ha kérdése van, írjon emailt a listshuffler@gmail.com címre."
+  },
+  "gdpr-cookie-info": {
+    "defaultMessage": "We use store IDs in your browser to keep you signed in. If you do not accept this, we will not store anything. If you do, the browser settings decide."
+  },
+  "gdpr-cookies": {
+    "defaultMessage": "Cookies or similar"
+  },
+  "gdpr-note-alias": {
+    "defaultMessage": "Note that we do not recommend you to share any private data with us. If you are worried about the names leaking please use aliases."
+  },
+  "gdpr-privacy": {
+    "defaultMessage": "Személyes adatok"
+  },
+  "gdpr-private-data": {
+    "defaultMessage": "Private data"
+  },
+  "gdpr-rights": {
+    "defaultMessage": "When you name a list or its item we store that so next time you log in, the names remain. When you delete a list, everything about it deletes, like its name. Same applies for its items. We delete every instance a month after its creation, so even if you forgot to delete it, it will do so automatically."
+  },
+  "gdpr-storage": {
+    "defaultMessage": "Said all that, we store all the aforementioned data in safe databases away from any bad actor, on Amazon Web Services in Frankfurt. Only the people with the right access will be able to see your data and they are requied not to do so by policy."
+  },
+  "gdpr-stored-info": {
+    "defaultMessage": "We are committed to your right to security. We do not store any information about you, other than the names you give the lists and their items."
+  },
+  "gdpr-your-data": {
+    "defaultMessage": "Adataid"
+  },
+  "instance-if-ever": {
+    "defaultMessage": "Instance does not exist now, if it ever had."
+  },
+  "item-pair-multiplier": {
+    "defaultMessage": "item | pair | multiplier"
+  },
+  "lists-saved": {
+    "defaultMessage": "Lists successfully saved"
+  },
+  "logo-of": {
+    "defaultMessage": "Logo of Listshuffler"
+  },
+  "new-list": {
+    "defaultMessage": "New List"
+  },
+  "no-matching": {
+    "defaultMessage": "Couldn’t find matching object, check code and try again!"
+  },
+  "please-wait": {
+    "defaultMessage": "Please wait"
+  },
+  "probs-saved": {
+    "defaultMessage": "Probabilities successfully saved"
+  },
+  "save": {
+    "defaultMessage": "Save"
+  },
+  "save-probs": {
+    "defaultMessage": "Save probabilities"
+  },
+  "see-the-pairs": {
+    "defaultMessage": "See the pairs"
+  },
+  "select-main": {
+    "defaultMessage": "Select main list"
+  },
+  "show-pairs": {
+    "defaultMessage": "Show pairs"
+  },
+  "shuffle-lists": {
+    "defaultMessage": "Shuffle lists"
+  },
+  "shuffle-now": {
+    "defaultMessage": "Shuffle now"
+  },
+  "sorry-inconvenience": {
+    "defaultMessage": "Sorry for the inconvenience."
+  },
+  "these-are-pairs": {
+    "defaultMessage": "These are your pairs."
+  },
+  "this-admin-page": {
+    "defaultMessage": "This is the admin page."
+  },
+  "this-list-item": {
+    "defaultMessage": "This is a list item page."
+  },
+  "timed-shuffle": {
+    "defaultMessage": "Timed shuffle"
+  },
+  "try-adjusting": {
+    "defaultMessage": "Try adjusting the parameters."
+  },
+  "try-reloading": {
+    "defaultMessage": "Try reloading the page."
+  },
+  "unique": {
+    "defaultMessage": "Unique:"
+  },
+  "unique-pairs": {
+    "defaultMessage": "Unique pairs per list multiplicity"
+  },
+  "use-code": {
+    "defaultMessage": "Use Code"
+  },
+  "which-will-shuffle-for": {
+    "defaultMessage": "Which list do you want to shuffle pairs for?"
+  },
+  "wrong-length": {
+    "defaultMessage": "Wrong code length"
+  },
+  "you-can-set-multipliers": {
+    "defaultMessage": "You can set multipliers that affect the shuffle process"
+  },
+  "you-can-share": {
+    "defaultMessage": "You can now share this with the to-be list pairs"
+  },
+  "you-can-shuffle": {
+    "defaultMessage": "You can shuffle now!"
+  },
+  "you-have-code": {
+    "defaultMessage": "You have a code?"
+  },
+  "you-need-multiplicity": {
+    "defaultMessage": "You need at least two lists or a list with at least 2 multiplicity to shuffle"
+  },
+  "zero-cannot": {
+    "defaultMessage": "zero = cannot be paired"
+  }
+}

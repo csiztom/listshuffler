@@ -4,6 +4,13 @@ import { renderHook } from '@testing-library/react-hooks'
 import { act } from 'react-dom/test-utils'
 import useProbabilities from './useProbabilities'
 
+jest.mock('react-intl', () => ({
+    ...(jest.requireActual('react-intl') as any),
+    useIntl: () => ({
+        formatMessage: (obj: {defaultMessage: string, id: string}) => obj.defaultMessage
+    }),
+}))
+
 describe('useProbabilities', () => {
     beforeEach(() => {
         fetch.resetMocks()

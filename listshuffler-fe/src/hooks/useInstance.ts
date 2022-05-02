@@ -1,5 +1,7 @@
 import { useBoolean, useToast } from '@chakra-ui/react'
 import { useState, useEffect, useMemo } from 'react'
+import { useIntl } from 'react-intl'
+import { useNavigate } from 'react-router-dom'
 import { AbstractInstance, AbstractList, AbstractListItem } from '../types/main'
 
 const useInstance = (
@@ -9,6 +11,7 @@ const useInstance = (
 ): {
     instance: AbstractInstance | undefined
     setInstance: (instance: AbstractInstance) => void
+    deleteInstance: () => void
     addList: () => void
     revertLists: () => void
     saveLists: () => void
@@ -20,6 +23,9 @@ const useInstance = (
     const [updateLists, setUpdateLists] = useBoolean()
     const [updateEditedLists, setUpdateEditedLists] = useBoolean()
     const toast = useToast()
+    const navigate = useNavigate()
+    const intl = useIntl()
+    console.log(intl)
 
     useEffect(() => {
         if (!id) return
@@ -27,7 +33,10 @@ const useInstance = (
         fetch(process.env.REACT_APP_API_URL + '/instance?adminID=' + id, {
             method: 'GET',
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (response.ok) return response.json()
+                else throw Error('not 2xx answer')
+            })
             .then((response: AbstractInstance) => {
                 setInstance(response)
                 setEditedLists(response.lists)
@@ -35,8 +44,15 @@ const useInstance = (
             .then(setLoading && setLoading.off)
             .catch(() =>
                 toast({
-                    title: 'Error, ID not found. :/',
-                    description: 'Log in with the link provided in your email',
+                    title: intl.formatMessage({
+                        id: 'error-id-not-found',
+                        defaultMessage: 'Error, ID not found. :/',
+                    }),
+                    description: intl.formatMessage({
+                        id: 'instance-if-ever',
+                        defaultMessage:
+                            'Instance does not exist now, if it ever had.',
+                    }),
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
@@ -79,6 +95,37 @@ const useInstance = (
         [instance],
     )
 
+    const deleteInstance = () => {
+        setLoading && setLoading.on()
+        fetch(process.env.REACT_APP_API_URL + '/instance', {
+            method: 'DELETE',
+            body: JSON.stringify({
+                adminID: id,
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) throw Error('not 2xx answer')
+            })
+            .catch(() =>
+                toast({
+                    title: intl.formatMessage({
+                        id: 'error-deleting-instance',
+                        defaultMessage:
+                            'Error occurred while deleting instance. :/',
+                    }),
+                    description: intl.formatMessage({
+                        id: 'sorry-inconvenience',
+                        defaultMessage: 'Sorry for the inconvenience.',
+                    }),
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                }),
+            )
+            .then(setLoading && setLoading.off)
+            .then(() => navigate('/'))
+    }
+
     const updateInstance = (editedInstance: AbstractInstance) => {
         if (
             editedInstance.shuffleTime !== instance?.shuffleTime ||
@@ -101,10 +148,20 @@ const useInstance = (
                         : {}),
                 }),
             })
+                .then((response) => {
+                    if (!response.ok) throw Error('not 2xx answer')
+                })
                 .catch(() =>
                     toast({
-                        title: 'Error occurred while saving changes. :/',
-                        description: 'Sorry for the inconvenience',
+                        title: intl.formatMessage({
+                            id: 'error-saving-changes',
+                            defaultMessage:
+                                'Error occurred while saving changes. :/',
+                        }),
+                        description: intl.formatMessage({
+                            id: 'sorry-inconvenience',
+                            defaultMessage: 'Sorry for the inconvenience.',
+                        }),
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
@@ -143,17 +200,26 @@ const useInstance = (
             method: 'POST',
             body: JSON.stringify({
                 adminID: id,
-                listName: 'New List',
+                listName: intl.formatMessage({
+                    id: 'new-list',
+                    defaultMessage: 'New List',
+                }),
                 multiplicity: '1',
             }),
         })
-            .then((response) => response.ok && response.json())
+            .then((response) => {
+                if (response.ok) return response.json()
+                else throw Error('not 2xx answer')
+            })
             .then((response) => {
                 setEditedLists((lists) => [
                     ...lists,
                     {
                         listID: response.listID,
-                        listName: 'New List',
+                        listName: intl.formatMessage({
+                            id: 'new-list',
+                            defaultMessage: 'New List',
+                        }),
                         listItems: [] as AbstractListItem[],
                         inProgress: true,
                         multiplicity: 1,
@@ -167,7 +233,10 @@ const useInstance = (
                                 ...instance.lists,
                                 {
                                     listID: response.listID,
-                                    listName: 'New List',
+                                    listName: intl.formatMessage({
+                                        id: 'new-list',
+                                        defaultMessage: 'New List',
+                                    }),
                                     listItems: [] as AbstractListItem[],
                                     inProgress: true,
                                     multiplicity: 1,
@@ -178,8 +247,15 @@ const useInstance = (
             })
             .catch(() =>
                 toast({
-                    title: 'Error occurred while adding new list. :/',
-                    description: 'Sorry for the inconvenience.',
+                    title: intl.formatMessage({
+                        id: 'error-adding-list',
+                        defaultMessage:
+                            'Error occurred while adding new list. :/',
+                    }),
+                    description: intl.formatMessage({
+                        id: 'sorry-inconvenience',
+                        defaultMessage: 'Sorry for the inconvenience.',
+                    }),
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
@@ -196,6 +272,8 @@ const useInstance = (
                 listName: list.listName,
                 multiplicity: list.multiplicity,
             }),
+        }).then((response) => {
+            if (!response.ok) throw Error('not 2xx answer')
         })
 
     const deleteList = (list: AbstractList) =>
@@ -204,6 +282,8 @@ const useInstance = (
             body: JSON.stringify({
                 listID: list.listID,
             }),
+        }).then((response) => {
+            if (!response.ok) throw Error('not 2xx answer')
         })
 
     const addListItem = (list: AbstractList, item: AbstractListItem) =>
@@ -213,6 +293,8 @@ const useInstance = (
                 listID: list.listID,
                 listItem: item.listItem,
             }),
+        }).then((response) => {
+            if (!response.ok) throw Error('not 2xx answer')
         })
 
     const saveListItem = (item: AbstractListItem) =>
@@ -222,6 +304,8 @@ const useInstance = (
                 listItem: item.listItem,
                 listItemID: item.listItemID,
             }),
+        }).then((response) => {
+            if (!response.ok) throw Error('not 2xx answer')
         })
 
     const deleteListItem = (item: AbstractListItem) =>
@@ -230,6 +314,8 @@ const useInstance = (
             body: JSON.stringify({
                 listItemID: item.listItemID,
             }),
+        }).then((response) => {
+            if (!response.ok) throw Error('not 2xx answer')
         })
 
     const saveLists = () => {
@@ -276,8 +362,14 @@ const useInstance = (
             ])
                 .then(() =>
                     toast({
-                        title: 'Lists successfully saved',
-                        description: 'You can shuffle now!',
+                        title: intl.formatMessage({
+                            id: 'lists-saved',
+                            defaultMessage: 'Lists successfully saved',
+                        }),
+                        description: intl.formatMessage({
+                            id: 'you-can-shuffle',
+                            defaultMessage: 'You can shuffle now!',
+                        }),
                         status: 'success',
                         duration: 9000,
                         isClosable: true,
@@ -285,8 +377,14 @@ const useInstance = (
                 )
                 .catch(() =>
                     toast({
-                        title: 'Error occurred while saving. :/',
-                        description: 'Sorry for the inconvenience.',
+                        title: intl.formatMessage({
+                            id: 'error-saving',
+                            defaultMessage: 'Error occurred while saving. :/',
+                        }),
+                        description: intl.formatMessage({
+                            id: 'sorry-inconvenience',
+                            defaultMessage: 'Sorry for the inconvenience.',
+                        }),
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
@@ -309,8 +407,15 @@ const useInstance = (
             ])
                 .catch(() =>
                     toast({
-                        title: 'Error occurred while discarding changes. :/',
-                        description: 'Sorry for the inconvenience.',
+                        title: intl.formatMessage({
+                            id: 'error-discarding',
+                            defaultMessage:
+                                'Error occurred while discarding changes. :/',
+                        }),
+                        description: intl.formatMessage({
+                            id: 'sorry-inconvenience',
+                            defaultMessage: 'Sorry for the inconvenience.',
+                        }),
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
@@ -323,6 +428,7 @@ const useInstance = (
 
     return {
         instance: instance && { ...instance, lists: editedLists },
+        deleteInstance,
         allListItems,
         addList,
         multiplicitySum,

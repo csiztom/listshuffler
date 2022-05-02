@@ -1,14 +1,14 @@
 import {
-    BoxProps,
     Heading,
     Button,
     Input,
     ButtonProps,
+    InputProps,
 } from '@chakra-ui/react'
 import { ReactElement, useState } from 'react'
 import Card from './Card'
 
-interface ActionCardProps extends BoxProps, Pick<ButtonProps, 'isLoading'> {
+interface ActionCardProps extends InputProps, Pick<ButtonProps, 'isLoading'> {
     title: string
     buttonText: string
     hasInput?: boolean
@@ -25,10 +25,9 @@ const ActionCard = ({
     isLoading,
     ...props
 }: ActionCardProps): ReactElement => {
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState(props.defaultValue ?? '')
     return (
-        <Card
-        >
+        <Card>
             <Heading as="h1" fontSize="xlarge" fontWeight="light" mb={4}>
                 {title}
             </Heading>
@@ -39,13 +38,14 @@ const ActionCard = ({
                     mb={4}
                     borderColor="text"
                     onChange={(e) => setValue(e.target.value)}
+                    {...props}
                 />
             )}
             <Button
                 colorScheme="primary"
                 borderRadius="button"
                 mb={4}
-                onClick={() => onButtonClick && onButtonClick(value)}
+                onClick={() => onButtonClick && onButtonClick(value.toString())}
                 isLoading={isLoading}
             >
                 {buttonText}
