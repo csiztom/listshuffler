@@ -4,7 +4,6 @@ import {
     ColorModeScript,
     Select,
     Stack,
-    Switch,
 } from '@chakra-ui/react'
 import { StartPage, InstancePage } from './pages'
 import { Routes, Route, useNavigate } from 'react-router-dom'
