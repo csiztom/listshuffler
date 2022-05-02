@@ -1,8 +1,7 @@
-import { ReactElement, useState } from 'react'
+import { ReactElement } from 'react'
 import {
     Button,
     Heading,
-    Input,
     Modal,
     ModalBody,
     ModalCloseButton,
