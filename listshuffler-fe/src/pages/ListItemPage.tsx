@@ -60,7 +60,7 @@ const ListItemPage = (props: {
                 }),
             )
             .then(setIsLoading.off)
-    }, [id, toast, setIsLoading, intl])
+    }, [id, toast, setIsLoading, intl, props])
 
     useEffect(() => {
         if (!id) return
