@@ -57,7 +57,7 @@ const EditorCard = ({
         <Card zIndex={2}>
             <Stack
                 direction="row"
-                gap={4}
+                gap={2}
                 spacing={0}
                 align="center"
                 wrap="wrap"

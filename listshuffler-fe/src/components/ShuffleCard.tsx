@@ -64,7 +64,12 @@ const ShuffleCard = ({
                         'Do you really want to delete the whole instance? You will need to start over again if you want to shuffle.',
                 })}
             />
-            <Stack direction="row" gap={2}>
+            <Stack direction="row"
+                gap={2}
+                spacing={0}
+                align="center"
+                wrap="wrap"
+                justifyContent="center">
                 <Tooltip
                     hasArrow
                     label={intl.formatMessage({
