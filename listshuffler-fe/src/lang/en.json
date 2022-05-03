@@ -138,7 +138,7 @@
     "defaultMessage": "If you have any questions, write an email to listshuffler@gmail.com"
   },
   "gdpr-cookie-info": {
-    "defaultMessage": "We use store IDs in your browser to keep you signed in. If you do not accept this, we will not store anything. If you do, the browser settings decide."
+    "defaultMessage": "We store IDs in your browser to keep you signed in. If you do not accept this, we will not store anything. If you do, the browser settings decide."
   },
   "gdpr-cookies": {
     "defaultMessage": "Cookies or similar"

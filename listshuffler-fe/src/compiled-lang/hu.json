@@ -278,49 +278,49 @@
   "gdpr-cookie-info": [
     {
       "type": 0,
-      "value": "We use store IDs in your browser to keep you signed in. If you do not accept this, we will not store anything. If you do, the browser settings decide."
+      "value": "Azonosítókat tárolunk a böngészőjében, hogy belépéskor egyszerűbb legyen önnek. Ha ezt nem fogadja el, nem tárolunk el semmit. Ha elfogadja, a böngésző beállításaitól függ."
     }
   ],
   "gdpr-cookies": [
     {
       "type": 0,
-      "value": "Cookies or similar"
+      "value": "Sütik és hasonlók"
     }
   ],
   "gdpr-note-alias": [
     {
       "type": 0,
-      "value": "Note that we do not recommend you to share any private data with us. If you are worried about the names leaking please use aliases."
+      "value": "Nem ajánljuk, hogy személyes adatot osszon meg velünk. Ha attól fél, hogy a nevek kitudódnak, kérjük használjon álneveket."
     }
   ],
   "gdpr-privacy": [
     {
       "type": 0,
-      "value": "Személyes adatok"
+      "value": "Titoktartás"
     }
   ],
   "gdpr-private-data": [
     {
       "type": 0,
-      "value": "Private data"
+      "value": "Személyes adatok"
     }
   ],
   "gdpr-rights": [
     {
       "type": 0,
-      "value": "When you name a list or its item we store that so next time you log in, the names remain. When you delete a list, everything about it deletes, like its name. Same applies for its items. We delete every instance a month after its creation, so even if you forgot to delete it, it will do so automatically."
+      "value": "Amikor nevet ad egy listának vagy egy elemének, mi eltároljuk, hogy később is elérhető legyen. Ha kitöröl egy listát, minden törlődik a listával kapcsolatosan, a benne levő nevek is. Ugyanez ha listaelemet töröl. Automatikusan törlünk minden közeget egy hónap után."
     }
   ],
   "gdpr-storage": [
     {
       "type": 0,
-      "value": "Said all that, we store all the aforementioned data in safe databases away from any bad actor, on Amazon Web Services in Frankfurt. Only the people with the right access will be able to see your data and they are requied not to do so by policy."
+      "value": "Ha mégis úgy dönt, hogy ránk bízza az adatait, egy biztonságos adatbázisban tároljuk azokat, az Amazon frankfurti szerverein. Csak a jelszóval rendelkező személyek tudják megnézni az adatokat, de irányelvünk, hogy nem nézzük meg azokat."
     }
   ],
   "gdpr-stored-info": [
     {
       "type": 0,
-      "value": "We are committed to your right to security. We do not store any information about you, other than the names you give the lists and their items."
+      "value": "A biztonsághoz való jogát tudomásul vesszük. Csak a listáknak és elemeinek adott neveket tároljuk."
     }
   ],
   "gdpr-your-data": [
@@ -332,199 +332,199 @@
   "instance-if-ever": [
     {
       "type": 0,
-      "value": "Instance does not exist now, if it ever had."
+      "value": "A közeg nem létezik"
     }
   ],
   "item-pair-multiplier": [
     {
       "type": 0,
-      "value": "item | pair | multiplier"
+      "value": "listaelem | pár | szorzó"
     }
   ],
   "lists-saved": [
     {
       "type": 0,
-      "value": "Lists successfully saved"
+      "value": "Listák elmentve"
     }
   ],
   "logo-of": [
     {
       "type": 0,
-      "value": "Logo of Listshuffler"
+      "value": "A Listshuffler logója"
     }
   ],
   "new-list": [
     {
       "type": 0,
-      "value": "New List"
+      "value": "Új Lista"
     }
   ],
   "no-matching": [
     {
       "type": 0,
-      "value": "Couldn’t find matching object, check code and try again!"
+      "value": "Nem sikerült, talán elírt valamit?"
     }
   ],
   "please-wait": [
     {
       "type": 0,
-      "value": "Please wait"
+      "value": "Kérem várjon"
     }
   ],
   "probs-saved": [
     {
       "type": 0,
-      "value": "Probabilities successfully saved"
+      "value": "Valószínűségek elmentve"
     }
   ],
   "save": [
     {
       "type": 0,
-      "value": "Save"
+      "value": "Mentés"
     }
   ],
   "save-probs": [
     {
       "type": 0,
-      "value": "Save probabilities"
+      "value": "Valószínűségek mentése"
     }
   ],
   "see-the-pairs": [
     {
       "type": 0,
-      "value": "See the pairs"
+      "value": "Párok mutatása"
     }
   ],
   "select-main": [
     {
       "type": 0,
-      "value": "Select main list"
+      "value": "Fő lista kiválasztása"
     }
   ],
   "show-pairs": [
     {
       "type": 0,
-      "value": "Show pairs"
+      "value": "Mustasd a párokat"
     }
   ],
   "shuffle-lists": [
     {
       "type": 0,
-      "value": "Shuffle lists"
+      "value": "Listák keverése"
     }
   ],
   "shuffle-now": [
     {
       "type": 0,
-      "value": "Shuffle now"
+      "value": "Keverés most"
     }
   ],
   "sorry-inconvenience": [
     {
       "type": 0,
-      "value": "Sorry for the inconvenience."
+      "value": "Elnézést a kellemetlenségért."
     }
   ],
   "these-are-pairs": [
     {
       "type": 0,
-      "value": "These are your pairs."
+      "value": "Ezek az ön párjai"
     }
   ],
   "this-admin-page": [
     {
       "type": 0,
-      "value": "This is the admin page."
+      "value": "Ez az admin oldala"
     }
   ],
   "this-list-item": [
     {
       "type": 0,
-      "value": "This is a list item page."
+      "value": "Ez egy listaelem oldala"
     }
   ],
   "timed-shuffle": [
     {
       "type": 0,
-      "value": "Timed shuffle"
+      "value": "Indőzített keverés"
     }
   ],
   "try-adjusting": [
     {
       "type": 0,
-      "value": "Try adjusting the parameters."
+      "value": "Próbáljon a paramétereken változtatni."
     }
   ],
   "try-reloading": [
     {
       "type": 0,
-      "value": "Try reloading the page."
+      "value": "Próbálja meg újratölteni az oldalt."
     }
   ],
   "unique": [
     {
       "type": 0,
-      "value": "Unique:"
+      "value": "Egyedi:"
     }
   ],
   "unique-pairs": [
     {
       "type": 0,
-      "value": "Unique pairs per list multiplicity"
+      "value": "Egyedi minden lista multiplicitásonként"
     }
   ],
   "use-code": [
     {
       "type": 0,
-      "value": "Use Code"
+      "value": "Kód használata"
     }
   ],
   "which-will-shuffle-for": [
     {
       "type": 0,
-      "value": "Which list do you want to shuffle pairs for?"
+      "value": "Melyik listához akar párokat keverni?"
     }
   ],
   "wrong-length": [
     {
       "type": 0,
-      "value": "Wrong code length"
+      "value": "Rossz kódhossz"
     }
   ],
   "you-can-set-multipliers": [
     {
       "type": 0,
-      "value": "You can set multipliers that affect the shuffle process"
+      "value": "Szorzókat tud beállítani, amik befolyásolják a keverési folyamatot."
     }
   ],
   "you-can-share": [
     {
       "type": 0,
-      "value": "You can now share this with the to-be list pairs"
+      "value": "Megoszthatja az illető személyekkel"
     }
   ],
   "you-can-shuffle": [
     {
       "type": 0,
-      "value": "You can shuffle now!"
+      "value": "Most már keverhet!"
     }
   ],
   "you-have-code": [
     {
       "type": 0,
-      "value": "You have a code?"
+      "value": "Van egy kódja?"
     }
   ],
   "you-need-multiplicity": [
     {
       "type": 0,
-      "value": "You need at least two lists or a list with at least 2 multiplicity to shuffle"
+      "value": "Legalább két lista vagy egy lista legalább két multiplicitással szükséges a keveréshez."
     }
   ],
   "zero-cannot": [
     {
       "type": 0,
-      "value": "zero = cannot be paired"
+      "value": "nulla = nem lehet párba állítani"
     }
   ]
 }

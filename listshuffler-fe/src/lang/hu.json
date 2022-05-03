@@ -138,129 +138,129 @@
     "defaultMessage": "Ha kérdése van, írjon emailt a listshuffler@gmail.com címre."
   },
   "gdpr-cookie-info": {
-    "defaultMessage": "We use store IDs in your browser to keep you signed in. If you do not accept this, we will not store anything. If you do, the browser settings decide."
+    "defaultMessage": "Azonosítókat tárolunk a böngészőjében, hogy belépéskor egyszerűbb legyen önnek. Ha ezt nem fogadja el, nem tárolunk el semmit. Ha elfogadja, a böngésző beállításaitól függ."
   },
   "gdpr-cookies": {
-    "defaultMessage": "Cookies or similar"
+    "defaultMessage": "Sütik és hasonlók"
   },
   "gdpr-note-alias": {
-    "defaultMessage": "Note that we do not recommend you to share any private data with us. If you are worried about the names leaking please use aliases."
+    "defaultMessage": "Nem ajánljuk, hogy személyes adatot osszon meg velünk. Ha attól fél, hogy a nevek kitudódnak, kérjük használjon álneveket."
   },
   "gdpr-privacy": {
-    "defaultMessage": "Személyes adatok"
+    "defaultMessage": "Titoktartás"
   },
   "gdpr-private-data": {
-    "defaultMessage": "Private data"
+    "defaultMessage": "Személyes adatok"
   },
   "gdpr-rights": {
-    "defaultMessage": "When you name a list or its item we store that so next time you log in, the names remain. When you delete a list, everything about it deletes, like its name. Same applies for its items. We delete every instance a month after its creation, so even if you forgot to delete it, it will do so automatically."
+    "defaultMessage": "Amikor nevet ad egy listának vagy egy elemének, mi eltároljuk, hogy később is elérhető legyen. Ha kitöröl egy listát, minden törlődik a listával kapcsolatosan, a benne levő nevek is. Ugyanez ha listaelemet töröl. Automatikusan törlünk minden közeget egy hónap után."
   },
   "gdpr-storage": {
-    "defaultMessage": "Said all that, we store all the aforementioned data in safe databases away from any bad actor, on Amazon Web Services in Frankfurt. Only the people with the right access will be able to see your data and they are requied not to do so by policy."
+    "defaultMessage": "Ha mégis úgy dönt, hogy ránk bízza az adatait, egy biztonságos adatbázisban tároljuk azokat, az Amazon frankfurti szerverein. Csak a jelszóval rendelkező személyek tudják megnézni az adatokat, de irányelvünk, hogy nem nézzük meg azokat."
   },
   "gdpr-stored-info": {
-    "defaultMessage": "We are committed to your right to security. We do not store any information about you, other than the names you give the lists and their items."
+    "defaultMessage": "A biztonsághoz való jogát tudomásul vesszük. Csak a listáknak és elemeinek adott neveket tároljuk."
   },
   "gdpr-your-data": {
     "defaultMessage": "Adataid"
   },
   "instance-if-ever": {
-    "defaultMessage": "Instance does not exist now, if it ever had."
+    "defaultMessage": "A közeg nem létezik"
   },
   "item-pair-multiplier": {
-    "defaultMessage": "item | pair | multiplier"
+    "defaultMessage": "listaelem | pár | szorzó"
   },
   "lists-saved": {
-    "defaultMessage": "Lists successfully saved"
+    "defaultMessage": "Listák elmentve"
   },
   "logo-of": {
-    "defaultMessage": "Logo of Listshuffler"
+    "defaultMessage": "A Listshuffler logója"
   },
   "new-list": {
-    "defaultMessage": "New List"
+    "defaultMessage": "Új Lista"
   },
   "no-matching": {
-    "defaultMessage": "Couldn’t find matching object, check code and try again!"
+    "defaultMessage": "Nem sikerült, talán elírt valamit?"
   },
   "please-wait": {
-    "defaultMessage": "Please wait"
+    "defaultMessage": "Kérem várjon"
   },
   "probs-saved": {
-    "defaultMessage": "Probabilities successfully saved"
+    "defaultMessage": "Valószínűségek elmentve"
   },
   "save": {
-    "defaultMessage": "Save"
+    "defaultMessage": "Mentés"
   },
   "save-probs": {
-    "defaultMessage": "Save probabilities"
+    "defaultMessage": "Valószínűségek mentése"
   },
   "see-the-pairs": {
-    "defaultMessage": "See the pairs"
+    "defaultMessage": "Párok mutatása"
   },
   "select-main": {
-    "defaultMessage": "Select main list"
+    "defaultMessage": "Fő lista kiválasztása"
   },
   "show-pairs": {
-    "defaultMessage": "Show pairs"
+    "defaultMessage": "Mustasd a párokat"
   },
   "shuffle-lists": {
-    "defaultMessage": "Shuffle lists"
+    "defaultMessage": "Listák keverése"
   },
   "shuffle-now": {
-    "defaultMessage": "Shuffle now"
+    "defaultMessage": "Keverés most"
   },
   "sorry-inconvenience": {
-    "defaultMessage": "Sorry for the inconvenience."
+    "defaultMessage": "Elnézést a kellemetlenségért."
   },
   "these-are-pairs": {
-    "defaultMessage": "These are your pairs."
+    "defaultMessage": "Ezek az ön párjai"
   },
   "this-admin-page": {
-    "defaultMessage": "This is the admin page."
+    "defaultMessage": "Ez az admin oldala"
   },
   "this-list-item": {
-    "defaultMessage": "This is a list item page."
+    "defaultMessage": "Ez egy listaelem oldala"
   },
   "timed-shuffle": {
-    "defaultMessage": "Timed shuffle"
+    "defaultMessage": "Indőzített keverés"
   },
   "try-adjusting": {
-    "defaultMessage": "Try adjusting the parameters."
+    "defaultMessage": "Próbáljon a paramétereken változtatni."
   },
   "try-reloading": {
-    "defaultMessage": "Try reloading the page."
+    "defaultMessage": "Próbálja meg újratölteni az oldalt."
   },
   "unique": {
-    "defaultMessage": "Unique:"
+    "defaultMessage": "Egyedi:"
   },
   "unique-pairs": {
-    "defaultMessage": "Unique pairs per list multiplicity"
+    "defaultMessage": "Egyedi minden lista multiplicitásonként"
   },
   "use-code": {
-    "defaultMessage": "Use Code"
+    "defaultMessage": "Kód használata"
   },
   "which-will-shuffle-for": {
-    "defaultMessage": "Which list do you want to shuffle pairs for?"
+    "defaultMessage": "Melyik listához akar párokat keverni?"
   },
   "wrong-length": {
-    "defaultMessage": "Wrong code length"
+    "defaultMessage": "Rossz kódhossz"
   },
   "you-can-set-multipliers": {
-    "defaultMessage": "You can set multipliers that affect the shuffle process"
+    "defaultMessage": "Szorzókat tud beállítani, amik befolyásolják a keverési folyamatot."
   },
   "you-can-share": {
-    "defaultMessage": "You can now share this with the to-be list pairs"
+    "defaultMessage": "Megoszthatja az illető személyekkel"
   },
   "you-can-shuffle": {
-    "defaultMessage": "You can shuffle now!"
+    "defaultMessage": "Most már keverhet!"
   },
   "you-have-code": {
-    "defaultMessage": "You have a code?"
+    "defaultMessage": "Van egy kódja?"
   },
   "you-need-multiplicity": {
-    "defaultMessage": "You need at least two lists or a list with at least 2 multiplicity to shuffle"
+    "defaultMessage": "Legalább két lista vagy egy lista legalább két multiplicitással szükséges a keveréshez."
   },
   "zero-cannot": {
-    "defaultMessage": "zero = cannot be paired"
+    "defaultMessage": "nulla = nem lehet párba állítani"
   }
 }

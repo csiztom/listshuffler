@@ -278,7 +278,7 @@
   "gdpr-cookie-info": [
     {
       "type": 0,
-      "value": "We use store IDs in your browser to keep you signed in. If you do not accept this, we will not store anything. If you do, the browser settings decide."
+      "value": "We store IDs in your browser to keep you signed in. If you do not accept this, we will not store anything. If you do, the browser settings decide."
     }
   ],
   "gdpr-cookies": [

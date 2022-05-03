@@ -87,7 +87,7 @@ const GDPRModal = ({
                     {intl.formatMessage({
                             id: 'gdpr-cookie-info',
                             defaultMessage:
-                            'We use store IDs in your browser to keep you signed in. If you do not accept this, we will not store anything. If you do, the browser settings decide.',
+                            'We store IDs in your browser to keep you signed in. If you do not accept this, we will not store anything. If you do, the browser settings decide.',
                         })}
                     </Text>
                     <br />
