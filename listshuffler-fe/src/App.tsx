@@ -17,6 +17,7 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import enMessages from './compiled-lang/en.json'
 import huMessages from './compiled-lang/hu.json'
 import { AbstractInstance, Preset } from './types/main'
+import christmasTheme from './styles/christmasTheme'
 
 const App = () => {
     const navigate = useNavigate()
@@ -52,7 +53,9 @@ const App = () => {
     return (
         <>
             <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-            <ChakraProvider theme={theme}>
+            <ChakraProvider
+                theme={preset === 'christmas' ? christmasTheme : theme}
+            >
                 <IntlProvider
                     locale={lang}
                     messages={lang === 'hu' ? huMessages : enMessages}
@@ -71,7 +74,11 @@ const App = () => {
                             />
                             <Route
                                 path=":id/pairs"
-                                element={background(<PairedPage />)}
+                                element={background(
+                                    <PairedPage
+                                        onChangePreset={(p) => setPreset(p)}
+                                    />,
+                                )}
                             />
                         </Route>
                         <Route path="listitem">
@@ -93,42 +100,42 @@ const App = () => {
                         right={6}
                         align="end"
                     >
-                        {(!window.location.pathname.includes('instance') &&
-                            !window.location.pathname.includes('listitem')) && (
-                            <Select
-                                variant="filled"
-                                value={preset ?? 'default'}
-                                onChange={(e) => {
-                                    setPreset(e.target.value as Preset)
-                                    localStorage.setItem(
-                                        'preset',
-                                        e.target.value,
-                                    )
-                                }}
-                                width="fit-content"
-                            >
-                                <FormattedMessage
-                                    id="default"
-                                    defaultMessage="Default"
+                        {!window.location.pathname.includes('instance') &&
+                            !window.location.pathname.includes('listitem') && (
+                                <Select
+                                    variant="filled"
+                                    value={preset ?? 'default'}
+                                    onChange={(e) => {
+                                        setPreset(e.target.value as Preset)
+                                        localStorage.setItem(
+                                            'preset',
+                                            e.target.value,
+                                        )
+                                    }}
+                                    width="fit-content"
                                 >
-                                    {(message) => (
-                                        <option value="default">
-                                            {message}
-                                        </option>
-                                    )}
-                                </FormattedMessage>
-                                <FormattedMessage
-                                    id="christmas"
-                                    defaultMessage="Secret Santa"
-                                >
-                                    {(message) => (
-                                        <option value="christmas">
-                                            {message}
-                                        </option>
-                                    )}
-                                </FormattedMessage>
-                            </Select>
-                        )}
+                                    <FormattedMessage
+                                        id="default"
+                                        defaultMessage="Default"
+                                    >
+                                        {(message) => (
+                                            <option value="default">
+                                                {message}
+                                            </option>
+                                        )}
+                                    </FormattedMessage>
+                                    <FormattedMessage
+                                        id="christmas"
+                                        defaultMessage="Secret Santa"
+                                    >
+                                        {(message) => (
+                                            <option value="christmas">
+                                                {message}
+                                            </option>
+                                        )}
+                                    </FormattedMessage>
+                                </Select>
+                            )}
                         <Select
                             variant="filled"
                             defaultValue={lang}

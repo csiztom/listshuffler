@@ -6,11 +6,14 @@ import { ListItemButtonInput } from '../components'
 import Card from '../components/Card'
 import useInstance from '../hooks/useInstance'
 import usePairs from '../hooks/usePairs'
+import { AbstractInstance } from '../types/main'
 
-const PairedPage = (): ReactElement => {
+const PairedPage = (props: {
+    onChangePreset: (p: AbstractInstance['preset']) => void
+}): ReactElement => {
     const { id } = useParams()
     const [isLoading, setIsLoading] = useBoolean(false)
-    const { instance, allListItems } = useInstance(id ?? '', setIsLoading)
+    const { instance, allListItems } = useInstance(id ?? '', setIsLoading, undefined, undefined, props.onChangePreset)
     const [pairs] = usePairs(id, instance?.shuffled, setIsLoading)
     const intl = useIntl()
     const navigate = useNavigate()

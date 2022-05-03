@@ -1,7 +1,7 @@
 import { extendTheme } from '@chakra-ui/react'
 import '@fontsource/catamaran'
 
-const theme = extendTheme({
+const christmasTheme = extendTheme({
     colors: {
         error: '#679934',
         success: '#679934',
@@ -57,4 +57,4 @@ const theme = extendTheme({
     },
 })
 
-export default theme
+export default christmasTheme
