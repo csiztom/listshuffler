@@ -12,7 +12,8 @@ class TestList(TestCase):
 
     def test_create(self):
         client = lambda_client()
-        response = client.invoke(FunctionName="testPostInstance")
+        response = client.invoke(FunctionName="testPostInstance",
+                                 Payload=json.dumps({"queryStringParameters": None, "body": None}))
         payload = json.loads(response['Payload'].read())
         admin_id = json.loads(payload['body'])['adminID']
         assert payload['statusCode'] == 200
@@ -28,7 +29,8 @@ class TestList(TestCase):
 
     def test_edit(self):
         client = lambda_client()
-        response = client.invoke(FunctionName="testPostInstance")
+        response = client.invoke(FunctionName="testPostInstance",
+                                 Payload=json.dumps({"queryStringParameters": None, "body": None}))
         payload = json.loads(response['Payload'].read())
         admin_id = json.loads(payload['body'])['adminID']
         assert payload['statusCode'] == 200
@@ -49,7 +51,8 @@ class TestList(TestCase):
 
     def test_delete(self):
         client = lambda_client()
-        response = client.invoke(FunctionName="testPostInstance")
+        response = client.invoke(FunctionName="testPostInstance",
+                                 Payload=json.dumps({"queryStringParameters": None, "body": None}))
         payload = json.loads(response['Payload'].read())
         admin_id = json.loads(payload['body'])['adminID']
         assert payload['statusCode'] == 200
