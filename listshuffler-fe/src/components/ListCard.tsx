@@ -128,7 +128,7 @@ const ListCard = ({
                         borderRadius="button"
                         mb={4}
                         maxLength={40}
-                        fontSize="xsmall"
+                        fontSize="sm"
                         size="sm"
                         w="fit-content"
                         defaultValue={list.listName}
@@ -141,7 +141,7 @@ const ListCard = ({
                     />
                 </Tooltip>
             ) : (
-                <Text mt={-4} mb={2} color="text" fontSize="small">
+                <Text mt={-4} mb={2} color="text" fontSize="sm">
                     {list?.listName}
                 </Text>
             )}

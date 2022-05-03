@@ -116,7 +116,7 @@ const App = () => {
                                 >
                                     <FormattedMessage
                                         id="default"
-                                        defaultMessage="Default"
+                                        defaultMessage="Extended"
                                     >
                                         {(message) => (
                                             <option value="default">

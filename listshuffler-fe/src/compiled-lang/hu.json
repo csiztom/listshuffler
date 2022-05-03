@@ -59,6 +59,18 @@
       "value": "Karácsonyi húzás"
     }
   ],
+  "christmas-create": [
+    {
+      "type": 0,
+      "value": "Hozd létre a saját karácsonyi húzásodat"
+    }
+  ],
+  "christmas-create-button": [
+    {
+      "type": 0,
+      "value": "Karácsonyi húzás"
+    }
+  ],
   "code": [
     {
       "type": 0,
@@ -140,7 +152,7 @@
   "default": [
     {
       "type": 0,
-      "value": "Alap"
+      "value": "Bővített"
     }
   ],
   "delete": [

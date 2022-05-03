@@ -29,6 +29,12 @@
   "christmas": {
     "defaultMessage": "Karácsonyi húzás"
   },
+  "christmas-create": {
+    "defaultMessage": "Hozd létre a saját karácsonyi húzásodat"
+  },
+  "christmas-create-button": {
+    "defaultMessage": "Karácsonyi húzás"
+  },
   "code": {
     "defaultMessage": "Kód"
   },
@@ -69,7 +75,7 @@
     "defaultMessage": "Hozd létre a saját listáidat és keverj"
   },
   "default": {
-    "defaultMessage": "Alap"
+    "defaultMessage": "Bővített"
   },
   "delete": {
     "defaultMessage": "Törlés"

@@ -59,6 +59,18 @@
       "value": "Secret Santa"
     }
   ],
+  "christmas-create": [
+    {
+      "type": 0,
+      "value": "Create your own Secret Santa shuffle"
+    }
+  ],
+  "christmas-create-button": [
+    {
+      "type": 0,
+      "value": "Create Secret Santa"
+    }
+  ],
   "code": [
     {
       "type": 0,
@@ -140,7 +152,7 @@
   "default": [
     {
       "type": 0,
-      "value": "Default"
+      "value": "Extended"
     }
   ],
   "delete": [

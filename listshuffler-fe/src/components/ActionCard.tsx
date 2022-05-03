@@ -28,7 +28,7 @@ const ActionCard = ({
     const [value, setValue] = useState(props.defaultValue ?? '')
     return (
         <Card>
-            <Heading as="h1" fontSize="xlarge" fontWeight="light" mb={4}>
+            <Heading as="h1" fontSize='4xl' fontWeight="light" mb={4}>
                 {title}
             </Heading>
             {hasInput && (

@@ -29,6 +29,12 @@
   "christmas": {
     "defaultMessage": "Secret Santa"
   },
+  "christmas-create": {
+    "defaultMessage": "Create your own Secret Santa shuffle"
+  },
+  "christmas-create-button": {
+    "defaultMessage": "Create Secret Santa"
+  },
   "code": {
     "defaultMessage": "Code"
   },
@@ -69,7 +75,7 @@
     "defaultMessage": "Create your own lists and shuffle"
   },
   "default": {
-    "defaultMessage": "Default"
+    "defaultMessage": "Extended"
   },
   "delete": {
     "defaultMessage": "Delete"

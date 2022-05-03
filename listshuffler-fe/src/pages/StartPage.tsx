@@ -214,14 +214,30 @@ const StartPage = (props: {
             </GridItem>
             <GridItem rowSpan={1} colSpan={2}>
                 <ActionCard
-                    title={intl.formatMessage({
-                        id: 'create-your-own',
-                        defaultMessage: 'Create your own lists and shuffle',
-                    })}
-                    buttonText={intl.formatMessage({
-                        id: 'create-lists',
-                        defaultMessage: 'Create lists',
-                    })}
+                    title={
+                        props.preset === 'christmas'
+                            ? intl.formatMessage({
+                                  id: 'christmas-create',
+                                  defaultMessage:
+                                      'Create your own Secret Santa shuffle',
+                              })
+                            : intl.formatMessage({
+                                  id: 'create-your-own',
+                                  defaultMessage:
+                                      'Create your own lists and shuffle',
+                              })
+                    }
+                    buttonText={
+                        props.preset === 'christmas'
+                            ? intl.formatMessage({
+                                  id: 'christmas-create-button',
+                                  defaultMessage: 'Create Secret Santa',
+                              })
+                            : intl.formatMessage({
+                                  id: 'create-lists',
+                                  defaultMessage: 'Create lists',
+                              })
+                    }
                     onButtonClick={onCreateOpen}
                     isLoading={isLoading}
                 />
