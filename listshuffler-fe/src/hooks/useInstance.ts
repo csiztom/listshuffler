@@ -25,7 +25,6 @@ const useInstance = (
     const toast = useToast()
     const navigate = useNavigate()
     const intl = useIntl()
-    console.log(intl)
 
     useEffect(() => {
         if (!id) return

@@ -23,6 +23,12 @@
       "value": "Add list item"
     }
   ],
+  "back": [
+    {
+      "type": 0,
+      "value": "Go back"
+    }
+  ],
   "bookmark-this-page": [
     {
       "type": 0,

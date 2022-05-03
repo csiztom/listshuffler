@@ -23,6 +23,12 @@
       "value": "Listaelem hozzáadása"
     }
   ],
+  "back": [
+    {
+      "type": 0,
+      "value": "Vissza"
+    }
+  ],
   "bookmark-this-page": [
     {
       "type": 0,
@@ -404,7 +410,7 @@
   "show-pairs": [
     {
       "type": 0,
-      "value": "Mustasd a párokat"
+      "value": "Mutasd a párokat"
     }
   ],
   "shuffle-lists": [

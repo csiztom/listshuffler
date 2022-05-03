@@ -1,7 +1,7 @@
-import { Spinner, Stack, Text, useBoolean } from '@chakra-ui/react'
+import { Button, Spinner, Stack, Text, Tooltip, useBoolean } from '@chakra-ui/react'
 import { ReactElement, useMemo } from 'react'
 import { useIntl } from 'react-intl'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ListItemButtonInput } from '../components'
 import Card from '../components/Card'
 import useInstance from '../hooks/useInstance'
@@ -13,6 +13,7 @@ const PairedPage = (): ReactElement => {
     const { instance, allListItems } = useInstance(id ?? '', setIsLoading)
     const [pairs] = usePairs(id, instance?.shuffled, setIsLoading)
     const intl = useIntl()
+    const navigate = useNavigate()
 
     const generatedPairs = useMemo(
         () =>
@@ -97,6 +98,27 @@ const PairedPage = (): ReactElement => {
                     justifyContent="center"
                 >
                     {generatedPairs}
+                    <Card>
+                    <Tooltip
+                        hasArrow
+                        label={intl.formatMessage({
+                            id: 'back',
+                            defaultMessage: 'Go back',
+                        })}
+                    >
+                        <Button
+                            colorScheme="primary"
+                            borderRadius="button"
+                            p={2}
+                            isLoading={isLoading}
+                            onClick={() => navigate('/instance/'+id)}
+                        >
+                            {intl.formatMessage({
+                                id: 'back',
+                                defaultMessage: 'Go back',
+                            })}
+                        </Button>
+                    </Tooltip></Card>
                 </Stack>
             )}
         </>

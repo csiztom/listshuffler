@@ -11,6 +11,9 @@
   "add-list-item": {
     "defaultMessage": "Add list item"
   },
+  "back": {
+    "defaultMessage": "Go back"
+  },
   "bookmark-this-page": {
     "defaultMessage": "Bookmark this page if you want to come back later."
   },

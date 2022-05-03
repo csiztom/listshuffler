@@ -11,6 +11,9 @@
   "add-list-item": {
     "defaultMessage": "Listaelem hozzáadása"
   },
+  "back": {
+    "defaultMessage": "Vissza"
+  },
   "bookmark-this-page": {
     "defaultMessage": "Tedd el könyvjelzőként, ha vissza akarsz jönni később."
   },
@@ -201,7 +204,7 @@
     "defaultMessage": "Fő lista kiválasztása"
   },
   "show-pairs": {
-    "defaultMessage": "Mustasd a párokat"
+    "defaultMessage": "Mutasd a párokat"
   },
   "shuffle-lists": {
     "defaultMessage": "Listák keverése"
