@@ -18,7 +18,7 @@ import {
 import { ReactElement, useMemo } from 'react'
 import { useIntl } from 'react-intl'
 import useListEditor from '../hooks/useListEditor'
-import { AbstractList } from '../types/main'
+import { AbstractInstance, AbstractList } from '../types/main'
 import Card from './Card'
 import DeleteModal from './DeleteModal'
 import ListItemButtonInput from './ListItemButtonInput'
@@ -29,6 +29,7 @@ interface ListCardProps extends Pick<ButtonProps, 'isLoading'> {
     listId: string
     editing?: boolean
     shuffled?: boolean
+    preset?: AbstractInstance['preset']
 }
 
 const ListCard = ({
@@ -38,6 +39,7 @@ const ListCard = ({
     editing = false,
     isLoading: parentIsLoading,
     shuffled = false,
+    preset,
     ...props
 }: ListCardProps): ReactElement => {
     const { editList, deleteList, addListItem, editListItem, deleteListItem } =
@@ -208,7 +210,7 @@ const ListCard = ({
                     mt={generatedItems?.length ? 4 : 0}
                     justifyContent="center"
                 >
-                    {
+                    {preset !== 'christmas' && (
                         <Tooltip
                             hasArrow
                             label={intl.formatMessage({
@@ -230,7 +232,7 @@ const ListCard = ({
                                 })}
                             </Button>
                         </Tooltip>
-                    }
+                    )}
                     {addListItem && (
                         <Tooltip
                             hasArrow
@@ -254,7 +256,7 @@ const ListCard = ({
                             </Button>
                         </Tooltip>
                     )}
-                    {
+                    {preset !== 'christmas' && (
                         <Tooltip
                             hasArrow
                             label={intl.formatMessage({
@@ -288,7 +290,7 @@ const ListCard = ({
                                 </NumberInputStepper>
                             </NumberInput>
                         </Tooltip>
-                    }
+                    )}
                 </Stack>
             )}
         </Card>

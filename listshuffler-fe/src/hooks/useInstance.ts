@@ -8,6 +8,8 @@ const useInstance = (
     id?: string,
     setLoading?: { on: () => void; off: () => void },
     setEditing?: { on: () => void; off: () => void },
+    preset?: AbstractInstance['preset'],
+    onChangePreset?: (p: AbstractInstance['preset']) => void,
 ): {
     instance: AbstractInstance | undefined
     setInstance: (instance: AbstractInstance) => void
@@ -39,6 +41,7 @@ const useInstance = (
             .then((response: AbstractInstance) => {
                 setInstance(response)
                 setEditedLists(response.lists)
+                onChangePreset && onChangePreset(response.preset)
             })
             .then(setLoading && setLoading.off)
             .catch(() =>
@@ -65,6 +68,48 @@ const useInstance = (
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [updateEditedLists],
     )
+
+    useEffect(() => {
+        if (!instance) return
+        if (!preset) return
+        if (preset === instance.preset) return
+        setLoading && setLoading.on()
+        fetch(process.env.REACT_APP_API_URL + '/instance', {
+            method: 'PATCH',
+            body: JSON.stringify({
+                adminID: id,
+                preset: preset,
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) throw Error('not 2xx answer')
+            })
+            .then(() =>
+                setInstance((instance) =>
+                    preset === undefined
+                        ? instance
+                        : instance && { ...instance, preset: preset },
+                ),
+            )
+            .catch(() =>
+                toast({
+                    title: intl.formatMessage({
+                        id: 'error occurred',
+                        defaultMessage: 'Error occurred. :/',
+                    }),
+                    description: intl.formatMessage({
+                        id: 'couldnt-save-preset',
+                        defaultMessage:
+                            'Couldn’t save preset, maybe try reloading the page and trying again.',
+                    }),
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                }),
+            )
+            .then(setLoading && setLoading.off)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [preset, id])
 
     const multiplicitySum = useMemo(
         () =>

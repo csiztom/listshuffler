@@ -53,6 +53,12 @@
       "value": "Valószínűségek változtatása"
     }
   ],
+  "christmas": [
+    {
+      "type": 0,
+      "value": "Karácsonyi húzás"
+    }
+  ],
   "code": [
     {
       "type": 0,
@@ -113,6 +119,12 @@
       "value": "Nem tud a listaelembe belépni, lehet a kód rossz."
     }
   ],
+  "couldnt-save-preset": [
+    {
+      "type": 0,
+      "value": "Nem tudtuk elmenteni a témát"
+    }
+  ],
   "create-lists": [
     {
       "type": 0,
@@ -123,6 +135,12 @@
     {
       "type": 0,
       "value": "Hozd létre a saját listáidat és keverj"
+    }
+  ],
+  "default": [
+    {
+      "type": 0,
+      "value": "Alap"
     }
   ],
   "delete": [

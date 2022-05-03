@@ -88,27 +88,29 @@ const EditorCard = ({
                                 </Button>
                             </Tooltip>
                         )}
-                        <Tooltip
-                            hasArrow
-                            label={intl.formatMessage({
-                                id: 'add-list',
-                                defaultMessage: 'Add list',
-                            })}
-                        >
-                            <Button
-                                colorScheme="primary"
-                                borderRadius="button"
-                                p={2}
-                                onClick={addList}
-                                isLoading={isLoading}
-                            >
-                                <AddIcon mr={2} />
-                                {intl.formatMessage({
+                        {instance.preset !== 'christmas' && (
+                            <Tooltip
+                                hasArrow
+                                label={intl.formatMessage({
                                     id: 'add-list',
                                     defaultMessage: 'Add list',
                                 })}
-                            </Button>
-                        </Tooltip>
+                            >
+                                <Button
+                                    colorScheme="primary"
+                                    borderRadius="button"
+                                    p={2}
+                                    onClick={addList}
+                                    isLoading={isLoading}
+                                >
+                                    <AddIcon mr={2} />
+                                    {intl.formatMessage({
+                                        id: 'add-list',
+                                        defaultMessage: 'Add list',
+                                    })}
+                                </Button>
+                            </Tooltip>
+                        )}
                         <Tooltip
                             hasArrow
                             label={intl.formatMessage({
@@ -164,49 +166,52 @@ const EditorCard = ({
                     </Tooltip>
                 ) : (
                     <>
-                        <Menu>
-                            <Tooltip
-                                hasArrow
-                                label={intl.formatMessage({
-                                    id: 'which-will-shuffle-for',
-                                    defaultMessage:
-                                        'Which list do you want to shuffle pairs for?',
-                                })}
-                            >
-                                <MenuButton
-                                    as={Button}
-                                    rightIcon={<ChevronDownIcon />}
-                                    isLoading={isLoading}
-                                    colorScheme="secondary"
-                                    borderRadius="button"
-                                    disabled={multiplicity < 2 || isLoading}
-                                    p={2}
+                        {instance.preset !== 'christmas' && (
+                            <Menu>
+                                <Tooltip
+                                    hasArrow
+                                    label={intl.formatMessage({
+                                        id: 'which-will-shuffle-for',
+                                        defaultMessage:
+                                            'Which list do you want to shuffle pairs for?',
+                                    })}
                                 >
-                                    {instance.shuffledID ??
-                                        intl.formatMessage({
-                                            id: 'select-main',
-                                            defaultMessage: 'Select main list',
-                                        })}
-                                </MenuButton>
-                            </Tooltip>
-                            <MenuList>
-                                {instance.lists &&
-                                    instance.lists.map((li) => (
-                                        <MenuItem
-                                            key={li.listID}
-                                            command={li.listID}
-                                            onClick={() =>
-                                                setInstance({
-                                                    ...instance,
-                                                    shuffledID: li.listID,
-                                                })
-                                            }
-                                        >
-                                            {li.listName}
-                                        </MenuItem>
-                                    ))}
-                            </MenuList>
-                        </Menu>
+                                    <MenuButton
+                                        as={Button}
+                                        rightIcon={<ChevronDownIcon />}
+                                        isLoading={isLoading}
+                                        colorScheme="secondary"
+                                        borderRadius="button"
+                                        disabled={multiplicity < 2 || isLoading}
+                                        p={2}
+                                    >
+                                        {instance.shuffledID ??
+                                            intl.formatMessage({
+                                                id: 'select-main',
+                                                defaultMessage:
+                                                    'Select main list',
+                                            })}
+                                    </MenuButton>
+                                </Tooltip>
+                                <MenuList>
+                                    {instance.lists &&
+                                        instance.lists.map((li) => (
+                                            <MenuItem
+                                                key={li.listID}
+                                                command={li.listID}
+                                                onClick={() =>
+                                                    setInstance({
+                                                        ...instance,
+                                                        shuffledID: li.listID,
+                                                    })
+                                                }
+                                            >
+                                                {li.listName}
+                                            </MenuItem>
+                                        ))}
+                                </MenuList>
+                            </Menu>
+                        )}
                         <Tooltip
                             hasArrow
                             label={intl.formatMessage({
@@ -228,36 +233,38 @@ const EditorCard = ({
                                 })}
                             </Button>
                         </Tooltip>
-                        <Tooltip
-                            hasArrow
-                            label={intl.formatMessage({
-                                id: 'unique-pairs',
-                                defaultMessage:
-                                    'Unique pairs per list multiplicity',
-                            })}
-                        >
-                            <Stack direction="row" align="center">
-                                <Text>
-                                    {intl.formatMessage({
-                                        id: 'unique',
-                                        defaultMessage: 'Unique:',
-                                    })}
-                                </Text>
-                                <Switch
-                                    colorScheme="primary"
-                                    borderRadius="button"
-                                    p={2}
-                                    disabled={isLoading}
-                                    defaultChecked={instance.uniqueInMul}
-                                    onChange={(e) =>
-                                        setInstance({
-                                            ...instance,
-                                            uniqueInMul: e.target.checked,
-                                        })
-                                    }
-                                />
-                            </Stack>
-                        </Tooltip>
+                        {instance.preset !== 'christmas' && (
+                            <Tooltip
+                                hasArrow
+                                label={intl.formatMessage({
+                                    id: 'unique-pairs',
+                                    defaultMessage:
+                                        'Unique pairs per list multiplicity',
+                                })}
+                            >
+                                <Stack direction="row" align="center">
+                                    <Text>
+                                        {intl.formatMessage({
+                                            id: 'unique',
+                                            defaultMessage: 'Unique:',
+                                        })}
+                                    </Text>
+                                    <Switch
+                                        colorScheme="primary"
+                                        borderRadius="button"
+                                        p={2}
+                                        disabled={isLoading}
+                                        defaultChecked={instance.uniqueInMul}
+                                        onChange={(e) =>
+                                            setInstance({
+                                                ...instance,
+                                                uniqueInMul: e.target.checked,
+                                            })
+                                        }
+                                    />
+                                </Stack>
+                            </Tooltip>
+                        )}
                         <Tooltip
                             hasArrow
                             label={intl.formatMessage({

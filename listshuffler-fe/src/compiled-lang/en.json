@@ -53,6 +53,12 @@
       "value": "Change probability"
     }
   ],
+  "christmas": [
+    {
+      "type": 0,
+      "value": "Secret Santa"
+    }
+  ],
   "code": [
     {
       "type": 0,
@@ -113,6 +119,12 @@
       "value": "Couldn’t log into listitem, maybe the code provided was wrong."
     }
   ],
+  "couldnt-save-preset": [
+    {
+      "type": 0,
+      "value": "Couldn’t save preset, maybe try reloading the page and trying again."
+    }
+  ],
   "create-lists": [
     {
       "type": 0,
@@ -123,6 +135,12 @@
     {
       "type": 0,
       "value": "Create your own lists and shuffle"
+    }
+  ],
+  "default": [
+    {
+      "type": 0,
+      "value": "Default"
     }
   ],
   "delete": [

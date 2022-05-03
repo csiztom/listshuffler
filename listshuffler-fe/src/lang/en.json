@@ -26,6 +26,9 @@
   "change-probability": {
     "defaultMessage": "Change probability"
   },
+  "christmas": {
+    "defaultMessage": "Secret Santa"
+  },
   "code": {
     "defaultMessage": "Code"
   },
@@ -56,11 +59,17 @@
   "couldnt-in-listitem": {
     "defaultMessage": "Couldn’t log into listitem, maybe the code provided was wrong."
   },
+  "couldnt-save-preset": {
+    "defaultMessage": "Couldn’t save preset, maybe try reloading the page and trying again."
+  },
   "create-lists": {
     "defaultMessage": "Create lists"
   },
   "create-your-own": {
     "defaultMessage": "Create your own lists and shuffle"
+  },
+  "default": {
+    "defaultMessage": "Default"
   },
   "delete": {
     "defaultMessage": "Delete"

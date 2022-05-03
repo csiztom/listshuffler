@@ -26,6 +26,9 @@
   "change-probability": {
     "defaultMessage": "Valószínűségek változtatása"
   },
+  "christmas": {
+    "defaultMessage": "Karácsonyi húzás"
+  },
   "code": {
     "defaultMessage": "Kód"
   },
@@ -56,11 +59,17 @@
   "couldnt-in-listitem": {
     "defaultMessage": "Nem tud a listaelembe belépni, lehet a kód rossz."
   },
+  "couldnt-save-preset": {
+    "defaultMessage": "Nem tudtuk elmenteni a témát"
+  },
   "create-lists": {
     "defaultMessage": "Listák létrehozása"
   },
   "create-your-own": {
     "defaultMessage": "Hozd létre a saját listáidat és keverj"
+  },
+  "default": {
+    "defaultMessage": "Alap"
   },
   "delete": {
     "defaultMessage": "Törlés"

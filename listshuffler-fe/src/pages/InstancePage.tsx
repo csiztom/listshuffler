@@ -1,10 +1,4 @@
-import {
-    Stack,
-    Grid,
-    useBoolean,
-    Spinner,
-    Text,
-} from '@chakra-ui/react'
+import { Stack, Grid, useBoolean, Spinner, Text } from '@chakra-ui/react'
 import { ReactElement, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { ListCard } from '../components'
@@ -16,8 +10,12 @@ import useInstance from '../hooks/useInstance'
 import useProbabilities from '../hooks/useProbabilities'
 import usePairs from '../hooks/usePairs'
 import { useIntl } from 'react-intl'
+import { AbstractInstance } from '../types/main'
 
-const InstancePage = (): ReactElement => {
+const InstancePage = (props: {
+    preset: AbstractInstance['preset']
+    onChangePreset: (p: AbstractInstance['preset']) => void
+}): ReactElement => {
     const { id } = useParams()
     const [isLoading, setIsLoading] = useBoolean(false)
     const [editing, setEditing] = useBoolean(false)
@@ -30,7 +28,13 @@ const InstancePage = (): ReactElement => {
         saveLists,
         setInstance,
         deleteInstance,
-    } = useInstance(id ?? 'null', setIsLoading, setEditing)
+    } = useInstance(
+        id ?? 'null',
+        setIsLoading,
+        setEditing,
+        props.preset,
+        props.onChangePreset,
+    )
     const { probs, setProbs, saveProbs } = useProbabilities(
         id,
         instance?.shuffledID || undefined,
@@ -60,6 +64,7 @@ const InstancePage = (): ReactElement => {
                         setInstance({ ...instance, lists: lists })
                     }
                     shuffled={instance.shuffled}
+                    preset={instance.preset}
                 />
             )),
         [instance, isLoading, editing, setInstance],
@@ -69,29 +74,35 @@ const InstancePage = (): ReactElement => {
         () =>
             probs &&
             openProbs &&
-            Object.keys(probs).map((p1) => (
-                <Card>
-                    <Grid
-                        templateColumns="1fr 1fr 1fr"
-                        gap={5}
-                        justifyItems="center"
-                    >
-                        {Object.keys(probs[p1]).map((p2) => (
-                            <ProbabilityInput
-                                listItem1={allListItems[p1]}
-                                listItem2={allListItems[p2]}
-                                probability={probs[p1][p2]}
-                                key={p1 + p2}
-                                onChange={(str, num) => {
-                                    const tmp = probs
-                                    tmp[p1][p2] = num
-                                    setProbs(tmp)
-                                }}
-                            />
-                        ))}
-                    </Grid>
-                </Card>
-            )),
+            Object.keys(probs).map(
+                (p1) =>
+                    Object.keys(probs[p1]).length > 1 && (
+                        <Card>
+                            <Grid
+                                templateColumns="1fr 1fr 1fr"
+                                gap={5}
+                                justifyItems="center"
+                            >
+                                {Object.keys(probs[p1]).map(
+                                    (p2) =>
+                                        p1 !== p2 && (
+                                            <ProbabilityInput
+                                                listItem1={allListItems[p1]}
+                                                listItem2={allListItems[p2]}
+                                                probability={probs[p1][p2]}
+                                                key={p1 + p2}
+                                                onChange={(str, num) => {
+                                                    const tmp = probs
+                                                    tmp[p1][p2] = num
+                                                    setProbs(tmp)
+                                                }}
+                                            />
+                                        ),
+                                )}
+                            </Grid>
+                        </Card>
+                    ),
+            ),
         [probs, allListItems, setProbs, openProbs],
     )
 
@@ -182,7 +193,21 @@ const InstancePage = (): ReactElement => {
                     isLoading={isLoading}
                     instance={instance}
                     setInstance={setInstance}
-                    disabled={multiplicitySum < 2}
+                    disabled={
+                        multiplicitySum < 2 ||
+                        instance.lists.some(
+                            (li) => li.listItems.length === 0,
+                        ) ||
+                        (instance.uniqueInMul &&
+                            instance.lists.some(
+                                (li) =>
+                                    li.listItems.length <
+                                    (instance.lists.find(
+                                        (li) =>
+                                            li.listID === instance.shuffledID,
+                                    )?.listItems.length ?? 0),
+                            ))
+                    }
                     shuffle={shuffle}
                     deleteInstance={deleteInstance}
                 />

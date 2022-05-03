@@ -11,8 +11,11 @@ import image from '../assets/drawing.svg'
 import { useNavigate } from 'react-router-dom'
 import GDPRModal from '../components/GDPRModal'
 import { useIntl } from 'react-intl'
+import { AbstractInstance } from '../types/main'
 
-const StartPage = (): ReactElement => {
+const StartPage = (props: {
+    preset: AbstractInstance['preset']
+}): ReactElement => {
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useBoolean(false)
     const {
@@ -33,9 +36,14 @@ const StartPage = (): ReactElement => {
 
     const createInstance = () => {
         setIsLoading.on()
-        fetch(process.env.REACT_APP_API_URL + '/instance', {
-            method: 'POST',
-        })
+        fetch(
+            process.env.REACT_APP_API_URL +
+                '/instance' +
+                (props.preset ? '?preset=' + props.preset : ''),
+            {
+                method: 'POST',
+            },
+        )
             .then((response) => {
                 if (response.ok) return response.json()
                 else throw Error('not 2xx answer')

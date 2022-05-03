@@ -24,7 +24,7 @@ def handler(event, context):
 
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
-        cur.execute("select listItem from listItems where listItemId=%s",
+        cur.execute("select listItem, preset from (listItems natural join lists) natural join instances where listItemId=%s",
                     (listitem_id))
         result = cur.fetchone()
         cur.execute("""select listItemID, listItem, multiplicity
@@ -47,4 +47,5 @@ def handler(event, context):
         'listItemID': listitem_id,
         'listItem': result[0],
         'pairs': pairs,
+        'preset': result[1],
     } if result != None else '')

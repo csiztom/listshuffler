@@ -1,4 +1,4 @@
-type Preset = 'christmas'
+type Preset = 'christmas' | 'default'
 
 export type AbstractListItem = { listItem: string; listItemID: string }
 

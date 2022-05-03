@@ -28,8 +28,9 @@ def handler(event, context):
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         cur.execute(
-            "select listID from public.lists where listID=%s", (list_id))
-        if (cur.fetchone() == None):
+            "select preset from public.lists natural join public.instances where listID=%s", (list_id))
+        res = cur.fetchone()
+        if (res == None):
             logger.info("ERROR: No corresponding list id")
             return http_response.response(404, "No corresponding id")
         i = 0
@@ -48,6 +49,11 @@ def handler(event, context):
         if i >= 20:
             logger.info("ERROR: Could not find random id")
             return http_response.response(508, "Could not assign id to item")
+
+        if res[0] == 'christmas':
+            cur.execute("""insert into probabilities (listItemID1,listItemID2,probability) values('%s','%s',%s)""" % (
+                listitem_id, listitem_id, 0))
+            conn.commit()
 
     return http_response.response(200, {
         "listItemID": listitem_id

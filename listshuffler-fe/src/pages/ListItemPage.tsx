@@ -14,8 +14,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { ListItemButtonInput } from '../components'
 import Card from '../components/Card'
 import DeleteModal from '../components/DeleteModal'
+import { AbstractInstance } from '../types/main'
 
-const ListItemPage = (): ReactElement => {
+const ListItemPage = (props: {
+    onChangePreset: (p: AbstractInstance['preset']) => void
+}): ReactElement => {
     const { isOpen, onClose, onOpen } = useDisclosure()
     const { id } = useParams()
     const [pairs, setPairs] = useState<{ [key: string]: string }>({})
@@ -39,6 +42,7 @@ const ListItemPage = (): ReactElement => {
             .then((response) => {
                 setPairs(response['pairs'])
                 setName(response['listItem'])
+                props.onChangePreset(response['preset'] ?? 'default')
             })
             .catch(() =>
                 toast({
