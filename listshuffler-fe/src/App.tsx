@@ -8,7 +8,8 @@ import {
 import { StartPage, InstancePage } from './pages'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import '@fontsource/catamaran/200.css'
-import image from './assets/drawing.svg'
+import christmasTree from './assets/christmas.png'
+import pattern from './assets/pattern.png'
 import PairedPage from './pages/PairedPage'
 import ListItemPage from './pages/ListItemPage'
 import { Logo } from './components'
@@ -32,7 +33,9 @@ const App = () => {
         <Stack
             direction="column"
             gap={4}
-            bgImage={image}
+            bgImage={preset === 'christmas' ? christmasTree : pattern}
+            bgRepeat='repeat'
+            bgColor='background'
             w="100vw"
             h="100vh"
             p="8"

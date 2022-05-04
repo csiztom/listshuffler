@@ -7,7 +7,8 @@ import {
 } from '@chakra-ui/react'
 import { ReactElement, useState } from 'react'
 import { Logo, ActionCard } from '../components'
-import image from '../assets/drawing.svg'
+import christmasTree from '../assets/christmas.png'
+import pattern from '../assets/pattern.png'
 import { useNavigate } from 'react-router-dom'
 import GDPRModal from '../components/GDPRModal'
 import { useIntl } from 'react-intl'
@@ -196,7 +197,9 @@ const StartPage = (props: {
             templateColumns={{ base: '', md: 'repeat(4, 1fr)' }}
             templateRows={{ base: '', md: 'auto 1fr 1fr' }}
             gap={4}
-            bgImage={image}
+            bgImage={props.preset === 'christmas' ? christmasTree : pattern}
+            bgRepeat='repeat'
+            bgColor='background'
             w="100vw"
             h="100vh"
             p="8"
@@ -208,7 +211,7 @@ const StartPage = (props: {
                 rowSpan={1}
                 colStart={{ base: 1, md: 2 }}
                 colEnd={{ base: 3, md: 4 }}
-                w="60%"
+                w="80%"
             >
                 <Logo />
             </GridItem>
