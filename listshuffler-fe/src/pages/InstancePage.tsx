@@ -1,5 +1,5 @@
 import { Stack, Grid, useBoolean, Spinner, Text } from '@chakra-ui/react'
-import { ReactElement, useMemo } from 'react'
+import { ReactElement, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { ListCard } from '../components'
 import Card from '../components/Card'
@@ -50,6 +50,10 @@ const InstancePage = (props: {
         setInstance,
     )[1]
     const intl = useIntl()
+
+    useEffect(() => {
+        window.onbeforeunload = editing ? () => "" : null
+    }, [editing])
 
     const generatedLists = useMemo(
         () =>

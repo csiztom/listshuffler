@@ -96,6 +96,10 @@ const ListItemPage = (props: {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [editing])
 
+    useEffect(() => {
+        window.onbeforeunload = editing ? () => "" : null
+    }, [editing])
+
     const deleteItem = () => {
         if (!id) return
         if (!name) return
