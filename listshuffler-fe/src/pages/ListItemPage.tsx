@@ -155,9 +155,7 @@ const ListItemPage = (props: {
                     {
                         <>
                             <ListItemButtonInput
-                                id={it}
                                 name={pairs[it]}
-                                disabled
                             />
                         </>
                     }
