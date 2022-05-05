@@ -137,7 +137,7 @@ const useInstance = (
                       {},
                   )
                 : [],
-        [instance],
+        [instance?.lists],
     )
 
     const deleteInstance = () => {
