@@ -3,7 +3,7 @@ import '@fontsource/catamaran'
 
 const christmasTheme = extendTheme({
     colors: {
-        error: '#679934',
+        error: '#993434',
         success: '#679934',
         primary: {
             100: '#58c6c6',

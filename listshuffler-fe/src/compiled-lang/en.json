@@ -1,4 +1,22 @@
 {
+  "about-1": [
+    {
+      "type": 0,
+      "value": "This app helps you in shuffling lists. When you have distinct sets of people or objects (and their copies), and you want to pair them up randomly, this app will help you."
+    }
+  ],
+  "about-2": [
+    {
+      "type": 0,
+      "value": "For example in Secret Santa mode, you have one list that you want to pair up with itself (a copy)."
+    }
+  ],
+  "about-3": [
+    {
+      "type": 0,
+      "value": "If you want to pair up a list with itself, so that 3 items of the same list will be in a pair, set the multiplicity to 3."
+    }
+  ],
   "accept": [
     {
       "type": 0,
@@ -83,22 +101,10 @@
       "value": "Code copied to clipboard"
     }
   ],
-  "code-generated": [
-    {
-      "type": 0,
-      "value": "code-generated item"
-    }
-  ],
   "copy-code": [
     {
       "type": 0,
       "value": "Copy code"
-    }
-  ],
-  "copy-invite-code": [
-    {
-      "type": 0,
-      "value": "Copy invite code"
     }
   ],
   "copy-list-code": [
@@ -371,10 +377,28 @@
       "value": "Instance does not exist now, if it ever had."
     }
   ],
+  "invite-code": [
+    {
+      "type": 0,
+      "value": "Invite code"
+    }
+  ],
+  "invite-code-explain": [
+    {
+      "type": 0,
+      "value": "Creates new item when used"
+    }
+  ],
   "item-pair-multiplier": [
     {
       "type": 0,
       "value": "item | pair | multiplier"
+    }
+  ],
+  "list-name": [
+    {
+      "type": 0,
+      "value": "List name"
     }
   ],
   "lists-saved": [
@@ -389,6 +413,24 @@
       "value": "Logo of Listshuffler"
     }
   ],
+  "more-can-muliplier": [
+    {
+      "type": 0,
+      "value": "The higher the number the more likely the pair."
+    }
+  ],
+  "multiplicity-s": [
+    {
+      "type": 0,
+      "value": "multiplicity"
+    }
+  ],
+  "name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
   "new-list": [
     {
       "type": 0,
@@ -401,6 +443,12 @@
       "value": "Couldn’t find matching object, check code and try again!"
     }
   ],
+  "placeholder-name": [
+    {
+      "type": 0,
+      "value": "placeholder name"
+    }
+  ],
   "please-wait": [
     {
       "type": 0,
@@ -411,6 +459,12 @@
     {
       "type": 0,
       "value": "Probabilities successfully saved"
+    }
+  ],
+  "repetitive": [
+    {
+      "type": 0,
+      "value": "Repetitive"
     }
   ],
   "save": [
@@ -431,10 +485,10 @@
       "value": "See the pairs"
     }
   ],
-  "select-main": [
+  "select-list": [
     {
       "type": 0,
-      "value": "Select main list"
+      "value": "Select list"
     }
   ],
   "show-pairs": [
@@ -470,13 +524,19 @@
   "this-admin-page": [
     {
       "type": 0,
-      "value": "This is the admin page."
+      "value": "This is the admin page. You can edit lists, probabilities and shuffle here."
     }
   ],
-  "this-list-item": [
+  "this-list-item-1": [
     {
       "type": 0,
-      "value": "This is a list item page."
+      "value": "This is a list item page. You will be able to see your pairs here."
+    }
+  ],
+  "this-list-item-2": [
+    {
+      "type": 0,
+      "value": "This is a list item page. You can see your pairs here."
     }
   ],
   "timed-shuffle": [
@@ -500,7 +560,7 @@
   "unique": [
     {
       "type": 0,
-      "value": "Unique:"
+      "value": "Unique"
     }
   ],
   "unique-pairs": [

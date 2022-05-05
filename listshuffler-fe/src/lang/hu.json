@@ -1,4 +1,13 @@
 {
+  "about-1": {
+    "defaultMessage": "Ez az alkalmazás listák keverésében segít. Amikor egy csoport személyt vagy tárgyat (akár többször) véletlenszerűen párokba szeretne rakni. Az alkalmazás lebonyolítja automatikusan önnek."
+  },
+  "about-2": {
+    "defaultMessage": "Karácsonyi húzásnál például egy listája van és ennek a másolatával párokat alakít."
+  },
+  "about-3": {
+    "defaultMessage": "Ha egy csoportot önmagával háromszor tenne párba, akkor az alkalmazásban a multiplicitást háromra kell állítani."
+  },
   "accept": {
     "defaultMessage": "Elfogad"
   },
@@ -21,7 +30,7 @@
     "defaultMessage": "Mégse"
   },
   "change-multiplicity": {
-    "defaultMessage": "Multiplicitás változatása"
+    "defaultMessage": "Multiplicitás változtatása"
   },
   "change-probability": {
     "defaultMessage": "Valószínűségek változtatása"
@@ -41,14 +50,8 @@
   "code-copied": {
     "defaultMessage": "A kód a vágólapra lett másolva"
   },
-  "code-generated": {
-    "defaultMessage": "kód által létrehozott elem"
-  },
   "copy-code": {
     "defaultMessage": "Kód másolása"
-  },
-  "copy-invite-code": {
-    "defaultMessage": "Meghívó kód másolása"
   },
   "copy-list-code": {
     "defaultMessage": "Listába meghívó kód másolása"
@@ -185,8 +188,17 @@
   "instance-if-ever": {
     "defaultMessage": "A közeg nem létezik"
   },
+  "invite-code": {
+    "defaultMessage": "Meghívó kód"
+  },
+  "invite-code-explain": {
+    "defaultMessage": "Új elemet hoz létre használatakor"
+  },
   "item-pair-multiplier": {
     "defaultMessage": "listaelem | pár | szorzó"
+  },
+  "list-name": {
+    "defaultMessage": "Lista név"
   },
   "lists-saved": {
     "defaultMessage": "Listák elmentve"
@@ -194,17 +206,32 @@
   "logo-of": {
     "defaultMessage": "A Listshuffler logója"
   },
+  "more-can-muliplier": {
+    "defaultMessage": "Nagyobb szám nagyobb valószínűséget jelent"
+  },
+  "multiplicity-s": {
+    "defaultMessage": "multiplicitás"
+  },
+  "name": {
+    "defaultMessage": "Név"
+  },
   "new-list": {
     "defaultMessage": "Új Lista"
   },
   "no-matching": {
     "defaultMessage": "Nem sikerült, talán elírt valamit?"
   },
+  "placeholder-name": {
+    "defaultMessage": "helyfoglaló név"
+  },
   "please-wait": {
     "defaultMessage": "Kérem várjon"
   },
   "probs-saved": {
     "defaultMessage": "Valószínűségek elmentve"
+  },
+  "repetitive": {
+    "defaultMessage": "Ismétléses"
   },
   "save": {
     "defaultMessage": "Mentés"
@@ -215,8 +242,8 @@
   "see-the-pairs": {
     "defaultMessage": "Párok mutatása"
   },
-  "select-main": {
-    "defaultMessage": "Fő lista kiválasztása"
+  "select-list": {
+    "defaultMessage": "Válassz listát"
   },
   "show-pairs": {
     "defaultMessage": "Mutasd a párokat"
@@ -234,10 +261,13 @@
     "defaultMessage": "Ezek az ön párjai"
   },
   "this-admin-page": {
-    "defaultMessage": "Ez az admin oldala"
+    "defaultMessage": "Ez az admin oldala. A listákat, valószínűségeket itt tudod változtatni, valamint itt tudsz keverni."
   },
-  "this-list-item": {
-    "defaultMessage": "Ez egy listaelem oldala"
+  "this-list-item-1": {
+    "defaultMessage": "Ez egy listaelem oldal. A párjaidat itt fogod látni."
+  },
+  "this-list-item-2": {
+    "defaultMessage": "Ez egy listaelem oldal. A párjaidat itt láthatod."
   },
   "timed-shuffle": {
     "defaultMessage": "Indőzített keverés"
@@ -249,7 +279,7 @@
     "defaultMessage": "Próbálja meg újratölteni az oldalt."
   },
   "unique": {
-    "defaultMessage": "Egyedi:"
+    "defaultMessage": "Ismétlődés-nélküli"
   },
   "unique-pairs": {
     "defaultMessage": "Egyedi minden lista multiplicitásonként"

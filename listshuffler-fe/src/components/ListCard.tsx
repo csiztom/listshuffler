@@ -15,7 +15,7 @@ import {
     useToast,
     useDisclosure,
 } from '@chakra-ui/react'
-import { ReactElement, useMemo } from 'react'
+import { ReactElement, useEffect, useMemo, useRef } from 'react'
 import { useIntl } from 'react-intl'
 import useListEditor from '../hooks/useListEditor'
 import { AbstractInstance, AbstractList } from '../types/main'
@@ -51,6 +51,10 @@ const ListCard = ({
     )
     const { isOpen, onClose, onOpen } = useDisclosure()
     const intl = useIntl()
+    const inputFocus = useRef<HTMLInputElement>(null)
+    useEffect(() => {
+        inputFocus.current && inputFocus.current.focus()
+    }, [])
     const onClickCopy = () => {
         var data = [
             new ClipboardItem({
@@ -127,22 +131,30 @@ const ListCard = ({
                         colorScheme="secondary"
                         borderRadius="button"
                         mb={4}
+                        ml={2}
                         maxLength={40}
                         fontSize="sm"
                         size="sm"
                         w="fit-content"
                         defaultValue={list.listName}
-                        htmlSize={list.listName.length}
+                        htmlSize={list.listName.length || 10}
                         backdropFilter="blur(16px) saturate(180%)"
                         bgColor="card"
                         onChange={(e) =>
                             editList({ ...list, listName: e.target.value })
                         }
+                        ref={inputFocus}
+                        placeholder={intl.formatMessage({
+                            id: 'list-name',
+                            defaultMessage: 'List name',
+                        })}
                     />
                 </Tooltip>
             ) : (
                 <Text mt={-4} mb={2} color="text" fontSize="sm">
                     {list?.listName}
+                    <br />
+                    {list?.listID}
                 </Text>
             )}
             {list && (
@@ -168,7 +180,7 @@ const ListCard = ({
             {generatedItems && (
                 <Stack
                     direction="row"
-                    gap={4}
+                    gap={2}
                     spacing={0}
                     align="center"
                     wrap="wrap"
@@ -191,10 +203,21 @@ const ListCard = ({
                                 {...props}
                             >
                                 <CopyIcon mr={2} />
-                                {intl.formatMessage({
-                                    id: 'copy-invite-code',
-                                    defaultMessage: 'Copy invite code',
-                                })}
+                                <div>
+                                    <Text fontSize="sm">
+                                        {intl.formatMessage({
+                                            id: 'invite-code',
+                                            defaultMessage: 'Invite code',
+                                        })}
+                                    </Text>
+                                    <Text fontSize="x-small">
+                                        {intl.formatMessage({
+                                            id: 'invite-code-explain',
+                                            defaultMessage:
+                                                'Creates new item when used',
+                                        })}
+                                    </Text>
+                                </div>
                             </Button>
                         </Tooltip>
                     )}
@@ -203,7 +226,7 @@ const ListCard = ({
             {editing && list && (
                 <Stack
                     direction="row"
-                    gap={4}
+                    gap={2}
                     spacing={0}
                     align="center"
                     wrap="wrap"
@@ -224,6 +247,7 @@ const ListCard = ({
                                 p={2}
                                 onClick={onOpen}
                                 isLoading={parentIsLoading}
+                                alignSelf='end'
                             >
                                 <DeleteIcon mr={2} />
                                 {intl.formatMessage({
@@ -247,6 +271,7 @@ const ListCard = ({
                                 p={2}
                                 onClick={() => addListItem(list)}
                                 isLoading={parentIsLoading}
+                                alignSelf='end'
                             >
                                 <AddIcon mr={2} />
                                 {intl.formatMessage({
@@ -264,31 +289,39 @@ const ListCard = ({
                                 defaultMessage: 'Change multiplicity',
                             })}
                         >
-                            <NumberInput
-                                isRequired
-                                step={1}
-                                defaultValue={list.multiplicity}
-                                min={1}
-                                max={5}
-                                maxW={24}
-                                onChange={(str, num) =>
-                                    str !== ''
-                                        ? editList({
-                                              ...list,
-                                              multiplicity: num,
-                                          })
-                                        : editList({
-                                              ...list,
-                                              multiplicity: 0,
-                                          })
-                                }
-                            >
-                                <NumberInputField bgColor="card" />
-                                <NumberInputStepper>
-                                    <NumberIncrementStepper />
-                                    <NumberDecrementStepper />
-                                </NumberInputStepper>
-                            </NumberInput>
+                            <div>
+                                <Text fontSize="x-small" mb={1}>
+                                    {intl.formatMessage({
+                                        id: 'multiplicity-s',
+                                        defaultMessage: 'multiplicity',
+                                    })}
+                                </Text>
+                                <NumberInput
+                                    isRequired
+                                    step={1}
+                                    defaultValue={list.multiplicity}
+                                    min={1}
+                                    max={5}
+                                    maxW={24}
+                                    onChange={(str, num) =>
+                                        str !== ''
+                                            ? editList({
+                                                  ...list,
+                                                  multiplicity: num,
+                                              })
+                                            : editList({
+                                                  ...list,
+                                                  multiplicity: 0,
+                                              })
+                                    }
+                                >
+                                    <NumberInputField bgColor="card" />
+                                    <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                    </NumberInputStepper>
+                                </NumberInput>
+                            </div>
                         </Tooltip>
                     )}
                 </Stack>

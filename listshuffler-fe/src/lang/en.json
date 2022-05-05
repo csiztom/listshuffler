@@ -1,4 +1,13 @@
 {
+  "about-1": {
+    "defaultMessage": "This app helps you in shuffling lists. When you have distinct sets of people or objects (and their copies), and you want to pair them up randomly, this app will help you."
+  },
+  "about-2": {
+    "defaultMessage": "For example in Secret Santa mode, you have one list that you want to pair up with itself (a copy)."
+  },
+  "about-3": {
+    "defaultMessage": "If you want to pair up a list with itself, so that 3 items of the same list will be in a pair, set the multiplicity to 3."
+  },
   "accept": {
     "defaultMessage": "Accept"
   },
@@ -41,14 +50,8 @@
   "code-copied": {
     "defaultMessage": "Code copied to clipboard"
   },
-  "code-generated": {
-    "defaultMessage": "code-generated item"
-  },
   "copy-code": {
     "defaultMessage": "Copy code"
-  },
-  "copy-invite-code": {
-    "defaultMessage": "Copy invite code"
   },
   "copy-list-code": {
     "defaultMessage": "Copy list invite code"
@@ -185,8 +188,17 @@
   "instance-if-ever": {
     "defaultMessage": "Instance does not exist now, if it ever had."
   },
+  "invite-code": {
+    "defaultMessage": "Invite code"
+  },
+  "invite-code-explain": {
+    "defaultMessage": "Creates new item when used"
+  },
   "item-pair-multiplier": {
     "defaultMessage": "item | pair | multiplier"
+  },
+  "list-name": {
+    "defaultMessage": "List name"
   },
   "lists-saved": {
     "defaultMessage": "Lists successfully saved"
@@ -194,17 +206,32 @@
   "logo-of": {
     "defaultMessage": "Logo of Listshuffler"
   },
+  "more-can-muliplier": {
+    "defaultMessage": "The higher the number the more likely the pair."
+  },
+  "multiplicity-s": {
+    "defaultMessage": "multiplicity"
+  },
+  "name": {
+    "defaultMessage": "Name"
+  },
   "new-list": {
     "defaultMessage": "New List"
   },
   "no-matching": {
     "defaultMessage": "Couldn’t find matching object, check code and try again!"
   },
+  "placeholder-name": {
+    "defaultMessage": "placeholder name"
+  },
   "please-wait": {
     "defaultMessage": "Please wait"
   },
   "probs-saved": {
     "defaultMessage": "Probabilities successfully saved"
+  },
+  "repetitive": {
+    "defaultMessage": "Repetitive"
   },
   "save": {
     "defaultMessage": "Save"
@@ -215,8 +242,8 @@
   "see-the-pairs": {
     "defaultMessage": "See the pairs"
   },
-  "select-main": {
-    "defaultMessage": "Select main list"
+  "select-list": {
+    "defaultMessage": "Select list"
   },
   "show-pairs": {
     "defaultMessage": "Show pairs"
@@ -234,10 +261,13 @@
     "defaultMessage": "These are your pairs."
   },
   "this-admin-page": {
-    "defaultMessage": "This is the admin page."
+    "defaultMessage": "This is the admin page. You can edit lists, probabilities and shuffle here."
   },
-  "this-list-item": {
-    "defaultMessage": "This is a list item page."
+  "this-list-item-1": {
+    "defaultMessage": "This is a list item page. You will be able to see your pairs here."
+  },
+  "this-list-item-2": {
+    "defaultMessage": "This is a list item page. You can see your pairs here."
   },
   "timed-shuffle": {
     "defaultMessage": "Timed shuffle"
@@ -249,7 +279,7 @@
     "defaultMessage": "Try reloading the page."
   },
   "unique": {
-    "defaultMessage": "Unique:"
+    "defaultMessage": "Unique"
   },
   "unique-pairs": {
     "defaultMessage": "Unique pairs per list multiplicity"

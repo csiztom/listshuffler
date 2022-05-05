@@ -15,8 +15,9 @@ import {
     MenuButton,
     MenuList,
     MenuItem,
-    Switch,
     Text,
+    Select,
+    Portal,
 } from '@chakra-ui/react'
 import { ReactElement } from 'react'
 import { useIntl } from 'react-intl'
@@ -54,7 +55,7 @@ const EditorCard = ({
 }: EditorCardProps): ReactElement => {
     const intl = useIntl()
     return (
-        <Card zIndex={2}>
+        <Card>
             <Stack
                 direction="row"
                 gap={2}
@@ -185,31 +186,49 @@ const EditorCard = ({
                                         disabled={multiplicity < 2 || isLoading}
                                         p={2}
                                     >
-                                        {instance.shuffledID ??
-                                            intl.formatMessage({
-                                                id: 'select-main',
-                                                defaultMessage:
-                                                    'Select main list',
-                                            })}
+                                        <div>
+                                            <Text fontSize="small">
+                                                {instance.lists.find(
+                                                    (li) =>
+                                                        li.listID ===
+                                                        instance.shuffledID,
+                                                )?.listName ??
+                                                    intl.formatMessage({
+                                                        id: 'select-list',
+                                                        defaultMessage:
+                                                            'Select list',
+                                                    })}
+                                            </Text>
+                                            <Text fontSize="x-small">
+                                                {intl.formatMessage({
+                                                    id: 'which-will-shuffle-for',
+                                                    defaultMessage:
+                                                        'Which list do you want to shuffle pairs for?',
+                                                })}
+                                            </Text>
+                                        </div>
                                     </MenuButton>
                                 </Tooltip>
-                                <MenuList>
-                                    {instance.lists &&
-                                        instance.lists.map((li) => (
-                                            <MenuItem
-                                                key={li.listID}
-                                                command={li.listID}
-                                                onClick={() =>
-                                                    setInstance({
-                                                        ...instance,
-                                                        shuffledID: li.listID,
-                                                    })
-                                                }
-                                            >
-                                                {li.listName}
-                                            </MenuItem>
-                                        ))}
-                                </MenuList>
+                                <Portal>
+                                    <MenuList borderRadius="button">
+                                        {instance.lists &&
+                                            instance.lists.map((li) => (
+                                                <MenuItem
+                                                    key={li.listID}
+                                                    command={li.listID}
+                                                    onClick={() =>
+                                                        setInstance({
+                                                            ...instance,
+                                                            shuffledID:
+                                                                li.listID,
+                                                        })
+                                                    }
+                                                >
+                                                    {li.listName}
+                                                </MenuItem>
+                                            ))}
+                                    </MenuList>
+                                </Portal>
                             </Menu>
                         )}
                         <Tooltip
@@ -242,27 +261,39 @@ const EditorCard = ({
                                         'Unique pairs per list multiplicity',
                                 })}
                             >
-                                <Stack direction="row" align="center">
-                                    <Text>
+                                <Select
+                                    value={
+                                        instance.uniqueInMul
+                                            ? 'unique'
+                                            : 'repetitive'
+                                    }
+                                    borderColor="primary.500"
+                                    borderWidth={2}
+                                    borderRadius="button"
+                                    disabled={isLoading}
+                                    variant="outline"
+                                    width="fit-content"
+                                    onChange={(e) =>
+                                        setInstance({
+                                            ...instance,
+                                            uniqueInMul:
+                                                e.target.value === 'unique',
+                                        })
+                                    }
+                                >
+                                    <option value="unique">
                                         {intl.formatMessage({
                                             id: 'unique',
-                                            defaultMessage: 'Unique:',
+                                            defaultMessage: 'Unique',
                                         })}
-                                    </Text>
-                                    <Switch
-                                        colorScheme="primary"
-                                        borderRadius="button"
-                                        p={2}
-                                        disabled={isLoading}
-                                        defaultChecked={instance.uniqueInMul}
-                                        onChange={(e) =>
-                                            setInstance({
-                                                ...instance,
-                                                uniqueInMul: e.target.checked,
-                                            })
-                                        }
-                                    />
-                                </Stack>
+                                    </option>
+                                    <option value="repetitive">
+                                        {intl.formatMessage({
+                                            id: 'repetitive',
+                                            defaultMessage: 'Repetitive',
+                                        })}
+                                    </option>
+                                </Select>
                             </Tooltip>
                         )}
                         <Tooltip

@@ -102,11 +102,15 @@ const App = () => {
                         top={6}
                         right={6}
                         align="end"
+                        gap={2}
                     >
                         {!window.location.pathname.includes('instance') &&
                             !window.location.pathname.includes('listitem') && (
                                 <Select
-                                    variant="filled"
+                                    variant="outline"
+                                    borderColor='primary.500'
+                                    borderWidth={2}
+                                    borderRadius="button"
                                     value={preset ?? 'default'}
                                     onChange={(e) => {
                                         setPreset(e.target.value as Preset)
@@ -140,8 +144,11 @@ const App = () => {
                                 </Select>
                             )}
                         <Select
-                            variant="filled"
+                            variant="outline"
+                            borderColor='primary.500'
+                            borderWidth={2}
                             defaultValue={lang}
+                            borderRadius="button"
                             onChange={(e) => {
                                 setLang(e.target.value as 'en' | 'hu')
                                 localStorage.setItem(

@@ -26,7 +26,7 @@ const PairedPage = (props: {
                         <Card>
                             <Stack
                                 direction="column"
-                                gap={4}
+                                gap={2}
                                 spacing={0}
                                 align="center"
                                 wrap="wrap"
@@ -42,7 +42,7 @@ const PairedPage = (props: {
                                         />
                                         <Stack
                                             direction="row"
-                                            gap={4}
+                                            gap={2}
                                             spacing={0}
                                             align="center"
                                             wrap="wrap"
@@ -94,7 +94,7 @@ const PairedPage = (props: {
             {!isLoading && generatedPairs.length > 0 && (
                 <Stack
                     direction="column"
-                    gap={8}
+                    gap={4}
                     spacing={0}
                     align="center"
                     wrap="wrap"

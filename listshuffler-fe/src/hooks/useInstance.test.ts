@@ -271,7 +271,7 @@ describe('useInstance', () => {
                 lists: [
                     {
                         listID: 'new_id',
-                        listName: 'New List',
+                        listName: 'New List 1',
                         listItems: [],
                         inProgress: true,
                         multiplicity: 1,
@@ -407,7 +407,7 @@ describe('useInstance', () => {
                     },
                     {
                         listID: 'list_id3',
-                        listName: 'New List',
+                        listName: 'New List 1',
                         listItems: [],
                         multiplicity: 1,
                         inProgress: true,
@@ -438,7 +438,7 @@ describe('useInstance', () => {
                     },
                     {
                         listID: 'list_id3',
-                        listName: 'New List',
+                        listName: 'New List 1',
                         listItems: [],
                         multiplicity: 1,
                         inProgress: true,

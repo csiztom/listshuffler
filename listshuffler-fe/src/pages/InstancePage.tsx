@@ -52,8 +52,8 @@ const InstancePage = (props: {
     const intl = useIntl()
 
     useEffect(() => {
-        window.onbeforeunload = editing ? () => "" : null
-    }, [editing])
+        window.onbeforeunload = editing || openProbs ? () => '' : null
+    }, [editing, openProbs])
 
     const generatedLists = useMemo(
         () =>
@@ -80,21 +80,23 @@ const InstancePage = (props: {
             openProbs &&
             Object.keys(probs).map(
                 (p1) =>
-                    Object.keys(probs[p1]).length > 1 && (
-                        <Card>
+                    (Object.keys(probs[p1]).length > 1 ||
+                        props.preset !== 'christmas') && (
+                        <Card key={p1 + 'probs'}>
                             <Grid
                                 templateColumns="1fr 1fr 1fr"
-                                gap={5}
+                                gap={4}
                                 justifyItems="center"
                             >
                                 {Object.keys(probs[p1]).map(
                                     (p2) =>
-                                        p1 !== p2 && (
+                                        (p1 !== p2 ||
+                                            props.preset !== 'christmas') && (
                                             <ProbabilityInput
                                                 listItem1={allListItems[p1]}
                                                 listItem2={allListItems[p2]}
                                                 probability={probs[p1][p2]}
-                                                key={p1 + p2}
+                                                key={p1 + p2 + 'probs'}
                                                 onChange={(str, num) => {
                                                     const tmp = probs
                                                     tmp[p1][p2] = num
@@ -107,7 +109,7 @@ const InstancePage = (props: {
                         </Card>
                     ),
             ),
-        [probs, allListItems, setProbs, openProbs],
+        [probs, allListItems, setProbs, openProbs, props.preset],
     )
 
     return (
@@ -120,17 +122,18 @@ const InstancePage = (props: {
                             defaultMessage:
                                 'Bookmark this page if you want to come back later.',
                         })}
-                        <br />{' '}
+                        <br />
                         {intl.formatMessage({
                             id: 'this-admin-page',
-                            defaultMessage: 'This is the admin page.',
+                            defaultMessage:
+                                'This is the admin page. You can edit lists, probabilities and shuffle here.',
                         })}
                     </Text>
                 </Card>
             )}
             {instance && !openProbs && multiplicitySum < 2 && (
                 <Card>
-                    <Text fontSize="md">
+                    <Text fontSize="md" color="error">
                         {intl.formatMessage({
                             id: 'you-need-multiplicity',
                             defaultMessage:
@@ -156,6 +159,12 @@ const InstancePage = (props: {
                         {intl.formatMessage({
                             id: 'zero-cannot',
                             defaultMessage: 'zero = cannot be paired',
+                        })}
+                        <br />
+                        {intl.formatMessage({
+                            id: 'more-can-muliplier',
+                            defaultMessage:
+                                'The higher the number the more likely the pair.',
                         })}
                     </Text>
                 </Card>

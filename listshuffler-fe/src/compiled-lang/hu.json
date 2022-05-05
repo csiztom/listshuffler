@@ -1,4 +1,22 @@
 {
+  "about-1": [
+    {
+      "type": 0,
+      "value": "Ez az alkalmazás listák keverésében segít. Amikor egy csoport személyt vagy tárgyat (akár többször) véletlenszerűen párokba szeretne rakni. Az alkalmazás lebonyolítja automatikusan önnek."
+    }
+  ],
+  "about-2": [
+    {
+      "type": 0,
+      "value": "Karácsonyi húzásnál például egy listája van és ennek a másolatával párokat alakít."
+    }
+  ],
+  "about-3": [
+    {
+      "type": 0,
+      "value": "Ha egy csoportot önmagával háromszor tenne párba, akkor az alkalmazásban a multiplicitást háromra kell állítani."
+    }
+  ],
   "accept": [
     {
       "type": 0,
@@ -44,7 +62,7 @@
   "change-multiplicity": [
     {
       "type": 0,
-      "value": "Multiplicitás változatása"
+      "value": "Multiplicitás változtatása"
     }
   ],
   "change-probability": [
@@ -83,22 +101,10 @@
       "value": "A kód a vágólapra lett másolva"
     }
   ],
-  "code-generated": [
-    {
-      "type": 0,
-      "value": "kód által létrehozott elem"
-    }
-  ],
   "copy-code": [
     {
       "type": 0,
       "value": "Kód másolása"
-    }
-  ],
-  "copy-invite-code": [
-    {
-      "type": 0,
-      "value": "Meghívó kód másolása"
     }
   ],
   "copy-list-code": [
@@ -371,10 +377,28 @@
       "value": "A közeg nem létezik"
     }
   ],
+  "invite-code": [
+    {
+      "type": 0,
+      "value": "Meghívó kód"
+    }
+  ],
+  "invite-code-explain": [
+    {
+      "type": 0,
+      "value": "Új elemet hoz létre használatakor"
+    }
+  ],
   "item-pair-multiplier": [
     {
       "type": 0,
       "value": "listaelem | pár | szorzó"
+    }
+  ],
+  "list-name": [
+    {
+      "type": 0,
+      "value": "Lista név"
     }
   ],
   "lists-saved": [
@@ -389,6 +413,24 @@
       "value": "A Listshuffler logója"
     }
   ],
+  "more-can-muliplier": [
+    {
+      "type": 0,
+      "value": "Nagyobb szám nagyobb valószínűséget jelent"
+    }
+  ],
+  "multiplicity-s": [
+    {
+      "type": 0,
+      "value": "multiplicitás"
+    }
+  ],
+  "name": [
+    {
+      "type": 0,
+      "value": "Név"
+    }
+  ],
   "new-list": [
     {
       "type": 0,
@@ -401,6 +443,12 @@
       "value": "Nem sikerült, talán elírt valamit?"
     }
   ],
+  "placeholder-name": [
+    {
+      "type": 0,
+      "value": "helyfoglaló név"
+    }
+  ],
   "please-wait": [
     {
       "type": 0,
@@ -411,6 +459,12 @@
     {
       "type": 0,
       "value": "Valószínűségek elmentve"
+    }
+  ],
+  "repetitive": [
+    {
+      "type": 0,
+      "value": "Ismétléses"
     }
   ],
   "save": [
@@ -431,10 +485,10 @@
       "value": "Párok mutatása"
     }
   ],
-  "select-main": [
+  "select-list": [
     {
       "type": 0,
-      "value": "Fő lista kiválasztása"
+      "value": "Válassz listát"
     }
   ],
   "show-pairs": [
@@ -470,13 +524,19 @@
   "this-admin-page": [
     {
       "type": 0,
-      "value": "Ez az admin oldala"
+      "value": "Ez az admin oldala. A listákat, valószínűségeket itt tudod változtatni, valamint itt tudsz keverni."
     }
   ],
-  "this-list-item": [
+  "this-list-item-1": [
     {
       "type": 0,
-      "value": "Ez egy listaelem oldala"
+      "value": "Ez egy listaelem oldal. A párjaidat itt fogod látni."
+    }
+  ],
+  "this-list-item-2": [
+    {
+      "type": 0,
+      "value": "Ez egy listaelem oldal. A párjaidat itt láthatod."
     }
   ],
   "timed-shuffle": [
@@ -500,7 +560,7 @@
   "unique": [
     {
       "type": 0,
-      "value": "Egyedi:"
+      "value": "Ismétlődés-nélküli"
     }
   ],
   "unique-pairs": [

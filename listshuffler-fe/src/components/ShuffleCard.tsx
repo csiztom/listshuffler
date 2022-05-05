@@ -45,7 +45,7 @@ const ShuffleCard = ({
     const [value, setValue] = useState<string>()
     const intl = useIntl()
     return (
-        <Card zIndex={1}>
+        <Card>
             <DeleteModal
                 isOpen={isModalOpen}
                 onClose={onModalClose}
@@ -64,12 +64,14 @@ const ShuffleCard = ({
                         'Do you really want to delete the whole instance? You will need to start over again if you want to shuffle.',
                 })}
             />
-            <Stack direction="row"
+            <Stack
+                direction="row"
                 gap={2}
                 spacing={0}
                 align="center"
                 wrap="wrap"
-                justifyContent="center">
+                justifyContent="center"
+            >
                 <Tooltip
                     hasArrow
                     label={intl.formatMessage({
@@ -170,7 +172,7 @@ const ShuffleCard = ({
                                     })}
                                 </Button>
                             </PopoverTrigger>
-                            <PopoverContent>
+                            <PopoverContent zIndex={1} position='relative'>
                                 <PopoverArrow />
                                 <Stack direction="row" padding={2}>
                                     <Input

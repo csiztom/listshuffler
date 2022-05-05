@@ -24,6 +24,7 @@ const useInstance = (
     const [editedLists, setEditedLists] = useState<AbstractList[]>([])
     const [updateLists, setUpdateLists] = useBoolean()
     const [updateEditedLists, setUpdateEditedLists] = useBoolean()
+    const [listIndex, setListIndex] = useState(1)
     const toast = useToast()
     const navigate = useNavigate()
     const intl = useIntl()
@@ -240,14 +241,16 @@ const useInstance = (
 
     const addList = () => {
         setLoading && setLoading.on()
+        setListIndex((i) => i + 1)
         fetch(process.env.REACT_APP_API_URL + '/list', {
             method: 'POST',
             body: JSON.stringify({
                 adminID: id,
-                listName: intl.formatMessage({
-                    id: 'new-list',
-                    defaultMessage: 'New List',
-                }),
+                listName:
+                    intl.formatMessage({
+                        id: 'new-list',
+                        defaultMessage: 'New List',
+                    }) + ` ${listIndex}`,
                 multiplicity: '1',
             }),
         })
@@ -260,10 +263,11 @@ const useInstance = (
                     ...lists,
                     {
                         listID: response.listID,
-                        listName: intl.formatMessage({
-                            id: 'new-list',
-                            defaultMessage: 'New List',
-                        }),
+                        listName:
+                            intl.formatMessage({
+                                id: 'new-list',
+                                defaultMessage: 'New List',
+                            }) + ` ${listIndex}`,
                         listItems: [] as AbstractListItem[],
                         inProgress: true,
                         multiplicity: 1,
@@ -277,10 +281,11 @@ const useInstance = (
                                 ...instance.lists,
                                 {
                                     listID: response.listID,
-                                    listName: intl.formatMessage({
-                                        id: 'new-list',
-                                        defaultMessage: 'New List',
-                                    }),
+                                    listName:
+                                        intl.formatMessage({
+                                            id: 'new-list',
+                                            defaultMessage: 'New List',
+                                        }) + ` ${listIndex}`,
                                     listItems: [] as AbstractListItem[],
                                     inProgress: true,
                                     multiplicity: 1,

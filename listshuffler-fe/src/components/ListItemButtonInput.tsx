@@ -1,12 +1,14 @@
+import { CopyIcon } from '@chakra-ui/icons'
 import {
     Button,
     ButtonProps,
     Input,
     InputProps,
+    Text,
     Tooltip,
     useToast,
 } from '@chakra-ui/react'
-import { ReactElement } from 'react'
+import { ReactElement, useEffect, useRef } from 'react'
 import { useIntl } from 'react-intl'
 
 interface ListItemButtonInputProps
@@ -28,6 +30,20 @@ const ListItemButtonInput = ({
 }: ListItemButtonInputProps): ReactElement => {
     const toast = useToast()
     const intl = useIntl()
+    const inputFocus = useRef<HTMLInputElement>(null)
+    useEffect(() => {
+        inputFocus.current && inputFocus.current.focus()
+    }, [])
+    useEffect(() => {
+        if (
+            name ===
+            intl.formatMessage({
+                id: 'placeholder-name',
+                defaultMessage: 'placeholder name',
+            })
+        )
+            inputFocus.current && inputFocus.current.focus()
+    }, [editing, intl, name])
     const onClick = () => {
         var data = [
             new ClipboardItem({
@@ -52,36 +68,59 @@ const ListItemButtonInput = ({
         )
     }
     return editing ? (
-        <Tooltip hasArrow label={intl.formatMessage({
-            id: 'edit-list-item',
-            defaultMessage: 'Edit list item name',
-        })}>
+        <Tooltip
+            hasArrow
+            label={intl.formatMessage({
+                id: 'edit-list-item',
+                defaultMessage: 'Edit list item name',
+            })}
+        >
             <Input
                 colorScheme="secondary"
                 borderRadius="button"
                 p={2}
                 maxLength={40}
                 w="fit-content"
-                defaultValue={name}
-                htmlSize={name.length}
+                defaultValue={
+                    name ===
+                    intl.formatMessage({
+                        id: 'placeholder-name',
+                        defaultMessage: 'placeholder name',
+                    })
+                        ? ''
+                        : name
+                }
+                placeholder={intl.formatMessage({
+                    id: 'name',
+                    defaultMessage: 'Name',
+                })}
+                htmlSize={name.length || 10}
                 backdropFilter="blur(16px) saturate(180%)"
                 bgColor="card"
                 onChange={onChange}
+                ref={inputFocus}
             />
         </Tooltip>
     ) : (
-        <Tooltip hasArrow label={intl.formatMessage({
-            id: 'copy-code',
-            defaultMessage: 'Copy code',
-        })}>
+        <Tooltip
+            hasArrow
+            label={intl.formatMessage({
+                id: 'copy-code',
+                defaultMessage: 'Copy code',
+            })}
+        >
             <Button
                 colorScheme={primary ? 'primary' : 'secondary'}
                 borderRadius="button"
                 onClick={onClick}
-                p={2}
+                p={3}
                 {...props}
             >
-                {name}
+                <CopyIcon mr={2} />
+                <div>
+                    <Text fontSize="sm">{name}</Text>
+                    <Text fontSize="xx-small">{id}</Text>
+                </div>
             </Button>
         </Tooltip>
     )

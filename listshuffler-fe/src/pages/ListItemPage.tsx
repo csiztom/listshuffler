@@ -43,6 +43,14 @@ const ListItemPage = (props: {
                 setPairs(response['pairs'])
                 setName(response['listItem'])
                 props.onChangePreset(response['preset'] ?? 'default')
+                if (
+                    response['listItem'] ===
+                    intl.formatMessage({
+                        id: 'placeholder-name',
+                        defaultMessage: 'placeholder name',
+                    })
+                )
+                    setEditing.on()
             })
             .catch(() =>
                 toast({
@@ -60,7 +68,7 @@ const ListItemPage = (props: {
                 }),
             )
             .then(setIsLoading.off)
-    }, [id, toast, setIsLoading, intl, props])
+    }, [id, toast, setIsLoading, intl, props, setEditing])
 
     useEffect(() => {
         if (!id) return
@@ -97,7 +105,7 @@ const ListItemPage = (props: {
     }, [editing])
 
     useEffect(() => {
-        window.onbeforeunload = editing ? () => "" : null
+        window.onbeforeunload = editing ? () => '' : null
     }, [editing])
 
     const deleteItem = () => {
@@ -138,7 +146,7 @@ const ListItemPage = (props: {
             Object.keys(pairs).map((it) => (
                 <Stack
                     direction="row"
-                    gap={4}
+                    gap={2}
                     spacing={0}
                     align="center"
                     wrap="wrap"
@@ -186,18 +194,25 @@ const ListItemPage = (props: {
                             defaultMessage:
                                 'Bookmark this page if you want to come back later.',
                         })}
-                        <br />{' '}
-                        {intl.formatMessage({
-                            id: 'this-list-item',
-                            defaultMessage: 'This is a list item page.',
-                        })}
+                        <br />
+                        {Object.keys(pairs).length === 0
+                            ? intl.formatMessage({
+                                  id: 'this-list-item-1',
+                                  defaultMessage:
+                                      'This is a list item page. You will be able to see your pairs here.',
+                              })
+                            : intl.formatMessage({
+                                  id: 'this-list-item-2',
+                                  defaultMessage:
+                                      'This is a list item page. You can see your pairs here.',
+                              })}
                     </Text>
                 </Card>
             }
             <Card>
                 <Stack
                     direction="column"
-                    gap={4}
+                    gap={2}
                     spacing={0}
                     align="center"
                     wrap="wrap"
@@ -213,7 +228,7 @@ const ListItemPage = (props: {
                         />
                     )}
                     {generatedPairs}
-                    <Stack direction="row" gap={4}>
+                    <Stack direction="row" gap={2}>
                         {Object.keys(pairs).length === 0 && editing && (
                             <Tooltip
                                 hasArrow

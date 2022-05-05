@@ -28,9 +28,7 @@ def pair_up(list_w_sorted, used, pairs, unique=True):
     if not len(list_w_sorted) > 0:
         return pairs
     j = 0
-    while True:
-        if not j < len(list_w_sorted[0][1]):
-            break
+    while j < len(list_w_sorted[0][1]):
         if unique and list_w_sorted[0][1][j] in used:
             j += 1
             continue

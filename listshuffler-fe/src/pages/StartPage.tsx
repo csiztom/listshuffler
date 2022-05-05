@@ -1,6 +1,7 @@
 import {
     Grid,
     GridItem,
+    Text,
     useBoolean,
     useDisclosure,
     useToast,
@@ -13,6 +14,7 @@ import { useNavigate } from 'react-router-dom'
 import GDPRModal from '../components/GDPRModal'
 import { useIntl } from 'react-intl'
 import { AbstractInstance } from '../types/main'
+import Card from '../components/Card'
 
 const StartPage = (props: {
     preset: AbstractInstance['preset']
@@ -113,8 +115,8 @@ const StartPage = (props: {
                 body: JSON.stringify({
                     listID: str,
                     listItem: intl.formatMessage({
-                        id: 'code-generated',
-                        defaultMessage: 'code-generated item',
+                        id: 'placeholder-name',
+                        defaultMessage: 'placeholder name',
                     }),
                 }),
             })
@@ -195,11 +197,11 @@ const StartPage = (props: {
     return (
         <Grid
             templateColumns={{ base: '', md: 'repeat(4, 1fr)' }}
-            templateRows={{ base: '', md: 'auto 1fr 1fr' }}
+            templateRows={{ base: '', md: 'auto 1fr 1fr 1fr' }}
             gap={4}
             bgImage={props.preset === 'christmas' ? christmasTree : pattern}
-            bgRepeat='repeat'
-            bgColor='background'
+            bgRepeat="repeat"
+            bgColor="background"
             w="100vw"
             h="100vh"
             p="8"
@@ -291,6 +293,32 @@ const StartPage = (props: {
                         code && signIn(code)
                     }}
                 ></GDPRModal>
+            </GridItem>
+            <GridItem></GridItem>
+            <GridItem rowSpan={1} colSpan={2}>
+                <Card>
+                    <Text align="left">
+                        {intl.formatMessage({
+                            id: 'about-1',
+                            defaultMessage:
+                                'This app helps you in shuffling lists. When you have distinct sets of people or objects (and their copies), and you want to pair them up randomly, this app will help you. ',
+                        })}
+                        <br />
+                        <br />
+                        {intl.formatMessage({
+                            id: 'about-2',
+                            defaultMessage:
+                                'For example in Secret Santa mode, you have one list that you want to pair up with itself (a copy). ',
+                        })}
+                        <br />
+                        <br />
+                        {intl.formatMessage({
+                            id: 'about-3',
+                            defaultMessage:
+                                'If you want to pair up a list with itself, so that 3 items of the same list will be in a pair, set the multiplicity to 3.',
+                        })}
+                    </Text>
+                </Card>
             </GridItem>
         </Grid>
     )
