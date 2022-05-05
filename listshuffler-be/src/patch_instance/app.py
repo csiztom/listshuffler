@@ -37,21 +37,24 @@ def handler(event, context):
         if (cur.fetchone() == None):
             logger.info("ERROR: No corresponding admin id")
             return http_response.response(404, "No corresponding id")
-        
-        if shuffle_time != None:
-            cur.execute("""update instances 
+        try:
+            if shuffle_time != None:
+                cur.execute("""update instances 
                 set shuffleTime='"""+shuffle_time+"""', expiration=DATE_ADD('"""+shuffle_time+"""', INTERVAL 30 DAY) 
                 where adminID=%s""", (
-                admin_id))
-        if shuffled_id != None:
-            cur.execute("update instances set shuffledID=%s where adminID=%s", (
-                shuffled_id, admin_id))
-        if unique != None:
-            cur.execute("update instances set uniqueInMul=%s where adminID=%s", (
-                unique, admin_id))
-        if preset != None:
-            cur.execute("update instances set preset=%s where adminID=%s", (
-                preset, admin_id))
-        conn.commit()
+                    admin_id))
+            if shuffled_id != None:
+                cur.execute("update instances set shuffledID=%s where adminID=%s", (
+                    shuffled_id, admin_id))
+            if unique != None:
+                cur.execute("update instances set uniqueInMul=%s where adminID=%s", (
+                    unique, admin_id))
+            if preset != None:
+                cur.execute("update instances set preset=%s where adminID=%s", (
+                    preset, admin_id))
+            conn.commit()
+        except pymysql.MySQLError:
+            logger.info("ERROR: Could not update")
+            return http_response.response(400)
 
     return http_response.response(200)
