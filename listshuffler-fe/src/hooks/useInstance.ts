@@ -137,6 +137,7 @@ const useInstance = (
                       {},
                   )
                 : [],
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [instance?.lists],
     )
 
