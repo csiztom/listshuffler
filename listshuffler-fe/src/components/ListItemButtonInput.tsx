@@ -16,7 +16,7 @@ interface ListItemButtonInputProps
         Omit<ButtonProps, 'onChange'> {
     editing?: boolean
     name: string
-    id: string
+    id?: string
     primary?: boolean
 }
 
@@ -45,6 +45,7 @@ const ListItemButtonInput = ({
             inputFocus.current && inputFocus.current.focus()
     }, [editing, intl, name])
     const onClick = () => {
+        if (!id) return
         var data = [
             new ClipboardItem({
                 'text/plain': new Blob([id], { type: 'text/plain' }),
@@ -116,10 +117,10 @@ const ListItemButtonInput = ({
                 p={3}
                 {...props}
             >
-                <CopyIcon mr={2} />
+                {id && <CopyIcon mr={2} />}
                 <div>
                     <Text fontSize="sm">{name}</Text>
-                    <Text fontSize="xx-small">{id}</Text>
+                    {id && <Text fontSize="xx-small">{id}</Text>}
                 </div>
             </Button>
         </Tooltip>

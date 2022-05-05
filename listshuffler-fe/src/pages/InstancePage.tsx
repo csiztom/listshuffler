@@ -131,7 +131,7 @@ const InstancePage = (props: {
                     </Text>
                 </Card>
             )}
-            {instance && !openProbs && multiplicitySum < 2 && (
+            {instance && !openProbs && multiplicitySum < 2 ? (
                 <Card>
                     <Text fontSize="md" color="error">
                         {intl.formatMessage({
@@ -141,6 +141,36 @@ const InstancePage = (props: {
                         })}
                     </Text>
                 </Card>
+            ) : instance?.lists.some((li) => li.listItems.length === 0) ? (
+                <Card>
+                    <Text fontSize="md" color="error">
+                        {intl.formatMessage({
+                            id: 'you-need-one-item',
+                            defaultMessage:
+                                'You need at least one item in each list to shuffle.',
+                        })}
+                    </Text>
+                </Card>
+            ) : (
+                instance &&
+                instance.uniqueInMul &&
+                instance.lists.some(
+                    (li) =>
+                        li.listItems.length <
+                        (instance.lists.find(
+                            (li) => li.listID === instance.shuffledID,
+                        )?.listItems.length ?? 0),
+                ) && (
+                    <Card>
+                        <Text fontSize="md" color="error">
+                            {intl.formatMessage({
+                                id: 'you-need-more',
+                                defaultMessage:
+                                    'You need as many items in every list as the main list or alternatively set the shuffle as repetitive.',
+                            })}
+                        </Text>
+                    </Card>
+                )
             )}
             {instance && openProbs && (
                 <Card>

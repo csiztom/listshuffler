@@ -305,8 +305,14 @@
   "you-have-code": {
     "defaultMessage": "You have a code?"
   },
+  "you-need-more": {
+    "defaultMessage": "You need as many items in every list as the main list or alternatively set the shuffle as repetitive."
+  },
   "you-need-multiplicity": {
     "defaultMessage": "You need at least two lists or a list with at least 2 multiplicity to shuffle"
+  },
+  "you-need-one-item": {
+    "defaultMessage": "You need at least one item in each list to shuffle."
   },
   "zero-cannot": {
     "defaultMessage": "zero = cannot be paired"

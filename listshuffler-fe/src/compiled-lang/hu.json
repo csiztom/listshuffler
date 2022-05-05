@@ -611,10 +611,22 @@
       "value": "Van egy kódja?"
     }
   ],
+  "you-need-more": [
+    {
+      "type": 0,
+      "value": "Legalább annyi eleme kell lennie minden listának mint a fő listának, vagy állítsa át ismétlésesre."
+    }
+  ],
   "you-need-multiplicity": [
     {
       "type": 0,
       "value": "Legalább két lista vagy egy lista legalább két multiplicitással szükséges a keveréshez."
+    }
+  ],
+  "you-need-one-item": [
+    {
+      "type": 0,
+      "value": "Legalább egy elem kell minden listába, hogy keverhessen."
     }
   ],
   "zero-cannot": [

@@ -305,8 +305,14 @@
   "you-have-code": {
     "defaultMessage": "Van egy kódja?"
   },
+  "you-need-more": {
+    "defaultMessage": "Legalább annyi eleme kell lennie minden listának mint a fő listának, vagy állítsa át ismétlésesre."
+  },
   "you-need-multiplicity": {
     "defaultMessage": "Legalább két lista vagy egy lista legalább két multiplicitással szükséges a keveréshez."
+  },
+  "you-need-one-item": {
+    "defaultMessage": "Legalább egy elem kell minden listába, hogy keverhessen."
   },
   "zero-cannot": {
     "defaultMessage": "nulla = nem lehet párba állítani"
