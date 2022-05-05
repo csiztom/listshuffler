@@ -11,6 +11,7 @@ import {
     useDisclosure,
     Stack,
     Portal,
+    Text,
 } from '@chakra-ui/react'
 import { ReactElement, useState } from 'react'
 import { useIntl } from 'react-intl'
@@ -167,10 +168,24 @@ const ShuffleCard = ({
                                     }
                                 >
                                     <CalendarIcon mr={2} />
-                                    {instance?.shuffleTime ?? intl.formatMessage({
-                                        id: 'timed-shuffle',
-                                        defaultMessage: 'Timed shuffle',
-                                    })}
+                                    <div>
+                                        <Text>
+                                            {instance?.shuffleTime ??
+                                                intl.formatMessage({
+                                                    id: 'timed-shuffle',
+                                                    defaultMessage:
+                                                        'Timed shuffle',
+                                                })}
+                                        </Text>
+                                        <Text fontSize='x-small'>
+                                            {instance?.shuffleTime &&
+                                                intl.formatMessage({
+                                                    id: 'timed-shuffle',
+                                                    defaultMessage:
+                                                        'Timed shuffle',
+                                                })}
+                                        </Text>
+                                    </div>
                                 </Button>
                             </PopoverTrigger>
                             <Portal>

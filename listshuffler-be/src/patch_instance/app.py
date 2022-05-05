@@ -1,5 +1,5 @@
 import logging
-
+import datetime
 import pymysql
 
 try:
@@ -25,7 +25,11 @@ def handler(event, context):
 
     parameters = params.get_optional_params(
         event, 'shuffleTime', 'uniqueInMul', 'shuffledID', 'preset')
-    shuffle_time = parameters['shuffleTime']
+    try:
+        datetime.strptime(parameters['shuffleTime'], '%Y-%M-%d')
+        shuffle_time = parameters['shuffleTime']
+    except:
+        shuffle_time =  None
     unique = parameters['uniqueInMul']
     shuffled_id = parameters['shuffledID']
     preset = parameters['preset']
