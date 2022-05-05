@@ -247,7 +247,7 @@ const ListCard = ({
                                 p={2}
                                 onClick={onOpen}
                                 isLoading={parentIsLoading}
-                                alignSelf='end'
+                                alignSelf='flex-end'
                             >
                                 <DeleteIcon mr={2} />
                                 {intl.formatMessage({
@@ -271,7 +271,7 @@ const ListCard = ({
                                 p={2}
                                 onClick={() => addListItem(list)}
                                 isLoading={parentIsLoading}
-                                alignSelf='end'
+                                alignSelf='flex-end'
                             >
                                 <AddIcon mr={2} />
                                 {intl.formatMessage({
