@@ -26,7 +26,7 @@ def handler(event, context):
     parameters = params.get_optional_params(
         event, 'shuffleTime', 'uniqueInMul', 'shuffledID', 'preset')
     try:
-        datetime.strptime(parameters['shuffleTime'], '%Y-%M-%d')
+        datetime.datetime.strptime(parameters['shuffleTime'], '%Y-%M-%d')
         shuffle_time = parameters['shuffleTime']
     except:
         shuffle_time =  None
