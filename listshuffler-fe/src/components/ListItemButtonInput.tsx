@@ -102,7 +102,7 @@ const ListItemButtonInput = ({
                 ref={inputFocus}
             />
         </Tooltip>
-    ) : (
+    ) : id ? (
         <Tooltip
             hasArrow
             label={intl.formatMessage({
@@ -117,13 +117,22 @@ const ListItemButtonInput = ({
                 p={3}
                 {...props}
             >
-                {id && <CopyIcon mr={2} />}
+                <CopyIcon mr={2} />
                 <div>
                     <Text fontSize="sm">{name}</Text>
-                    {id && <Text fontSize="xx-small">{id}</Text>}
+                    <Text fontSize="xx-small">{id}</Text>
                 </div>
             </Button>
         </Tooltip>
+    ) : (
+        <Button
+            colorScheme={primary ? 'primary' : 'secondary'}
+            borderRadius="button"
+            p={3}
+            {...props}
+        >
+            <Text fontSize="sm">{name}</Text>
+        </Button>
     )
 }
 
