@@ -10,6 +10,7 @@ import {
     Input,
     useDisclosure,
     Stack,
+    Portal,
 } from '@chakra-ui/react'
 import { ReactElement, useState } from 'react'
 import { useIntl } from 'react-intl'
@@ -166,49 +167,51 @@ const ShuffleCard = ({
                                     }
                                 >
                                     <CalendarIcon mr={2} />
-                                    {intl.formatMessage({
+                                    {instance?.shuffleTime ?? intl.formatMessage({
                                         id: 'timed-shuffle',
                                         defaultMessage: 'Timed shuffle',
                                     })}
                                 </Button>
                             </PopoverTrigger>
-                            <PopoverContent zIndex={1} position='relative'>
-                                <PopoverArrow />
-                                <Stack direction="row" padding={2}>
-                                    <Input
-                                        type="date"
-                                        defaultValue={
-                                            instance?.shuffleTime ?? ''
-                                        }
-                                        onChange={(e) =>
-                                            setValue(e.target.value)
-                                        }
-                                    />
-                                    <Button
-                                        colorScheme="primary"
-                                        borderRadius="button"
-                                        p={4}
-                                        isLoading={isLoading}
-                                        disabled={
-                                            disabled ||
-                                            !instance?.shuffledID ||
-                                            isLoading
-                                        }
-                                        onClick={() => {
-                                            setInstance({
-                                                ...instance,
-                                                shuffleTime: value ?? null,
-                                            })
-                                            onClose()
-                                        }}
-                                    >
-                                        {intl.formatMessage({
-                                            id: 'save',
-                                            defaultMessage: 'Save',
-                                        })}
-                                    </Button>
-                                </Stack>
-                            </PopoverContent>
+                            <Portal>
+                                <PopoverContent>
+                                    <PopoverArrow />
+                                    <Stack direction="row" padding={2}>
+                                        <Input
+                                            type="date"
+                                            defaultValue={
+                                                instance?.shuffleTime ?? ''
+                                            }
+                                            onChange={(e) =>
+                                                setValue(e.target.value)
+                                            }
+                                        />
+                                        <Button
+                                            colorScheme="primary"
+                                            borderRadius="button"
+                                            p={4}
+                                            isLoading={isLoading}
+                                            disabled={
+                                                disabled ||
+                                                !instance?.shuffledID ||
+                                                isLoading
+                                            }
+                                            onClick={() => {
+                                                setInstance({
+                                                    ...instance,
+                                                    shuffleTime: value ?? null,
+                                                })
+                                                onClose()
+                                            }}
+                                        >
+                                            {intl.formatMessage({
+                                                id: 'save',
+                                                defaultMessage: 'Save',
+                                            })}
+                                        </Button>
+                                    </Stack>
+                                </PopoverContent>
+                            </Portal>
                         </Popover>
                     </>
                 )}
