@@ -84,7 +84,7 @@ const InstancePage = (props: {
                         props.preset !== 'christmas') && (
                         <Card key={p1 + 'probs'}>
                             <Grid
-                                templateColumns="minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)"
+                                templateColumns="minmax(0, 1fr) minmax(0, 1fr) auto"
                                 gap={4}
                             >
                                 {Object.keys(probs[p1]).map(
