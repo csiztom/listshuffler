@@ -33,7 +33,7 @@ const App = () => {
     const settingsStack = (
         <Stack
             direction="row"
-            justifyContent="right"
+            justifyContent="flex-end"
             width="98%"
             padding={3}
             gap={2}
