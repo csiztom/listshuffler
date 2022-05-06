@@ -629,6 +629,12 @@
       "value": "Legalább egy elem kell minden listába, hogy keverhessen."
     }
   ],
+  "your-pairs": [
+    {
+      "type": 0,
+      "value": "Párjaid:"
+    }
+  ],
   "zero-cannot": [
     {
       "type": 0,

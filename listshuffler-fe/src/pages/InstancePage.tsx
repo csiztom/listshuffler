@@ -84,9 +84,8 @@ const InstancePage = (props: {
                         props.preset !== 'christmas') && (
                         <Card key={p1 + 'probs'}>
                             <Grid
-                                templateColumns="1fr 1fr 1fr"
+                                templateColumns="minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)"
                                 gap={4}
-                                justifyItems="center"
                             >
                                 {Object.keys(probs[p1]).map(
                                     (p2) =>
@@ -131,47 +130,48 @@ const InstancePage = (props: {
                     </Text>
                 </Card>
             )}
-            {instance && !openProbs && multiplicitySum < 2 ? (
-                <Card>
-                    <Text fontSize="md" color="error">
-                        {intl.formatMessage({
-                            id: 'you-need-multiplicity',
-                            defaultMessage:
-                                'You need at least two lists or a list with at least 2 multiplicity to shuffle',
-                        })}
-                    </Text>
-                </Card>
-            ) : instance?.lists.some((li) => li.listItems.length === 0) ? (
-                <Card>
-                    <Text fontSize="md" color="error">
-                        {intl.formatMessage({
-                            id: 'you-need-one-item',
-                            defaultMessage:
-                                'You need at least one item in each list to shuffle.',
-                        })}
-                    </Text>
-                </Card>
-            ) : (
-                instance &&
-                instance.uniqueInMul &&
-                instance.lists.some(
-                    (li) =>
-                        li.listItems.length <
-                        (instance.lists.find(
-                            (li) => li.listID === instance.shuffledID,
-                        )?.listItems.length ?? 0),
-                ) && (
+            {instance &&
+                !openProbs &&
+                (multiplicitySum < 2 ? (
                     <Card>
                         <Text fontSize="md" color="error">
                             {intl.formatMessage({
-                                id: 'you-need-more',
+                                id: 'you-need-multiplicity',
                                 defaultMessage:
-                                    'You need as many items in every list as the main list or alternatively set the shuffle as repetitive.',
+                                    'You need at least two lists or a list with at least 2 multiplicity to shuffle',
                             })}
                         </Text>
                     </Card>
-                )
-            )}
+                ) : instance.lists.some((li) => li.listItems.length === 0) ? (
+                    <Card>
+                        <Text fontSize="md" color="error">
+                            {intl.formatMessage({
+                                id: 'you-need-one-item',
+                                defaultMessage:
+                                    'You need at least one item in each list to shuffle.',
+                            })}
+                        </Text>
+                    </Card>
+                ) : (
+                    !!instance.uniqueInMul &&
+                    instance.lists.some(
+                        (li) =>
+                            li.listItems.length <
+                            (instance.lists.find(
+                                (li) => li.listID === instance.shuffledID,
+                            )?.listItems.length ?? 0),
+                    ) && (
+                        <Card>
+                            <Text fontSize="md" color="error">
+                                {intl.formatMessage({
+                                    id: 'you-need-more',
+                                    defaultMessage:
+                                        'You need as many items in every list as the main list or alternatively set the shuffle as repetitive.',
+                                })}
+                            </Text>
+                        </Card>
+                    )
+                ))}
             {instance && openProbs && (
                 <Card>
                     <Text fontSize="lg">

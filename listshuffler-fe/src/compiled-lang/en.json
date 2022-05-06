@@ -629,6 +629,12 @@
       "value": "You need at least one item in each list to shuffle."
     }
   ],
+  "your-pairs": [
+    {
+      "type": 0,
+      "value": "Your pairs:"
+    }
+  ],
   "zero-cannot": [
     {
       "type": 0,

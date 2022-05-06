@@ -177,7 +177,7 @@ const ShuffleCard = ({
                                                         'Timed shuffle',
                                                 })}
                                         </Text>
-                                        <Text fontSize='x-small'>
+                                        <Text fontSize="x-small">
                                             {instance?.shuffleTime &&
                                                 intl.formatMessage({
                                                     id: 'timed-shuffle',
@@ -189,7 +189,16 @@ const ShuffleCard = ({
                                 </Button>
                             </PopoverTrigger>
                             <Portal>
-                                <PopoverContent>
+                                <PopoverContent
+                                    onBlur={() =>
+                                        value &&
+                                        value.length === 10 &&
+                                        setInstance({
+                                            ...instance,
+                                            shuffleTime: value ?? null,
+                                        })
+                                    }
+                                >
                                     <PopoverArrow />
                                     <Stack direction="row" padding={2}>
                                         <Input

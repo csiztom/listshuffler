@@ -152,13 +152,7 @@ const ListItemPage = (props: {
                     wrap="wrap"
                     justifyContent="center"
                 >
-                    {
-                        <>
-                            <ListItemButtonInput
-                                name={pairs[it]}
-                            />
-                        </>
-                    }
+                    {<ListItemButtonInput name={pairs[it]} />}
                 </Stack>
             )),
         [pairs],
@@ -222,8 +216,17 @@ const ListItemPage = (props: {
                             name={name}
                             isLoading={isLoading}
                             editing={editing}
+                            primary
                             onChange={(e) => setName(e.target.value)}
                         />
+                    )}
+                    {Object.keys(pairs).length > 0 && (
+                        <Text fontSize="small">
+                            {intl.formatMessage({
+                                id: 'your-pairs',
+                                defaultMessage: 'Your pairs:',
+                            })}
+                        </Text>
                     )}
                     {generatedPairs}
                     <Stack direction="row" gap={2}>
@@ -259,7 +262,7 @@ const ListItemPage = (props: {
                                 })}
                             >
                                 <Button
-                                    colorScheme="primary"
+                                    colorScheme="secondary"
                                     borderRadius="button"
                                     p={2}
                                     isLoading={isLoading}
@@ -282,7 +285,7 @@ const ListItemPage = (props: {
                                 })}
                             >
                                 <Button
-                                    colorScheme="primary"
+                                    colorScheme="secondary"
                                     borderRadius="button"
                                     p={2}
                                     isLoading={isLoading}

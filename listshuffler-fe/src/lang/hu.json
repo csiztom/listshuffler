@@ -314,6 +314,9 @@
   "you-need-one-item": {
     "defaultMessage": "Legalább egy elem kell minden listába, hogy keverhessen."
   },
+  "your-pairs": {
+    "defaultMessage": "Párjaid:"
+  },
   "zero-cannot": {
     "defaultMessage": "nulla = nem lehet párba állítani"
   }

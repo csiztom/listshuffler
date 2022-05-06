@@ -131,13 +131,15 @@ const ListCard = ({
                         colorScheme="secondary"
                         borderRadius="button"
                         mb={4}
-                        ml={2}
-                        maxLength={40}
+                        maxWidth="100%"
+                        w="fit-content"
+                        maxLength={30}
                         fontSize="sm"
                         size="sm"
-                        w="fit-content"
+                        overflow="hidden"
+                        textOverflow="ellipsis"
                         defaultValue={list.listName}
-                        htmlSize={list.listName.length || 10}
+                        htmlSize={(list.listName.length || 10) + 3}
                         backdropFilter="blur(16px) saturate(180%)"
                         bgColor="card"
                         onChange={(e) =>
@@ -247,7 +249,7 @@ const ListCard = ({
                                 p={2}
                                 onClick={onOpen}
                                 isLoading={parentIsLoading}
-                                alignSelf='flex-end'
+                                alignSelf="flex-end"
                             >
                                 <DeleteIcon mr={2} />
                                 {intl.formatMessage({
@@ -271,7 +273,7 @@ const ListCard = ({
                                 p={2}
                                 onClick={() => addListItem(list)}
                                 isLoading={parentIsLoading}
-                                alignSelf='flex-end'
+                                alignSelf="flex-end"
                             >
                                 <AddIcon mr={2} />
                                 {intl.formatMessage({

@@ -80,8 +80,10 @@ const ListItemButtonInput = ({
                 colorScheme="secondary"
                 borderRadius="button"
                 p={2}
-                maxLength={40}
-                w="fit-content"
+                maxLength={30}
+                textOverflow="ellipsis"
+                overflow="hidden"
+                whiteSpace="nowrap"
                 defaultValue={
                     name ===
                     intl.formatMessage({
@@ -95,7 +97,7 @@ const ListItemButtonInput = ({
                     id: 'name',
                     defaultMessage: 'Name',
                 })}
-                htmlSize={name.length || 10}
+                htmlSize={(name.length || 10) + 3}
                 backdropFilter="blur(16px) saturate(180%)"
                 bgColor="card"
                 onChange={onChange}
@@ -128,6 +130,9 @@ const ListItemButtonInput = ({
         <Button
             colorScheme={primary ? 'primary' : 'secondary'}
             borderRadius="button"
+            textOverflow="ellipsis"
+            overflow="hidden"
+            minW={0}
             p={3}
             {...props}
         >
