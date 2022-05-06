@@ -170,7 +170,7 @@
   "delete-instance": [
     {
       "type": 0,
-      "value": "Közeg törlése"
+      "value": "Minden adat törlése"
     }
   ],
   "delete-item": [
@@ -560,7 +560,7 @@
   "unique": [
     {
       "type": 0,
-      "value": "Ismétlődés-nélküli"
+      "value": "Ismétlés nélküli"
     }
   ],
   "unique-pairs": [

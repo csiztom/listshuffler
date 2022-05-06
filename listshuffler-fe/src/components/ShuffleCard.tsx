@@ -58,7 +58,7 @@ const ShuffleCard = ({
                 }}
                 header={intl.formatMessage({
                     id: 'delete-instance',
-                    defaultMessage: 'Delete instance',
+                    defaultMessage: 'Clear all data',
                 })}
                 text={intl.formatMessage({
                     id: 'do-you-delete-instance',
@@ -78,7 +78,7 @@ const ShuffleCard = ({
                     hasArrow
                     label={intl.formatMessage({
                         id: 'delete-instance',
-                        defaultMessage: 'Delete instance',
+                        defaultMessage: 'Clear all data',
                     })}
                 >
                     <Button
@@ -91,7 +91,7 @@ const ShuffleCard = ({
                         <DeleteIcon mr={2} />
                         {intl.formatMessage({
                             id: 'delete-instance',
-                            defaultMessage: 'Delete instance',
+                            defaultMessage: 'Clear all data',
                         })}
                     </Button>
                 </Tooltip>

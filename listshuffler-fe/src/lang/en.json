@@ -84,7 +84,7 @@
     "defaultMessage": "Delete"
   },
   "delete-instance": {
-    "defaultMessage": "Delete instance"
+    "defaultMessage": "Clear all data"
   },
   "delete-item": {
     "defaultMessage": "Delete item"

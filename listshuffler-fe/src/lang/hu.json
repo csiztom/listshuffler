@@ -84,7 +84,7 @@
     "defaultMessage": "Törlés"
   },
   "delete-instance": {
-    "defaultMessage": "Közeg törlése"
+    "defaultMessage": "Minden adat törlése"
   },
   "delete-item": {
     "defaultMessage": "Elem törlése"
@@ -279,7 +279,7 @@
     "defaultMessage": "Próbálja meg újratölteni az oldalt."
   },
   "unique": {
-    "defaultMessage": "Ismétlődés-nélküli"
+    "defaultMessage": "Ismétlés nélküli"
   },
   "unique-pairs": {
     "defaultMessage": "Egyedi minden lista multiplicitásonként"

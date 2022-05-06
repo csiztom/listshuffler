@@ -197,13 +197,8 @@ const StartPage = (props: {
     return (
         <Grid
             templateColumns={{ base: '', md: 'repeat(4, 1fr)' }}
-            templateRows={{ base: '', md: 'auto 1fr 1fr 1fr' }}
+            templateRows={{ base: '', md: 'auto auto auto' }}
             gap={4}
-            bgImage={props.preset === 'christmas' ? christmasTree : pattern}
-            bgRepeat="repeat"
-            bgColor="background"
-            w="100vw"
-            h="100vh"
             p="8"
             overflow="auto"
             justifyItems="center"

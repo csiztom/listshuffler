@@ -170,7 +170,7 @@
   "delete-instance": [
     {
       "type": 0,
-      "value": "Delete instance"
+      "value": "Clear all data"
     }
   ],
   "delete-item": [
