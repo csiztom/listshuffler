@@ -8,8 +8,6 @@ import {
 } from '@chakra-ui/react'
 import { ReactElement, useState } from 'react'
 import { Logo, ActionCard } from '../components'
-import christmasTree from '../assets/christmas.png'
-import pattern from '../assets/pattern.png'
 import { useNavigate } from 'react-router-dom'
 import GDPRModal from '../components/GDPRModal'
 import { useIntl } from 'react-intl'
