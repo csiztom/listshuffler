@@ -43,17 +43,18 @@ const ProbabilityInput = ({
                             overflow="hidden"
                             textOverflow="ellipsis"
                             whiteSpace="nowrap"
+                            fontSize={listItem1.listItem === '' ? 'x-small' : 'md'}
                         >
-                            {listItem1.listItem}
+                            {listItem1.listItem === '' ? listItem1.listItemID : listItem1.listItem}
                         </Text>
                     </Button>
                 </Tooltip>
             </GridItem>
             <GridItem minW={0} display="flex">
-                <Tooltip hasArrow label={listItem2?.listItemID}>
+                <Tooltip hasArrow label={listItem2.listItemID}>
                     <Button
                         colorScheme={
-                            listItem2?.listItemID === listItem1?.listItemID
+                            listItem2.listItemID === listItem1.listItemID
                                 ? 'primary'
                                 : 'secondary'
                         }
@@ -66,8 +67,9 @@ const ProbabilityInput = ({
                             overflow="hidden"
                             textOverflow="ellipsis"
                             whiteSpace="nowrap"
+                            fontSize={listItem2.listItem === '' ? 'x-small' : 'md'}
                         >
-                            {listItem2.listItem}
+                            {listItem2.listItem === '' ? listItem2.listItemID : listItem2.listItem}
                         </Text>
                     </Button>
                 </Tooltip>
