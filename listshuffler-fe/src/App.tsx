@@ -34,7 +34,7 @@ const App = () => {
         <Stack
             direction="row"
             justifyContent="flex-end"
-            width="98%"
+            ml='auto'
             padding={3}
             gap={2}
         >
@@ -114,9 +114,10 @@ const App = () => {
                         }
                         bgRepeat="repeat"
                         bgColor="background"
-                        w="100vw"
-                        maxWidth="100vw"
+                        w="100%"
+                        maxWidth="100%"
                         minHeight="100vh"
+                        padding={3}
                     >
                         {settingsStack}
                         <Routes>

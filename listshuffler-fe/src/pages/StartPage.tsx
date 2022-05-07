@@ -206,7 +206,8 @@ const StartPage = (props: {
                 rowSpan={1}
                 colStart={{ base: 1, md: 2 }}
                 colEnd={{ base: 3, md: 4 }}
-                w="80%"
+                w="60%"
+                padding={5}
             >
                 <Logo />
             </GridItem>
