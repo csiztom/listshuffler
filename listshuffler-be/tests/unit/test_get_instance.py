@@ -64,7 +64,7 @@ class TestGetInstance(TestCase):
         assert json.loads(res['body'])['shuffleTime'] == None
 
     @mock.patch('src.helpers.rds_config.pymysql', autospec=True)
-    def test_moreListInstance(self, mock_pymysql):
+    def test_more_list_instance(self, mock_pymysql):
         mock_cursor = mock.MagicMock()
         mock_cursor.fetchall.return_value = [
             ['id', 'name', 1], ['id2', 'name2', 1]]
