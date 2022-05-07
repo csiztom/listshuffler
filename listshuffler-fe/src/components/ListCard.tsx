@@ -14,6 +14,7 @@ import {
     Tooltip,
     useToast,
     useDisclosure,
+    Divider,
 } from '@chakra-ui/react'
 import { ReactElement, useEffect, useMemo, useRef } from 'react'
 import { useIntl } from 'react-intl'
@@ -120,40 +121,42 @@ const ListCard = ({
     return (
         <Card {...props}>
             {list?.listName !== undefined && editing ? (
-                <Tooltip
-                    hasArrow
-                    label={intl.formatMessage({
-                        id: 'edit-list-name',
-                        defaultMessage: 'Edit list name',
-                    })}
-                >
-                    <Input
-                        colorScheme="secondary"
-                        borderRadius="button"
-                        mb={4}
-                        maxWidth="100%"
-                        w="fit-content"
-                        maxLength={30}
-                        fontSize="sm"
-                        size="sm"
-                        overflow="hidden"
-                        textOverflow="ellipsis"
-                        defaultValue={list.listName}
-                        htmlSize={(list.listName.length || 10) + 3}
-                        backdropFilter="blur(16px) saturate(180%)"
-                        bgColor="card"
-                        onChange={(e) =>
-                            editList({ ...list, listName: e.target.value })
-                        }
-                        ref={inputFocus}
-                        placeholder={intl.formatMessage({
-                            id: 'list-name',
-                            defaultMessage: 'List name',
+                <>
+                    <Tooltip
+                        hasArrow
+                        label={intl.formatMessage({
+                            id: 'edit-list-name',
+                            defaultMessage: 'Edit list name',
                         })}
-                    />
-                </Tooltip>
+                    >
+                        <Input
+                            colorScheme="secondary"
+                            borderRadius="button"
+                            maxWidth="100%"
+                            w="fit-content"
+                            maxLength={30}
+                            fontSize="sm"
+                            size="sm"
+                            overflow="hidden"
+                            textOverflow="ellipsis"
+                            defaultValue={list.listName}
+                            htmlSize={(list.listName.length || 10) + 3}
+                            backdropFilter="blur(16px) saturate(180%)"
+                            bgColor="card"
+                            onChange={(e) =>
+                                editList({ ...list, listName: e.target.value })
+                            }
+                            ref={inputFocus}
+                            placeholder={intl.formatMessage({
+                                id: 'list-name',
+                                defaultMessage: 'List name',
+                            })}
+                        />
+                    </Tooltip>
+                    <Divider mt={4} mb={4} borderWidth={2} />
+                </>
             ) : (
-                <Text mt={-4} mb={2} color="text" fontSize="sm">
+                <Text mt={-4} color="text" fontSize="sm" mb={2}>
                     {list?.listName}
                     <br />
                     {list?.listID}
