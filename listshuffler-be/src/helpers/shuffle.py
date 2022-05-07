@@ -16,7 +16,7 @@ def pair_up(list_w_sorted, used, pairs, unique=True):
     then it doesn't pair up anything
 
     Parameters:
-    list ([[string, [string]]]): tuples of unpaired listItemIDs like [[listItemID1, sorted [listItemID2]]]
+    list_w_sorted ([[string, [string]]]): tuples of unpaired listItemIDs like [[listItemID1, sorted [listItemID2]]]
     used ([string]): array of used listItemID2s
     pairs ({string: string}): already paired
     unique (bool): if each listitem pairs up with another listitem exclusively, default True
@@ -48,7 +48,6 @@ def shuffle(admin_id, conn):
     This shuffles the lists
     Parameters:
     adminId (string): admin id
-    unique (boolean): can one pair up with an item already paired up in the same list copy
     conn (pymysql connection): pymysql database connection
 
     Returns:
