@@ -39,6 +39,20 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### `npm run extract`
+
+Extracts the translateable fields to the `src/lang` folder.\
+You can translate that file.
+
+See the section about [extraction](https://formatjs.io/docs/getting-started/message-extraction/) for more information.
+
+### `npm run compile:en` and `npm run compile:hu`
+
+Compiles translations to the `src/compiled-lang` folder.\
+It will show up in the app.
+
+See the section about [distribution](https://formatjs.io/docs/getting-started/message-distribution) for more information.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
