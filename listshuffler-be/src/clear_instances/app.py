@@ -1,6 +1,6 @@
 try:
     from helpers import rds_config
-except:  # for testing inside different root
+except ImportError:  # for testing inside different root
     from ..helpers import rds_config
 
 
@@ -13,5 +13,3 @@ def handler(event, context):
         cur.execute("SET SQL_SAFE_UPDATES = 0")
         cur.execute("DELETE FROM public.instances where expiration < CURDATE()")
         conn.commit()
-
-        # on delete cascade!!!! foreign key

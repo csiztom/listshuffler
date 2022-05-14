@@ -1,0 +1,644 @@
+{
+  "about-1": [
+    {
+      "type": 0,
+      "value": "Ez az alkalmazás listák keverésében segít. Amikor egy csoport személyt vagy tárgyat (akár többször) véletlenszerűen párokba szeretne rakni. Az alkalmazás lebonyolítja automatikusan önnek."
+    }
+  ],
+  "about-2": [
+    {
+      "type": 0,
+      "value": "Karácsonyi húzásnál például egy listája van és ennek a másolatával párokat alakít."
+    }
+  ],
+  "about-3": [
+    {
+      "type": 0,
+      "value": "Ha egy csoportot önmagával háromszor tenne párba, akkor az alkalmazásban a multiplicitást háromra kell állítani."
+    }
+  ],
+  "accept": [
+    {
+      "type": 0,
+      "value": "Elfogad"
+    }
+  ],
+  "add-item": [
+    {
+      "type": 0,
+      "value": "Elem hozzáadása"
+    }
+  ],
+  "add-list": [
+    {
+      "type": 0,
+      "value": "Lista hozzáadása"
+    }
+  ],
+  "add-list-item": [
+    {
+      "type": 0,
+      "value": "Listaelem hozzáadása"
+    }
+  ],
+  "back": [
+    {
+      "type": 0,
+      "value": "Vissza"
+    }
+  ],
+  "bookmark-this-page": [
+    {
+      "type": 0,
+      "value": "Tedd el könyvjelzőként, ha vissza akarsz jönni később."
+    }
+  ],
+  "cancel": [
+    {
+      "type": 0,
+      "value": "Mégse"
+    }
+  ],
+  "change-multiplicity": [
+    {
+      "type": 0,
+      "value": "Multiplicitás változtatása"
+    }
+  ],
+  "change-probability": [
+    {
+      "type": 0,
+      "value": "Valószínűségek változtatása"
+    }
+  ],
+  "christmas": [
+    {
+      "type": 0,
+      "value": "Karácsonyi húzás"
+    }
+  ],
+  "christmas-create": [
+    {
+      "type": 0,
+      "value": "Hozd létre a saját karácsonyi húzásodat"
+    }
+  ],
+  "christmas-create-button": [
+    {
+      "type": 0,
+      "value": "Karácsonyi húzás"
+    }
+  ],
+  "code": [
+    {
+      "type": 0,
+      "value": "Kód"
+    }
+  ],
+  "code-copied": [
+    {
+      "type": 0,
+      "value": "A kód a vágólapra lett másolva"
+    }
+  ],
+  "copy-code": [
+    {
+      "type": 0,
+      "value": "Kód másolása"
+    }
+  ],
+  "copy-list-code": [
+    {
+      "type": 0,
+      "value": "Listába meghívó kód másolása"
+    }
+  ],
+  "couldnt-create-instance": [
+    {
+      "type": 0,
+      "value": "Nem lehet közeget létrehozni, esetleg próbálja meg az oldal újratöltését."
+    }
+  ],
+  "couldnt-in-instance": [
+    {
+      "type": 0,
+      "value": "Nem tud a közegbe belépni, lehet a kód rossz."
+    }
+  ],
+  "couldnt-in-list": [
+    {
+      "type": 0,
+      "value": "Nem tud a listába belépni, lehet a kód rossz."
+    }
+  ],
+  "couldnt-in-listitem": [
+    {
+      "type": 0,
+      "value": "Nem tud a listaelembe belépni, lehet a kód rossz."
+    }
+  ],
+  "couldnt-save-preset": [
+    {
+      "type": 0,
+      "value": "Nem tudtuk elmenteni a témát"
+    }
+  ],
+  "create-lists": [
+    {
+      "type": 0,
+      "value": "Listák létrehozása"
+    }
+  ],
+  "create-your-own": [
+    {
+      "type": 0,
+      "value": "Hozd létre a saját listáidat és keverj"
+    }
+  ],
+  "default": [
+    {
+      "type": 0,
+      "value": "Bővített"
+    }
+  ],
+  "delete": [
+    {
+      "type": 0,
+      "value": "Törlés"
+    }
+  ],
+  "delete-instance": [
+    {
+      "type": 0,
+      "value": "Minden adat törlése"
+    }
+  ],
+  "delete-item": [
+    {
+      "type": 0,
+      "value": "Elem törlése"
+    }
+  ],
+  "delete-list": [
+    {
+      "type": 0,
+      "value": "Lista törlése"
+    }
+  ],
+  "delete-list-item": [
+    {
+      "type": 0,
+      "value": "Listaelem törlése"
+    }
+  ],
+  "do-you-delete-instance": [
+    {
+      "type": 0,
+      "value": "Tényleg ki akarja törölni az egész közeget? Ha keverni akar, az elejéről kell majd kezdenie"
+    }
+  ],
+  "do-you-delete-item": [
+    {
+      "type": 0,
+      "value": "Tényleg ki akarja törölni ezt az elemet? Vissza fog lépni a főoldalra."
+    }
+  ],
+  "do-you-delete-list": [
+    {
+      "type": 0,
+      "value": "Tényleg ki akarja törölni ezt a listát?"
+    }
+  ],
+  "edit": [
+    {
+      "type": 0,
+      "value": "Szerkesztés"
+    }
+  ],
+  "edit-list-item": [
+    {
+      "type": 0,
+      "value": "Listaelem nevének változtatása"
+    }
+  ],
+  "edit-list-name": [
+    {
+      "type": 0,
+      "value": "Lista nevének változtatása"
+    }
+  ],
+  "edit-lists": [
+    {
+      "type": 0,
+      "value": "Listák szerkesztése"
+    }
+  ],
+  "edit-probs": [
+    {
+      "type": 0,
+      "value": "Valószínűségek változtatása"
+    }
+  ],
+  "error occurred": [
+    {
+      "type": 0,
+      "value": "Hiba történt. :/"
+    }
+  ],
+  "error-adding-list": [
+    {
+      "type": 0,
+      "value": "Hiba történt új lista hozzáadásakor. :/"
+    }
+  ],
+  "error-deleting": [
+    {
+      "type": 0,
+      "value": "Hiba történt törlés közben. :/"
+    }
+  ],
+  "error-deleting-instance": [
+    {
+      "type": 0,
+      "value": "Hiba történt a közeg törlése közben. :/"
+    }
+  ],
+  "error-discarding": [
+    {
+      "type": 0,
+      "value": "Hiba történt a változtatások visszaállításakor. :/"
+    }
+  ],
+  "error-id-not-found": [
+    {
+      "type": 0,
+      "value": "Hiba, nem létezik ez az azonosító. :/"
+    }
+  ],
+  "error-loading-item": [
+    {
+      "type": 0,
+      "value": "Hiba történt betöltéskor. :/"
+    }
+  ],
+  "error-loading-pairs": [
+    {
+      "type": 0,
+      "value": "Hiba történt a párok betöltése közben. :/"
+    }
+  ],
+  "error-loading-probs": [
+    {
+      "type": 0,
+      "value": "Hiba történt a valószínűségek betöltése közben. :/"
+    }
+  ],
+  "error-occurred-shuffle": [
+    {
+      "type": 0,
+      "value": "Nem sikerült keverni. :/"
+    }
+  ],
+  "error-saving": [
+    {
+      "type": 0,
+      "value": "Hiba történt mentés közben. :/"
+    }
+  ],
+  "error-saving-changes": [
+    {
+      "type": 0,
+      "value": "Hiba történt a változtatások mentése közben. :/"
+    }
+  ],
+  "gdpr-contact": [
+    {
+      "type": 0,
+      "value": "Ha kérdése van, írjon emailt a listshuffler@gmail.com címre."
+    }
+  ],
+  "gdpr-cookie-info": [
+    {
+      "type": 0,
+      "value": "Azonosítókat tárolunk a böngészőjében, hogy belépéskor egyszerűbb legyen önnek. Ha ezt nem fogadja el, nem tárolunk el semmit. Ha elfogadja, a böngésző beállításaitól függ."
+    }
+  ],
+  "gdpr-cookies": [
+    {
+      "type": 0,
+      "value": "Sütik és hasonlók"
+    }
+  ],
+  "gdpr-note-alias": [
+    {
+      "type": 0,
+      "value": "Nem ajánljuk, hogy személyes adatot osszon meg velünk. Ha attól fél, hogy a nevek kitudódnak, kérjük használjon álneveket."
+    }
+  ],
+  "gdpr-privacy": [
+    {
+      "type": 0,
+      "value": "Titoktartás"
+    }
+  ],
+  "gdpr-private-data": [
+    {
+      "type": 0,
+      "value": "Személyes adatok"
+    }
+  ],
+  "gdpr-rights": [
+    {
+      "type": 0,
+      "value": "Amikor nevet ad egy listának vagy egy elemének, mi eltároljuk, hogy később is elérhető legyen. Ha kitöröl egy listát, minden törlődik a listával kapcsolatosan, a benne levő nevek is. Ugyanez ha listaelemet töröl. Automatikusan törlünk minden közeget egy hónap után."
+    }
+  ],
+  "gdpr-storage": [
+    {
+      "type": 0,
+      "value": "Ha mégis úgy dönt, hogy ránk bízza az adatait, egy biztonságos adatbázisban tároljuk azokat, az Amazon frankfurti szerverein. Csak a jelszóval rendelkező személyek tudják megnézni az adatokat, de irányelvünk, hogy nem nézzük meg azokat."
+    }
+  ],
+  "gdpr-stored-info": [
+    {
+      "type": 0,
+      "value": "A biztonsághoz való jogát tudomásul vesszük. Csak a listáknak és elemeinek adott neveket tároljuk."
+    }
+  ],
+  "gdpr-your-data": [
+    {
+      "type": 0,
+      "value": "Adataid"
+    }
+  ],
+  "instance-if-ever": [
+    {
+      "type": 0,
+      "value": "A közeg nem létezik"
+    }
+  ],
+  "invite-code": [
+    {
+      "type": 0,
+      "value": "Meghívó kód"
+    }
+  ],
+  "invite-code-explain": [
+    {
+      "type": 0,
+      "value": "Új elemet hoz létre használatakor"
+    }
+  ],
+  "item-pair-multiplier": [
+    {
+      "type": 0,
+      "value": "listaelem | pár | szorzó"
+    }
+  ],
+  "list-name": [
+    {
+      "type": 0,
+      "value": "Lista név"
+    }
+  ],
+  "lists-saved": [
+    {
+      "type": 0,
+      "value": "Listák elmentve"
+    }
+  ],
+  "logo-of": [
+    {
+      "type": 0,
+      "value": "A Listshuffler logója"
+    }
+  ],
+  "more-can-muliplier": [
+    {
+      "type": 0,
+      "value": "Nagyobb szám nagyobb valószínűséget jelent"
+    }
+  ],
+  "multiplicity-s": [
+    {
+      "type": 0,
+      "value": "multiplicitás"
+    }
+  ],
+  "name": [
+    {
+      "type": 0,
+      "value": "Név"
+    }
+  ],
+  "new-list": [
+    {
+      "type": 0,
+      "value": "Új Lista"
+    }
+  ],
+  "no-matching": [
+    {
+      "type": 0,
+      "value": "Nem sikerült, talán elírt valamit?"
+    }
+  ],
+  "placeholder-name": [
+    {
+      "type": 0,
+      "value": "helyfoglaló név"
+    }
+  ],
+  "please-wait": [
+    {
+      "type": 0,
+      "value": "Kérem várjon"
+    }
+  ],
+  "probs-saved": [
+    {
+      "type": 0,
+      "value": "Valószínűségek elmentve"
+    }
+  ],
+  "repetitive": [
+    {
+      "type": 0,
+      "value": "Ismétléses"
+    }
+  ],
+  "save": [
+    {
+      "type": 0,
+      "value": "Mentés"
+    }
+  ],
+  "save-probs": [
+    {
+      "type": 0,
+      "value": "Valószínűségek mentése"
+    }
+  ],
+  "see-the-pairs": [
+    {
+      "type": 0,
+      "value": "Párok mutatása"
+    }
+  ],
+  "select-list": [
+    {
+      "type": 0,
+      "value": "Válassz listát"
+    }
+  ],
+  "show-pairs": [
+    {
+      "type": 0,
+      "value": "Mutasd a párokat"
+    }
+  ],
+  "shuffle-lists": [
+    {
+      "type": 0,
+      "value": "Listák keverése"
+    }
+  ],
+  "shuffle-now": [
+    {
+      "type": 0,
+      "value": "Keverés most"
+    }
+  ],
+  "sorry-inconvenience": [
+    {
+      "type": 0,
+      "value": "Elnézést a kellemetlenségért."
+    }
+  ],
+  "these-are-pairs": [
+    {
+      "type": 0,
+      "value": "Ezek az ön párjai"
+    }
+  ],
+  "this-admin-page": [
+    {
+      "type": 0,
+      "value": "Ez az admin oldala. A listákat, valószínűségeket itt tudod változtatni, valamint itt tudsz keverni."
+    }
+  ],
+  "this-list-item-1": [
+    {
+      "type": 0,
+      "value": "Ez egy listaelem oldal. A párjaidat itt fogod látni."
+    }
+  ],
+  "this-list-item-2": [
+    {
+      "type": 0,
+      "value": "Ez egy listaelem oldal. A párjaidat itt láthatod."
+    }
+  ],
+  "timed-shuffle": [
+    {
+      "type": 0,
+      "value": "Indőzített keverés"
+    }
+  ],
+  "try-adjusting": [
+    {
+      "type": 0,
+      "value": "Próbáljon a paramétereken változtatni."
+    }
+  ],
+  "try-reloading": [
+    {
+      "type": 0,
+      "value": "Próbálja meg újratölteni az oldalt."
+    }
+  ],
+  "unique": [
+    {
+      "type": 0,
+      "value": "Ismétlés nélküli"
+    }
+  ],
+  "unique-pairs": [
+    {
+      "type": 0,
+      "value": "Egyedi minden lista multiplicitásonként"
+    }
+  ],
+  "use-code": [
+    {
+      "type": 0,
+      "value": "Kód használata"
+    }
+  ],
+  "which-will-shuffle-for": [
+    {
+      "type": 0,
+      "value": "Melyik listához akar párokat keverni?"
+    }
+  ],
+  "wrong-length": [
+    {
+      "type": 0,
+      "value": "Rossz kódhossz"
+    }
+  ],
+  "you-can-set-multipliers": [
+    {
+      "type": 0,
+      "value": "Szorzókat tud beállítani, amik befolyásolják a keverési folyamatot."
+    }
+  ],
+  "you-can-share": [
+    {
+      "type": 0,
+      "value": "Megoszthatja az illető személyekkel"
+    }
+  ],
+  "you-can-shuffle": [
+    {
+      "type": 0,
+      "value": "Most már keverhet!"
+    }
+  ],
+  "you-have-code": [
+    {
+      "type": 0,
+      "value": "Van egy kódja?"
+    }
+  ],
+  "you-need-more": [
+    {
+      "type": 0,
+      "value": "Legalább annyi eleme kell lennie minden listának mint a fő listának, vagy állítsa át ismétlésesre."
+    }
+  ],
+  "you-need-multiplicity": [
+    {
+      "type": 0,
+      "value": "Legalább két lista vagy egy lista legalább két multiplicitással szükséges a keveréshez."
+    }
+  ],
+  "you-need-one-item": [
+    {
+      "type": 0,
+      "value": "Legalább egy elem kell minden listába, hogy keverhessen."
+    }
+  ],
+  "your-pairs": [
+    {
+      "type": 0,
+      "value": "Párjaid:"
+    }
+  ],
+  "zero-cannot": [
+    {
+      "type": 0,
+      "value": "nulla = nem lehet párba állítani"
+    }
+  ]
+}

@@ -10,7 +10,7 @@ const Card = (props: BoxProps): ReactElement => {
         <Box
             sx={{
                 textAlign: 'center',
-                backdropFilter: 'blur(16px) saturate(180%)',
+                backdropFilter: 'blur(12px) saturate(180%)',
                 bgColor: 'card',
                 borderRadius: 'card',
                 m: '2',

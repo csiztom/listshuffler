@@ -1,14 +1,13 @@
-import sys
 import logging
-import json
 import random
-import os
 import string
 
+import pymysql
+
 try:
-    from helpers import rds_config
-except:  # for testing inside different root
-    from ..helpers import rds_config
+    from helpers import rds_config, params, http_response
+except ImportError:  # for testing inside different root
+    from ..helpers import rds_config, params, http_response
 
 # logging
 logger = logging.getLogger()
@@ -20,41 +19,42 @@ def handler(event, context):
     This function creates a listitem
     """
     try:
-        listId = json.loads(event['body'])['listID']
-        listItem = json.loads(event['body'])['listItem']
-    except:
-        return {
-            "statusCode": 422,
-            "headers": {
-                "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-            },
-            "body": "Missing parameter",
-        }
+        parameters = params.get_params(event, 'listID', 'listItem')
+    except params.MissingParamError:
+        logger.info("ERROR: Bad parameters")
+        return http_response.response(400, "Missing or bad parameters")
+    [list_id, listitem_name] = parameters
+
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
+        cur.execute(
+            "select preset from public.lists natural join public.instances where listID=%s", (list_id))
+        res = cur.fetchone()
+        if (res == None):
+            logger.info("ERROR: No corresponding list id")
+            return http_response.response(404, "No corresponding id")
         i = 0
         while i < 20:
-            listItemId = ''.join(random.choice(
-                string.ascii_letters + string.digits) for _ in range(8))
+            listitem_id = ''.join(random.choice(
+                string.ascii_letters + string.digits) for _ in range(7))
             try:
                 cur.execute("insert into listItems (listID,listItemID,listItem) values(%s,%s,%s)", (
-                    listId, listItemId, listItem))
+                    list_id, listitem_id, listitem_name))
                 conn.commit()
-            except:
-                logging.info("INFO: ID already there")
+            except pymysql.MySQLError:
+                logger.info("INFO: ID already there")
                 i += 1
                 continue
             break
         if i >= 20:
-            logger.error("ERROR: Could not find random id")
-            sys.exit()
+            logger.info("ERROR: Could not find random id")
+            return http_response.response(508, "Could not assign id to item")
 
-    return {
-        "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-        },
-        "body": json.dumps({
-            "listItemID": listItemId
-        }),
-    }
+        if res[0] == 'christmas':
+            cur.execute("""insert into probabilities (listItemID1,listItemID2,probability) values('%s','%s',%s)""" % (
+                listitem_id, listitem_id, 0))
+            conn.commit()
+
+    return http_response.response(200, {
+        "listItemID": listitem_id
+    })

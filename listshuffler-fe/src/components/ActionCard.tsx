@@ -1,19 +1,19 @@
 import {
-    Box,
-    BoxProps,
     Heading,
     Button,
     Input,
     ButtonProps,
+    InputProps,
 } from '@chakra-ui/react'
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
+import Card from './Card'
 
-interface ActionCardProps extends BoxProps, Pick<ButtonProps, 'isLoading'> {
+interface ActionCardProps extends InputProps, Pick<ButtonProps, 'isLoading'> {
     title: string
     buttonText: string
     hasInput?: boolean
     inputPlaceholder?: string
-    onButtonClick?: () => Promise<void>
+    onButtonClick?: (str: string) => void
 }
 
 const ActionCard = ({
@@ -25,19 +25,10 @@ const ActionCard = ({
     isLoading,
     ...props
 }: ActionCardProps): ReactElement => {
+    const [value, setValue] = useState(props.defaultValue ?? '')
     return (
-        <Box
-            sx={{
-                textAlign: 'center',
-                backdropFilter: 'blur(16px) saturate(180%)',
-                bgColor: 'card',
-                borderRadius: 'card',
-                m: '2',
-                p: '6',
-            }}
-            {...props}
-        >
-            <Heading as="h1" fontSize="xlarge" fontWeight="light" mb={4}>
+        <Card>
+            <Heading as="h1" fontSize='4xl' fontWeight="light" mb={4}>
                 {title}
             </Heading>
             {hasInput && (
@@ -46,18 +37,20 @@ const ActionCard = ({
                     variant="filled"
                     mb={4}
                     borderColor="text"
+                    onChange={(e) => setValue(e.target.value)}
+                    {...props}
                 />
             )}
             <Button
                 colorScheme="primary"
                 borderRadius="button"
                 mb={4}
-                onClick={onButtonClick}
+                onClick={() => onButtonClick && onButtonClick(value.toString())}
                 isLoading={isLoading}
             >
                 {buttonText}
             </Button>
-        </Box>
+        </Card>
     )
 }
 

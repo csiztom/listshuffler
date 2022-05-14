@@ -1,4 +1,4 @@
-import Start from './Start'
+import StartPage from './StartPage'
 import InstancePage from './InstancePage'
 
-export { Start, InstancePage }
+export { StartPage, InstancePage }

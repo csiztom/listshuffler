@@ -1,14 +1,11 @@
-import sys
 import logging
-import json
-import random
-import os
-import string
+
+import pymysql
 
 try:
-    from helpers import rds_config
-except:  # for testing inside different root
-    from ..helpers import rds_config
+    from helpers import rds_config, params, http_response
+except ImportError:  # for testing inside different root
+    from ..helpers import rds_config, params, http_response
 
 # logging
 logger = logging.getLogger()
@@ -17,36 +14,28 @@ logger.setLevel(logging.INFO)
 
 def handler(event, context):
     """
-    This function creates a listitem
+    This function patches a listitem
     """
     try:
-        listItemId = json.loads(event['body'])['listItemID']
-        listItem = json.loads(event['body'])['listItem']
-    except:
-        return {
-            "statusCode": 422,
-            "headers": {
-                "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-            },
-            "body": "Missing parameter",
-        }
+        parameters = params.get_params(event, 'listItemID', 'listItem')
+    except params.MissingParamError:
+        logger.info("ERROR: Bad parameters")
+        return http_response.response(400, "Missing or bad parameters")
+    [listitem_id, listitem_name] = parameters
+
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
+        cur.execute(
+            "select listItemID from public.listItems where listItemID=%s", (listitem_id))
+        if (cur.fetchone() == None):
+            logger.info("ERROR: No corresponding listitem id")
+            return http_response.response(404, "No corresponding id")
         try:
             cur.execute("update listItems set listItem=%s where listItemID=%s", (
-                listItem, listItemId))
+                listitem_name, listitem_id))
             conn.commit()
-        except:
-            return {
-                "statusCode": 422,
-                "headers": {
-                    "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-                }
-            }
+        except pymysql.MySQLError:
+            logger.info("ERROR: Could not update")
+            return http_response.response(400)
 
-    return {
-        "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-        }
-    }
+    return http_response.response(200)

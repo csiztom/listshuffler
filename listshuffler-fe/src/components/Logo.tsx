@@ -1,13 +1,15 @@
 import { ReactElement } from 'react'
-import { Image, useColorMode } from '@chakra-ui/react'
+import { Image, ImageProps, useColorMode } from '@chakra-ui/react'
 import { logo_light, logo_dark, logo_small } from '../assets'
+import { useIntl } from 'react-intl'
 
-interface LogoProps {
+interface LogoProps extends ImageProps {
     size?: 'small'
 }
 
 const Logo = (props: LogoProps): ReactElement => {
     const { colorMode } = useColorMode()
+    const intl = useIntl()
     return (
         <Image
             src={
@@ -21,7 +23,11 @@ const Logo = (props: LogoProps): ReactElement => {
             maxHeight="100%"
             marginInline="auto"
             alignContent="center"
-            alt="Logo of Listshuffler"
+            alt={intl.formatMessage({
+                id: 'logo-of',
+                defaultMessage: 'Logo of Listshuffler',
+            })}
+            {...props}
         />
     )
 }

@@ -1,14 +1,17 @@
-import sys
 import logging
-import json
 import random
-import os
 import string
+import json
+import pymysql
 
 try:
-    from helpers import rds_config
-except:  # for testing inside different root
-    from ..helpers import rds_config
+    from helpers import rds_config, http_response, params
+    from post_list import app as post_list_app
+    from patch_instance import app as patch_instance_app
+except ImportError:  # for testing inside different root
+    from ..helpers import rds_config, http_response, params
+    from ..post_list import app as post_list_app
+    from ..patch_instance import app as patch_instance_app
 
 # logging
 logger = logging.getLogger()
@@ -19,31 +22,49 @@ def handler(event, context):
     """
     This function creates an instance to add lists to
     """
+    parameters = params.get_optional_params(
+        event, 'preset')
+    preset = parameters['preset']
+
     conn = rds_config.connect_rds()
     with conn.cursor() as cur:
         i = 0
         while i < 20:
-            adminId = ''.join(random.choice(
+            admin_id = ''.join(random.choice(
                 string.ascii_letters + string.digits) for _ in range(8))
             try:
-                cur.execute(
-                    "insert into instances (adminID,expiration) values(%s,DATE_ADD(SYSDATE(), INTERVAL 1 DAY))", (adminId))
+                if preset != None:
+                    cur.execute(
+                        """insert into instances (adminID,expiration,shuffled,uniqueInMul,preset) 
+                    values(%s,DATE_ADD(SYSDATE(), INTERVAL 10 DAY),false,true,%s)""", (admin_id, preset))
+                else:
+                    cur.execute(
+                        """insert into instances (adminID,expiration,shuffled,uniqueInMul,preset) 
+                    values(%s,DATE_ADD(SYSDATE(), INTERVAL 10 DAY),false,true,"default")""", (admin_id))
                 conn.commit()
-            except:
-                logging.info("INFO: ID already there")
+            except pymysql.MySQLError:
+                logger.info("INFO: ID already there")
                 i += 1
                 continue
             break
         if i >= 20:
-            logger.error("ERROR: Could not find random id")
-            sys.exit()
+            logger.info("ERROR: Could not find valid id")
+            return http_response.response(508, "Could not assign id to instance")
 
-    return {
-        "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin": os.environ['LS_PAGE_ORIGIN'],
-        },
-        "body": json.dumps({
-            "adminID": str(adminId)
-        }),
-    }
+    if preset == 'christmas':
+        ret = post_list_app.handler({
+            "body": '{ "adminID": "%s", "listName": "Names", "multiplicity": 2 }' % (admin_id),
+            "queryStringParameters": None
+        }, context)
+        if ret['statusCode'] != 200:
+            return ret
+        ret = patch_instance_app.handler({
+            "body": '{ "adminID": "%s", "shuffledID": "%s"}' % (admin_id, json.loads(ret['body'])['listID']),
+            "queryStringParameters": None
+        }, context)
+        if ret['statusCode'] != 200:
+            return ret
+
+    return http_response.response(200, {
+        "adminID": str(admin_id)
+    })

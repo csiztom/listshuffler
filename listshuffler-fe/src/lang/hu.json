@@ -1,0 +1,323 @@
+{
+  "about-1": {
+    "defaultMessage": "Ez az alkalmazás listák keverésében segít. Amikor egy csoport személyt vagy tárgyat (akár többször) véletlenszerűen párokba szeretne rakni. Az alkalmazás lebonyolítja automatikusan önnek."
+  },
+  "about-2": {
+    "defaultMessage": "Karácsonyi húzásnál például egy listája van és ennek a másolatával párokat alakít."
+  },
+  "about-3": {
+    "defaultMessage": "Ha egy csoportot önmagával háromszor tenne párba, akkor az alkalmazásban a multiplicitást háromra kell állítani."
+  },
+  "accept": {
+    "defaultMessage": "Elfogad"
+  },
+  "add-item": {
+    "defaultMessage": "Elem hozzáadása"
+  },
+  "add-list": {
+    "defaultMessage": "Lista hozzáadása"
+  },
+  "add-list-item": {
+    "defaultMessage": "Listaelem hozzáadása"
+  },
+  "back": {
+    "defaultMessage": "Vissza"
+  },
+  "bookmark-this-page": {
+    "defaultMessage": "Tedd el könyvjelzőként, ha vissza akarsz jönni később."
+  },
+  "cancel": {
+    "defaultMessage": "Mégse"
+  },
+  "change-multiplicity": {
+    "defaultMessage": "Multiplicitás változtatása"
+  },
+  "change-probability": {
+    "defaultMessage": "Valószínűségek változtatása"
+  },
+  "christmas": {
+    "defaultMessage": "Karácsonyi húzás"
+  },
+  "christmas-create": {
+    "defaultMessage": "Hozd létre a saját karácsonyi húzásodat"
+  },
+  "christmas-create-button": {
+    "defaultMessage": "Karácsonyi húzás"
+  },
+  "code": {
+    "defaultMessage": "Kód"
+  },
+  "code-copied": {
+    "defaultMessage": "A kód a vágólapra lett másolva"
+  },
+  "copy-code": {
+    "defaultMessage": "Kód másolása"
+  },
+  "copy-list-code": {
+    "defaultMessage": "Listába meghívó kód másolása"
+  },
+  "couldnt-create-instance": {
+    "defaultMessage": "Nem lehet közeget létrehozni, esetleg próbálja meg az oldal újratöltését."
+  },
+  "couldnt-in-instance": {
+    "defaultMessage": "Nem tud a közegbe belépni, lehet a kód rossz."
+  },
+  "couldnt-in-list": {
+    "defaultMessage": "Nem tud a listába belépni, lehet a kód rossz."
+  },
+  "couldnt-in-listitem": {
+    "defaultMessage": "Nem tud a listaelembe belépni, lehet a kód rossz."
+  },
+  "couldnt-save-preset": {
+    "defaultMessage": "Nem tudtuk elmenteni a témát"
+  },
+  "create-lists": {
+    "defaultMessage": "Listák létrehozása"
+  },
+  "create-your-own": {
+    "defaultMessage": "Hozd létre a saját listáidat és keverj"
+  },
+  "default": {
+    "defaultMessage": "Bővített"
+  },
+  "delete": {
+    "defaultMessage": "Törlés"
+  },
+  "delete-instance": {
+    "defaultMessage": "Minden adat törlése"
+  },
+  "delete-item": {
+    "defaultMessage": "Elem törlése"
+  },
+  "delete-list": {
+    "defaultMessage": "Lista törlése"
+  },
+  "delete-list-item": {
+    "defaultMessage": "Listaelem törlése"
+  },
+  "do-you-delete-instance": {
+    "defaultMessage": "Tényleg ki akarja törölni az egész közeget? Ha keverni akar, az elejéről kell majd kezdenie"
+  },
+  "do-you-delete-item": {
+    "defaultMessage": "Tényleg ki akarja törölni ezt az elemet? Vissza fog lépni a főoldalra."
+  },
+  "do-you-delete-list": {
+    "defaultMessage": "Tényleg ki akarja törölni ezt a listát?"
+  },
+  "edit": {
+    "defaultMessage": "Szerkesztés"
+  },
+  "edit-list-item": {
+    "defaultMessage": "Listaelem nevének változtatása"
+  },
+  "edit-list-name": {
+    "defaultMessage": "Lista nevének változtatása"
+  },
+  "edit-lists": {
+    "defaultMessage": "Listák szerkesztése"
+  },
+  "edit-probs": {
+    "defaultMessage": "Valószínűségek változtatása"
+  },
+  "error occurred": {
+    "defaultMessage": "Hiba történt. :/"
+  },
+  "error-adding-list": {
+    "defaultMessage": "Hiba történt új lista hozzáadásakor. :/"
+  },
+  "error-deleting": {
+    "defaultMessage": "Hiba történt törlés közben. :/"
+  },
+  "error-deleting-instance": {
+    "defaultMessage": "Hiba történt a közeg törlése közben. :/"
+  },
+  "error-discarding": {
+    "defaultMessage": "Hiba történt a változtatások visszaállításakor. :/"
+  },
+  "error-id-not-found": {
+    "defaultMessage": "Hiba, nem létezik ez az azonosító. :/"
+  },
+  "error-loading-item": {
+    "defaultMessage": "Hiba történt betöltéskor. :/"
+  },
+  "error-loading-pairs": {
+    "defaultMessage": "Hiba történt a párok betöltése közben. :/"
+  },
+  "error-loading-probs": {
+    "defaultMessage": "Hiba történt a valószínűségek betöltése közben. :/"
+  },
+  "error-occurred-shuffle": {
+    "defaultMessage": "Nem sikerült keverni. :/"
+  },
+  "error-saving": {
+    "defaultMessage": "Hiba történt mentés közben. :/"
+  },
+  "error-saving-changes": {
+    "defaultMessage": "Hiba történt a változtatások mentése közben. :/"
+  },
+  "gdpr-contact": {
+    "defaultMessage": "Ha kérdése van, írjon emailt a listshuffler@gmail.com címre."
+  },
+  "gdpr-cookie-info": {
+    "defaultMessage": "Azonosítókat tárolunk a böngészőjében, hogy belépéskor egyszerűbb legyen önnek. Ha ezt nem fogadja el, nem tárolunk el semmit. Ha elfogadja, a böngésző beállításaitól függ."
+  },
+  "gdpr-cookies": {
+    "defaultMessage": "Sütik és hasonlók"
+  },
+  "gdpr-note-alias": {
+    "defaultMessage": "Nem ajánljuk, hogy személyes adatot osszon meg velünk. Ha attól fél, hogy a nevek kitudódnak, kérjük használjon álneveket."
+  },
+  "gdpr-privacy": {
+    "defaultMessage": "Titoktartás"
+  },
+  "gdpr-private-data": {
+    "defaultMessage": "Személyes adatok"
+  },
+  "gdpr-rights": {
+    "defaultMessage": "Amikor nevet ad egy listának vagy egy elemének, mi eltároljuk, hogy később is elérhető legyen. Ha kitöröl egy listát, minden törlődik a listával kapcsolatosan, a benne levő nevek is. Ugyanez ha listaelemet töröl. Automatikusan törlünk minden közeget egy hónap után."
+  },
+  "gdpr-storage": {
+    "defaultMessage": "Ha mégis úgy dönt, hogy ránk bízza az adatait, egy biztonságos adatbázisban tároljuk azokat, az Amazon frankfurti szerverein. Csak a jelszóval rendelkező személyek tudják megnézni az adatokat, de irányelvünk, hogy nem nézzük meg azokat."
+  },
+  "gdpr-stored-info": {
+    "defaultMessage": "A biztonsághoz való jogát tudomásul vesszük. Csak a listáknak és elemeinek adott neveket tároljuk."
+  },
+  "gdpr-your-data": {
+    "defaultMessage": "Adataid"
+  },
+  "instance-if-ever": {
+    "defaultMessage": "A közeg nem létezik"
+  },
+  "invite-code": {
+    "defaultMessage": "Meghívó kód"
+  },
+  "invite-code-explain": {
+    "defaultMessage": "Új elemet hoz létre használatakor"
+  },
+  "item-pair-multiplier": {
+    "defaultMessage": "listaelem | pár | szorzó"
+  },
+  "list-name": {
+    "defaultMessage": "Lista név"
+  },
+  "lists-saved": {
+    "defaultMessage": "Listák elmentve"
+  },
+  "logo-of": {
+    "defaultMessage": "A Listshuffler logója"
+  },
+  "more-can-muliplier": {
+    "defaultMessage": "Nagyobb szám nagyobb valószínűséget jelent"
+  },
+  "multiplicity-s": {
+    "defaultMessage": "multiplicitás"
+  },
+  "name": {
+    "defaultMessage": "Név"
+  },
+  "new-list": {
+    "defaultMessage": "Új Lista"
+  },
+  "no-matching": {
+    "defaultMessage": "Nem sikerült, talán elírt valamit?"
+  },
+  "placeholder-name": {
+    "defaultMessage": "helyfoglaló név"
+  },
+  "please-wait": {
+    "defaultMessage": "Kérem várjon"
+  },
+  "probs-saved": {
+    "defaultMessage": "Valószínűségek elmentve"
+  },
+  "repetitive": {
+    "defaultMessage": "Ismétléses"
+  },
+  "save": {
+    "defaultMessage": "Mentés"
+  },
+  "save-probs": {
+    "defaultMessage": "Valószínűségek mentése"
+  },
+  "see-the-pairs": {
+    "defaultMessage": "Párok mutatása"
+  },
+  "select-list": {
+    "defaultMessage": "Válassz listát"
+  },
+  "show-pairs": {
+    "defaultMessage": "Mutasd a párokat"
+  },
+  "shuffle-lists": {
+    "defaultMessage": "Listák keverése"
+  },
+  "shuffle-now": {
+    "defaultMessage": "Keverés most"
+  },
+  "sorry-inconvenience": {
+    "defaultMessage": "Elnézést a kellemetlenségért."
+  },
+  "these-are-pairs": {
+    "defaultMessage": "Ezek az ön párjai"
+  },
+  "this-admin-page": {
+    "defaultMessage": "Ez az admin oldala. A listákat, valószínűségeket itt tudod változtatni, valamint itt tudsz keverni."
+  },
+  "this-list-item-1": {
+    "defaultMessage": "Ez egy listaelem oldal. A párjaidat itt fogod látni."
+  },
+  "this-list-item-2": {
+    "defaultMessage": "Ez egy listaelem oldal. A párjaidat itt láthatod."
+  },
+  "timed-shuffle": {
+    "defaultMessage": "Indőzített keverés"
+  },
+  "try-adjusting": {
+    "defaultMessage": "Próbáljon a paramétereken változtatni."
+  },
+  "try-reloading": {
+    "defaultMessage": "Próbálja meg újratölteni az oldalt."
+  },
+  "unique": {
+    "defaultMessage": "Ismétlés nélküli"
+  },
+  "unique-pairs": {
+    "defaultMessage": "Egyedi minden lista multiplicitásonként"
+  },
+  "use-code": {
+    "defaultMessage": "Kód használata"
+  },
+  "which-will-shuffle-for": {
+    "defaultMessage": "Melyik listához akar párokat keverni?"
+  },
+  "wrong-length": {
+    "defaultMessage": "Rossz kódhossz"
+  },
+  "you-can-set-multipliers": {
+    "defaultMessage": "Szorzókat tud beállítani, amik befolyásolják a keverési folyamatot."
+  },
+  "you-can-share": {
+    "defaultMessage": "Megoszthatja az illető személyekkel"
+  },
+  "you-can-shuffle": {
+    "defaultMessage": "Most már keverhet!"
+  },
+  "you-have-code": {
+    "defaultMessage": "Van egy kódja?"
+  },
+  "you-need-more": {
+    "defaultMessage": "Legalább annyi eleme kell lennie minden listának mint a fő listának, vagy állítsa át ismétlésesre."
+  },
+  "you-need-multiplicity": {
+    "defaultMessage": "Legalább két lista vagy egy lista legalább két multiplicitással szükséges a keveréshez."
+  },
+  "you-need-one-item": {
+    "defaultMessage": "Legalább egy elem kell minden listába, hogy keverhessen."
+  },
+  "your-pairs": {
+    "defaultMessage": "Párjaid:"
+  },
+  "zero-cannot": {
+    "defaultMessage": "nulla = nem lehet párba állítani"
+  }
+}

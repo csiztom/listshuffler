@@ -9,11 +9,18 @@ db_username = os.environ['LS_RDS_USER']
 db_password = os.environ['LS_RDS_PWD']
 db_name = "public"
 
+# logging
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
 
 def connect_rds():
-    logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
+    """Tries to connect to the database
 
+    Returns:
+    The connection object
+
+   """
     try:
         conn = pymysql.connect(host=db_host, user=db_username,
                                passwd=db_password, db=db_name, connect_timeout=5)
