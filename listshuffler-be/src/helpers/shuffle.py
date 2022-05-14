@@ -10,7 +10,8 @@ class ShuffleError(Exception):
     pass
 
 
-def pair_up(list_w_sorted, used, pairs, unique=True):
+ListPossiblePairs = list[list[str, list[str]]]
+def pair_up(list_w_sorted: ListPossiblePairs, used: list[str], pairs: dict[str, str], unique=True):
     """Tries to pair up every listitem, if it fails
     it goes back until it finds everyone a pair, unless impossible,
     then it doesn't pair up anything
@@ -89,11 +90,11 @@ def shuffle(admin_id, conn):
                 tup[0]: tup[1] for tup in cur.fetchall()}
 
         # set random values
-        list_pairables = {}
+        sorted_to_be_pairs: dict[str,list[ListPossiblePairs]] = {}
         for list_id in lists.keys():
-            list_pairables[list_id] = []
+            sorted_to_be_pairs[list_id] = []
             for i in range(multiplicities[list_id]):
-                sorted_pairables = []
+                listitem_possible_pairs: list[ListPossiblePairs] = []
                 for list_item_id in random.sample(list(lists[shuffled_list_id].keys()), len(lists[shuffled_list_id])):
                     probabilities = {}
                     for otherListItem in lists[list_id]:
@@ -102,9 +103,9 @@ def shuffle(admin_id, conn):
                                 probabilities[otherListItem] = lists[shuffled_list_id][list_item_id][otherListItem] * random.random()
                         else:
                             probabilities[otherListItem] = random.random()
-                    sorted_pairables.append([list_item_id, sorted(probabilities.keys(
+                    listitem_possible_pairs.append([list_item_id, sorted(probabilities.keys(
                     ), reverse=True, key=lambda x: probabilities[x])])
-                list_pairables[list_id].append(sorted_pairables)
+                sorted_to_be_pairs[list_id].append(listitem_possible_pairs)
 
         # pair up shuffled list with others
         paired = {}
@@ -112,7 +113,7 @@ def shuffle(admin_id, conn):
             paired[list_id] = []
             for i in range(multiplicities[list_id]):
                 paired[list_id].append(
-                    pair_up(list_pairables[list_id][i], [], {}, unique))
+                    pair_up(sorted_to_be_pairs[list_id][i], [], {}, unique))
 
         # save results
         values = ''
